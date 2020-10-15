@@ -1,0 +1,38 @@
+<form nz-form nzLayout="horizontal" [formGroup]="searchForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">ID</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="id" placeholder="ID" readonly nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">用户名</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="username" placeholder="用户名" nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">中文名</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="realName" placeholder="中文名" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">电话</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="mobile" placeholder="电话" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">邮箱</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="mail" placeholder="邮箱" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+</form>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()">确定</button>
+</div>
+
+
