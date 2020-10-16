@@ -91,7 +91,7 @@
 </div>
 
 <div>
-  <nz-table style="position: sticky;right: 0;"
+  <nz-table
     #rowSelectionTable
     nzShowPagination
     nzShowSizeChanger
@@ -101,18 +101,18 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1100px', y: '400px' }"
+    [nzScroll]="{ x: '2000px', y: '500px' }"
   >
     <thead>
       <tr>
-        <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+        <th nzLeft nzWidth="30px" [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
         <th nzLeft nzWidth="50px">ID</th>
         <th nzLeft nzWidth="120px">内外IP</th>
-  <!--      <th nzWidth="120px">外网IP</th>-->
+        <th nzWidth="120px">外网IP</th>
         <th>状态</th>
-  <!--      <th>资产ID</th>-->
-  <!--      <th>SN</th>-->
-        <th>hostname</th>
+        <th>资产ID</th>
+        <th>SN</th>
+        <th nzWidth="120px">hostname</th>
         <th>OS TYPE</th>
         <th>OS NAME</th>
         <th>OS VERSION</th>
@@ -120,26 +120,26 @@
         <th>内存</th>
         <th>SSH用户名</th>
         <th>SSH端口号</th>
-  <!--      <th>mac地址</th>-->
-  <!--      <th>外网mac地址</th>-->
-        <th>创建时间</th>
-        <th>更新时间</th>
-        <th [nzRight]="true" nzWidth="120px" style="right: 0px;">操作</th>
+        <th>mac地址</th>
+        <th>外网mac地址</th>
+        <th nzWidth="170px">创建时间</th>
+        <th nzWidth="170px">更新时间</th>
+        <th nzRight nzWidth="70px">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of rowSelectionTable.data">
-        <td
+        <td nzLeft
           [nzChecked]="setOfCheckedId.has(data.id)"
           [nzDisabled]="data.disabled"
           (nzCheckedChange)="onItemChecked(data.id, $event)"
         ></td>
         <td nzLeft>{{ data.id }}</td>
         <td nzLeft>{{ data.hostInnerip }}</td>
-  <!--      <td>{{ data.hostOuterip }}</td>-->
+        <td>{{ data.hostOuterip }}</td>
         <td>{{ data.state }}</td>
-  <!--      <td>{{ data.assertId }}</td>-->
-  <!--      <td>{{ data.sn }}</td>-->
+        <td>{{ data.assertId }}</td>
+        <td>{{ data.sn }}</td>
         <td>{{ data.hostName }}</td>
         <td>{{ data.osType }}</td>
         <td>{{ data.osName }}</td>
@@ -148,11 +148,11 @@
         <td>{{ data.mem}}</td>
         <td>{{ data.sshUser }}</td>
         <td>{{ data.sshPort }}</td>
-  <!--      <td>{{ data.mac }}</td>-->
-  <!--      <td>{{ data.outerMac }}</td>-->
+        <td>{{ data.mac }}</td>
+        <td>{{ data.outerMac }}</td>
         <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
-        <td nzRight style="right: 0px;">
+        <td nzRight >
           <button nz-button nzType="text" (click)="showEditDialog(data)">
             <i nz-icon nzType="edit" nzTheme="outline"></i>
           </button>

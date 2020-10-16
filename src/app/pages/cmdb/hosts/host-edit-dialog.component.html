@@ -1,1 +1,173 @@
-<p>host-edit-dialog works!</p>
+<form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">ID</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">内网IP</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="内网IP" formControlName="hostInnerip" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">外网IP</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="外网IP" formControlName="hostOuterip" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">内网MAC</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="内网MAC" formControlName="mac" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">内网MAC</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="内网MAC" formControlName="outerMac" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">资产ID</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="资产ID" formControlName="assertId" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">SN</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="SN" formControlName="sn" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">状态</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select formControlName="state" style="width: 100px;" nzSize="small">
+            <nz-option nzValue="" nzLabel="All"></nz-option>
+            <nz-option nzValue="idle" nzLabel="闲置"></nz-option>
+            <nz-option nzValue="common" nzLabel="正常"></nz-option>
+            <nz-option nzValue="fault" nzLabel="故障"></nz-option>
+            <nz-option nzValue="abandon" nzLabel="废弃"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">主机名</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="主机名" formControlName="hostName" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">OS类型</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select formControlName="osType" style="width: 100px;" nzSize="small">
+            <nz-option nzValue="" nzLabel="All"></nz-option>
+            <nz-option nzValue="Linux" nzLabel="Linux"></nz-option>
+            <nz-option nzValue="Window" nzLabel="Window"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">OS名字</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="OS名字" formControlName="osName" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">OS版本</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="OS版本" formControlName="osVersion" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">OS位数</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select formControlName="osBit" style="width: 100px;" nzSize="small">
+            <nz-option nzValue="" nzLabel="All"></nz-option>
+            <nz-option nzValue="32" nzLabel="32位"></nz-option>
+            <nz-option nzValue="64" nzLabel="64位"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">内存</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="内存" type="number" formControlName="mem" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">磁盘</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="磁盘" type="number" formControlName="disk" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">SSH用户名</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="SSH用户名" formControlName="sshUser" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">SSH端口号</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="SSH端口号" type="number" formControlName="sshPort" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
+</form>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!searchForm.valid">确定</button>
+</div>

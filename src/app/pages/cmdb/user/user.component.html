@@ -40,23 +40,24 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
+    [nzScroll]="{ x: '1000px', y: '500px' }"
   >
     <thead>
       <tr>
-        <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+        <th nzLeft nzWidth="30px" [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
         <th nzLeft nzWidth="50px">ID</th>
-        <th nzLeft nzWidth="120px">用户名</th>
-        <th nzWidth="120px">中文名</th>
-        <th>电话</th>
-        <th>邮箱</th>
-        <th>创建时间</th>
-        <th>更新时间</th>
-        <th nzRight nzWidth="120px">操作</th>
+        <th nzLeft nzWidth="100px">用户名</th>
+        <th>中文名</th>
+        <th nzWidth="120px">电话</th>
+        <th nzWidth="200px">邮箱</th>
+        <th nzWidth="170px">创建时间</th>
+        <th nzWidth="170px">更新时间</th>
+        <th nzRight nzWidth="80px">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of rowSelectionTable.data">
-        <td
+        <td nzLeft
           [nzChecked]="setOfCheckedId.has(data.id)"
           [nzDisabled]="data.disabled"
           (nzCheckedChange)="onItemChecked(data.id, $event)"
