@@ -24,6 +24,8 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzTableModule} from 'ng-zorro-antd/table';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzMessageServiceModule} from 'ng-zorro-antd/message';
+import {NzSelectModule} from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
     NzButtonModule,
     NzTableModule,
     NzIconModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzMessageServiceModule,
+    NzSelectModule,
   ]
 })
 export class CmdbModule { }

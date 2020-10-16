@@ -32,7 +32,7 @@
 </form>
 <div class="btns">
   <button nz-button (click)="onClose()">取消</button>
-  <button nz-button (click)="onSubmit()">确定</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!searchForm.valid">确定</button>
 </div>
 
 
