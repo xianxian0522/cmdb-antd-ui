@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {UserRepository} from '../../../shared/services/user-repository';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {NZ_DATE_CONFIG} from "ng-zorro-antd/i18n";
 
 @Component({
   selector: 'app-user-dialog',
@@ -29,11 +30,14 @@ export class UserDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.searchForm.get('id').setValue(this.data.id);
-    this.searchForm.get('mobile').setValue(this.data.mobile);
-    this.searchForm.get('username').setValue(this.data.username);
-    this.searchForm.get('realName').setValue(this.data.realName);
-    this.searchForm.get('mail').setValue(this.data.mail);
+    console.log(this.data, this.mode);
+    if (this.data) {
+      this.searchForm.get('id').setValue(this.data.id);
+      this.searchForm.get('mobile').setValue(this.data.mobile);
+      this.searchForm.get('username').setValue(this.data.username);
+      this.searchForm.get('realName').setValue(this.data.realName);
+      this.searchForm.get('mail').setValue(this.data.mail);
+    }
   }
 
   onSubmit(): void{
