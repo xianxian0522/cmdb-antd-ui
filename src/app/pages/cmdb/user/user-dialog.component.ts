@@ -3,7 +3,13 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {UserRepository} from '../../../shared/services/user-repository';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {NZ_DATE_CONFIG} from "ng-zorro-antd/i18n";
+import {EditDialogData} from '../../../shared/base-resource/base-resource.component';
+import {User} from '../../../shared/models/user';
+
+export interface DialogData extends EditDialogData<User> {
+  mode: string;
+  data: User;
+}
 
 @Component({
   selector: 'app-user-dialog',
@@ -14,10 +20,11 @@ export class UserDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userRepository: UserRepository,
-    private nzModalRef: NzModalRef,
-    private nzMessageService: NzMessageService
-  ) { }
+    protected userRepository: UserRepository,
+    protected nzModalRef: NzModalRef<UserDialogComponent>,
+    protected nzMessageService: NzMessageService
+  ) {
+  }
   @Input() mode = '';
   @Input() data;
 
@@ -30,7 +37,8 @@ export class UserDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    console.log(this.data, this.mode);
+    console.log(this.data);
+    console.log(this.nzModalRef.componentInstance.data);
     if (this.data) {
       this.searchForm.get('id').setValue(this.data.id);
       this.searchForm.get('mobile').setValue(this.data.mobile);

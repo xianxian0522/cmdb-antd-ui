@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Output, Type, ViewChild} from '@angular/core';
 import {BaseRepository} from '../services/base.repository';
-import {SelectionModel} from '@angular/cdk/collections';
 import {FormGroup} from '@angular/forms';
 import {merge} from 'rxjs';
 import {flow} from '../stream/stream';
@@ -10,21 +9,24 @@ import {NzTableComponent} from 'ng-zorro-antd/table';
 
 export interface EditDialogData<MODEL extends {id?: number}> {
   mode: string;
-  record: MODEL;
+  data: MODEL;
 }
 
 @Component({
   selector: 'app-base-resource',
   template: ``
 })
-export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DIALOG = any>
+export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DIALOG>
   implements AfterViewInit {
-  protected constructor(protected baseRepository: BaseRepository<MODEL>,
-                        protected modal: NzModalService) {
+  protected constructor(
+    protected baseRepository: BaseRepository<MODEL>,
+    protected modal: NzModalService,
+  ) {
   }
   data: MODEL[] = [];
-  selection = new SelectionModel<MODEL>(true, []);
-  total = 0;
+  total = 1;
+  pageSize = 10;
+  pageIndex = 1;
   isLoadingResults = true;
   checked = false;
   indeterminate = false;
@@ -38,23 +40,6 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
 
   protected abstract editDialogType(): Type<EDIT_DIALOG>;
 
-  // isAllSelected(): boolean {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.data.length;
-  //   return numSelected === numRows;
-  // }
-  // masterToggle(): void {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.data.forEach(row => this.selection.select(row));
-  // }
-  // checkboxLabel(row?: MODEL): string {
-  //   if (!row) {
-  //     return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-  //   }
-  //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id}`;
-  // }
-
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
@@ -66,9 +51,9 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
     this.refreshCheckedStatus();
   }
   refreshCheckedStatus(): void {
-    const listOfEnabledData = this.data;
-    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
-    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+    const data = this.data;
+    this.checked = data.every(({ id }) => this.setOfCheckedId.has(id));
+    this.indeterminate = data.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
   }
   onAllChecked(checked: boolean): void {
     this.data.forEach(({ id }) => this.updateCheckedSet(id, checked));
@@ -100,7 +85,6 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
       console.error(err);
     }).subscribe(data => {
       this.data = data;
-      this.selection.clear();
     });
     this.refresh.emit();
   }

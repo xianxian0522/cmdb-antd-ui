@@ -1,1 +1,49 @@
-<p>app-edit-dialog works!</p>
+<div>{{mode === 'edit' ? '修改应用' : '创建应用'}}</div>
+<form nz-form nzLayout="horizontal" [formGroup]="searchForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">ID</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="id" placeholder="ID" readonly nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="name" placeholder="名字" nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">中文名</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="cnName" placeholder="中文名" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">语言</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="programmingLanguage" placeholder="语言" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">级别</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="level" placeholder="级别" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">仓库</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="repository" placeholder="仓库" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">备注</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <textarea formControlName="comment" nzAutosize placeholder="备注" nz-input nzSize="small"></textarea>
+    </nz-form-control>
+  </nz-form-item >
+</form>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!searchForm.valid">确定</button>
+</div>

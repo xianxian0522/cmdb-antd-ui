@@ -3,7 +3,6 @@ import {AppRepository} from './app-repository';
 import {HostRepository} from './host-repository';
 import {ReplicaSetRepository} from './replica-set-repository';
 import {InstanceRepository} from './instance-repository';
-import {MatAutocomplete} from '@angular/material/autocomplete';
 import {AbstractControl} from '@angular/forms';
 import {first, flatMap, map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -13,24 +12,24 @@ import {Host} from '../models/host';
 import {Instance} from '../models/instance';
 import {PlaybookRepository} from './playbook-repository';
 import {Playbook} from '../models/playbook';
+import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepositoryHelperService {
 
-  constructor(private _hostRepository: HostRepository,
-              private _appRepository: AppRepository,
-              private _replicaSetRepository: ReplicaSetRepository,
-              private _instanceRepository: InstanceRepository,
-              private _playbookRepository: PlaybookRepository) {}
+  constructor(private hostRepository: HostRepository,
+              private appRepository: AppRepository,
+              private replicaSetRepository: ReplicaSetRepository,
+              private instanceRepository: InstanceRepository,
+              private playbookRepository: PlaybookRepository) {}
 
-  appAutoHelp(auto: MatAutocomplete, ctrl: AbstractControl, initValue?: any): Observable<App[]> {
-    return this._appRepository.queryAll(null, ['id', 'name']).pipe(
+  appAutoHelp(auto: NzAutocompleteComponent, ctrl: AbstractControl, initValue?: any): Observable<App[]> {
+    return this.appRepository.queryAll(null, ['id', 'name']).pipe(
       first(),
       flatMap(xs => {
         const fn = id => xs.filter(x => x.id === id).map(x => x.name)[0];
-        auto.displayWith = fn;
         if (arguments.length === 3) {
           setTimeout(() => ctrl.setValue(initValue));
         }
@@ -46,14 +45,13 @@ export class RepositoryHelperService {
     );
   }
 
-  replicaSetAutoHelp(auto: MatAutocomplete,
+  replicaSetAutoHelp(auto: NzAutocompleteComponent,
                      ctrl: AbstractControl,
                      initValue?: any): Observable<ReplicaSet[]> {
-    return this._replicaSetRepository.queryAll().pipe(
+    return this.replicaSetRepository.queryAll().pipe(
       first(),
       flatMap(xs => {
         const fn = id => xs.filter(x => x.id === id).map(x => x.name)[0];
-        auto.displayWith = fn;
         if (arguments.length === 3) {
           setTimeout(() => ctrl.setValue(initValue));
         }
@@ -69,12 +67,11 @@ export class RepositoryHelperService {
     );
   }
 
-  hostAutHelp(auto: MatAutocomplete, ctrl: AbstractControl, initValue?: any): Observable<Host[]> {
-    return this._hostRepository.queryAll().pipe(
+  hostAutHelp(auto: NzAutocompleteComponent, ctrl: AbstractControl, initValue?: any): Observable<Host[]> {
+    return this.hostRepository.queryAll().pipe(
       first(),
       flatMap(xs => {
         const fn = id => xs.filter(x => x.id === id).map(x => x.hostName)[0];
-        auto.displayWith = fn;
         if (arguments.length === 3) {
           setTimeout(() => ctrl.setValue(initValue));
         }
@@ -90,14 +87,13 @@ export class RepositoryHelperService {
     );
   }
 
-  instanceAutoHelp(auto: MatAutocomplete,
+  instanceAutoHelp(auto: NzAutocompleteComponent,
                    ctrl: AbstractControl,
                    initValue?: any): Observable<Instance[]> {
-    return this._instanceRepository.queryAll().pipe(
+    return this.instanceRepository.queryAll().pipe(
       first(),
       flatMap(xs => {
         const fn = id => xs.filter(x => x.id === id).map(x => x.name)[0];
-        auto.displayWith = fn;
         if (arguments.length === 3) {
           setTimeout(() => ctrl.setValue(initValue));
         }
@@ -113,14 +109,13 @@ export class RepositoryHelperService {
     );
   }
 
-  playbookAutoHelp(auto: MatAutocomplete,
+  playbookAutoHelp(auto: NzAutocompleteComponent,
                    ctrl: AbstractControl,
                    initValue?: any): Observable<Playbook[]> {
-    return this._playbookRepository.queryAll(null, ['id', 'name']).pipe(
+    return this.playbookRepository.queryAll(null, ['id', 'name']).pipe(
       first(),
       flatMap(xs => {
         const fn = id => xs.filter(x => x.id === id).map(x => x.name)[0];
-        auto.displayWith = fn;
         if (arguments.length === 3) {
           setTimeout(() => ctrl.setValue(initValue));
         }

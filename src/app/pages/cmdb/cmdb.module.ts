@@ -27,6 +27,8 @@ import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {NzMessageServiceModule} from 'ng-zorro-antd/message';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzGridModule} from 'ng-zorro-antd/grid';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
+import {NzAutocompleteModule} from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
     NzPopconfirmModule,
     NzMessageServiceModule,
     NzSelectModule,
-    NzGridModule
+    NzGridModule,
+    NzSpinModule,
+    NzAutocompleteModule,
   ]
 })
 export class CmdbModule { }
