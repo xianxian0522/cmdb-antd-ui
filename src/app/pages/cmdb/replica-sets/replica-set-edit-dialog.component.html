@@ -1,1 +1,46 @@
-<p>replica-set-edit-dialog works!</p>
+<h2 nz-row="24">
+  <div nz-col nzSpan="8" nzOffset="3" >{{mode === 'edit' ? '修改副本集' : '创建副本集'}}</div>
+</h2>
+<form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">ID</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">名字</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">所在应用</nz-form-label>
+        <input nz-input formControlName="appId" [nzAutocomplete]="appIdAuto" class="app-auto" nzSize="small">
+        <nz-autocomplete #appIdAuto>
+          <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5">备注</nz-form-label>
+      <nz-form-control [nzSpan]="19">
+        <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

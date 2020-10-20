@@ -9,8 +9,8 @@ const API = '/api/charts';
   providedIn: 'root'
 })
 export class ChartRepository extends BaseRepository<Chart> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {

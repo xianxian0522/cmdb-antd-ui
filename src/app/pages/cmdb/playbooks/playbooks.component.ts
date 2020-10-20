@@ -12,6 +12,7 @@ import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 import {App} from '../../../shared/models/app';
 import {ReplicaSet} from '../../../shared/models/replica-set';
 import {Instance} from '../../../shared/models/instance';
+import {PlaybookRunDialogComponent} from './playbook-run-dialog.component';
 
 @Component({
   selector: 'app-playbooks',
@@ -61,4 +62,12 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
     return PlaybookEditDialogComponent;
   }
 
+  showRunDialog(row): void{
+    this.modal.create({
+      nzContent: PlaybookRunDialogComponent,
+      nzFooter: null,
+      nzComponentParams: {data: row},
+      nzWidth: 830,
+    });
+  }
 }

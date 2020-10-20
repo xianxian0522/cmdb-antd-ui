@@ -97,11 +97,12 @@
     nzShowSizeChanger
     [nzFrontPagination]="false"
     (nzCurrentPageDataChange)="onCurrentPageDataChange()"
-    [nzData]="listOfData"
+    [nzData]="data"
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
     [nzScroll]="{ x: '2000px', y: '500px' }"
+    [nzLoading]="isLoadingResults"
   >
     <thead>
       <tr>

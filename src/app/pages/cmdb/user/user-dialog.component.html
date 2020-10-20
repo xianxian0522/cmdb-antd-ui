@@ -1,5 +1,7 @@
-<div>{{mode === 'edit' ? '修改用户' : '创建用户'}}</div>
-<form nz-form nzLayout="horizontal" [formGroup]="searchForm">
+<h2 nz-row="24">
+  <div nz-col nzSpan="8" nzOffset="3" >{{mode === 'edit' ? '修改用户' : '创建用户'}}</div>
+</h2>
+<form nz-form nzLayout="horizontal" [formGroup]="editForm">
   <nz-form-item>
     <nz-form-label [nzSpan]="6">ID</nz-form-label>
     <nz-form-control [nzSpan]="14">
@@ -33,7 +35,7 @@
 </form>
 <div class="btns">
   <button nz-button (click)="onClose()">取消</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!searchForm.valid">确定</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
 </div>
 
 

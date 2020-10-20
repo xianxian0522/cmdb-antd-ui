@@ -1,1 +1,84 @@
-<p>playbook-edit-dialog works!</p>
+<h2 nz-row="24">
+  <div nz-col nzSpan="8" nzOffset="1" >{{mode === 'edit' ? '修改剧本' : '创建剧本'}}</div>
+</h2>
+<form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">ID</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">名字</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
+          <a nz-button nzType="text" nzDanger *ngIf="editForm.get('name').invalid">{{getErrorMessage(editForm.get('name'))}}</a>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">显示名</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input placeholder="显示名" formControlName="displayName" nzSize="small"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" [formGroup]="referenceIdFormGroup">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">所属应用</nz-form-label>
+        <input nz-input formControlName="appId" [nzAutocomplete]="appIdAuto" class="app-auto" nzSize="small">
+        <nz-autocomplete #appIdAuto>
+          <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">所属副本集</nz-form-label>
+        <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
+        <nz-autocomplete #replicaSetIdAuto>
+          <nz-auto-option *ngFor="let option of filteredReplicaSets | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10">所属实例</nz-form-label>
+        <input nz-input formControlName="instanceId" [nzAutocomplete]="instanceIdAuto" class="app-auto" nzSize="small">
+        <nz-autocomplete #instanceIdAuto>
+          <nz-auto-option *ngFor="let option of filteredInstances | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-item>
+    </div>
+  </div>
+  <a style="margin-left: 102px" nz-button nzType="text" nzDanger *ngIf="referenceIdFormGroup.invalid">{{getErrorMessage(referenceIdFormGroup)}}</a>
+  <div nz-col [nzSpan]="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3">备注</nz-form-label>
+      <nz-form-control [nzSpan]="21">
+        <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3">剧本内容</nz-form-label>
+      <nz-form-control [nzSpan]="21">
+        <textarea nz-input placeholder="剧本内容" nzAutosize rows="10" formControlName="content"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

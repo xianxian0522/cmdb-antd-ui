@@ -1,22 +1,26 @@
 import {AbstractControl, FormGroup} from '@angular/forms';
 import {BaseRepository} from '../services/base.repository';
-import {EditDialogData} from '../base-resource/base-resource.component';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 
-export abstract class BaseEditDialogComponent<MODEL extends {id?: number}> {
+@Component({
+  selector: 'app-base-edit-dialog',
+  template: ``
+})
+export abstract class BaseEditDialogComponent<MODEL extends {id?: number}> implements AfterViewInit {
 
   protected constructor(
-    // public data: EditDialogData<MODEL>,
     protected baseRepository: BaseRepository<MODEL>,
     protected nzModalRef: NzModalRef<BaseEditDialogComponent<MODEL>>,
-    protected nzMessageService: NzMessageService) {
+    protected nzMessageService: NzMessageService,
+  ) {
   }
 
-  @Input() public data: EditDialogData<MODEL>;
   isLoadingResults = false;
   editForm: FormGroup;
+  @Input() mode;
+  @Input() data;
 
   getErrorMessage(control: AbstractControl): string {
     if (control.valid) {
@@ -39,21 +43,25 @@ export abstract class BaseEditDialogComponent<MODEL extends {id?: number}> {
     return this.editForm.value;
   }
 
+  ngAfterViewInit(): void {
+    console.log(this.data, this.mode, '有值吗');
+  }
+
   onSubmit(): void {
     this.isLoadingResults = true;
     const value = this.genFormValue();
-    (this.data.mode === 'edit' ?
+    (this.mode === 'edit' ?
       this.baseRepository.update(value) :
       this.baseRepository.add(value)).subscribe(
       newValue => {
-        this.data.data = newValue;
+        this.data = newValue;
         this.nzModalRef.close(newValue);
         this.nzMessageService.info(
-          this.data.mode === 'edit' ? '修改成功' : '创建成功');
+          this.mode === 'edit' ? '修改成功' : '创建成功');
       },
       err => {
         this.nzMessageService.info(
-          this.data.mode === 'edit' ? '修改失败' : '创建失败');
+          this.mode === 'edit' ? '修改失败' : '创建失败');
         console.error(err);
         this.isLoadingResults = false;
       },

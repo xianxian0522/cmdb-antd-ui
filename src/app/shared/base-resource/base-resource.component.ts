@@ -94,7 +94,7 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
     this.modal.create({
       nzContent: this.editDialogType(),
       nzFooter: null,
-      nzComponentParams: {mode: 'edit', data: record},
+      nzComponentParams: {mode: 'edit', data: record} as unknown as Partial<EDIT_DIALOG>,
       nzWidth: 830,
     }).afterClose.subscribe(needRefresh => {
       if (!!needRefresh) {
@@ -106,7 +106,7 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
   showCreateDialog(): void {
     this.modal.create({
       nzContent: this.editDialogType(),
-      nzComponentParams: {mode: 'create', data: {}},
+      nzComponentParams: {mode: 'create', data: {}} as unknown as Partial<EDIT_DIALOG>,
       nzFooter: null,
       nzWidth: 830,
     }).afterClose.subscribe(needRefresh => {

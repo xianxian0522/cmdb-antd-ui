@@ -10,8 +10,8 @@ const API = '/api/playbooks';
   providedIn: 'root'
 })
 export class PlaybookRepository extends BaseRepository<Playbook> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {
@@ -19,7 +19,7 @@ export class PlaybookRepository extends BaseRepository<Playbook> {
   }
 
   run(id: number): Observable<PlayResult> {
-    return this._httpClient.post<PlayResult>(`${this.api()}/${id}/run`, null);
+    return this.httpClient.post<PlayResult>(`${this.api()}/${id}/run`, null);
   }
 }
 

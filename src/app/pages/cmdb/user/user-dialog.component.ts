@@ -1,22 +1,17 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {UserRepository} from '../../../shared/services/user-repository';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {EditDialogData} from '../../../shared/base-resource/base-resource.component';
 import {User} from '../../../shared/models/user';
-
-export interface DialogData extends EditDialogData<User> {
-  mode: string;
-  data: User;
-}
+import {BaseEditDialogComponent} from '../../../shared/base-edit-dialog/base-edit-dialog.component';
 
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss']
 })
-export class UserDialogComponent implements OnInit {
+export class UserDialogComponent extends BaseEditDialogComponent<User> implements OnInit {
 
   constructor(
     private fb: FormBuilder,
@@ -24,12 +19,13 @@ export class UserDialogComponent implements OnInit {
     protected nzModalRef: NzModalRef<UserDialogComponent>,
     protected nzMessageService: NzMessageService
   ) {
+    super(userRepository, nzModalRef, nzMessageService);
   }
   @Input() mode = '';
   @Input() data;
 
-  searchForm = this.fb.group({
-    id: [''],
+  editForm = this.fb.group({
+    id: [],
     mobile: [''],
     username: ['', Validators.required],
     realName: [''],
@@ -37,26 +33,25 @@ export class UserDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    console.log(this.data);
-    console.log(this.nzModalRef.componentInstance.data);
+    // this.editForm.setValue({...this.data});
     if (this.data) {
-      this.searchForm.get('id').setValue(this.data.id);
-      this.searchForm.get('mobile').setValue(this.data.mobile);
-      this.searchForm.get('username').setValue(this.data.username);
-      this.searchForm.get('realName').setValue(this.data.realName);
-      this.searchForm.get('mail').setValue(this.data.mail);
+      this.editForm.get('id').setValue(this.data.id);
+      this.editForm.get('mobile').setValue(this.data.mobile);
+      this.editForm.get('username').setValue(this.data.username);
+      this.editForm.get('realName').setValue(this.data.realName);
+      this.editForm.get('mail').setValue(this.data.mail);
     }
   }
 
-  onSubmit(): void{
-    const value = this.searchForm.value;
-    (this.mode === 'edit' ? this.userRepository.update(value) :
-      this.userRepository.add(value)).subscribe(result => {
-      this.nzMessageService.info(this.mode ? '修改成功' : '新增成功');
-      this.nzModalRef.close(result);
-    });
-  }
-  onClose(): void{
-    this.nzModalRef.close();
-  }
+  // onSubmit(): void{
+  //   const value = this.editForm.value;
+  //   (this.mode === 'edit' ? this.userRepository.update(value) :
+  //     this.userRepository.add(value)).subscribe(result => {
+  //     this.nzMessageService.info(this.mode ? '修改成功' : '新增成功');
+  //     this.nzModalRef.close(result);
+  //   });
+  // }
+  // onClose(): void{
+  //   this.nzModalRef.close();
+  // }
 }

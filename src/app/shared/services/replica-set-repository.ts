@@ -9,8 +9,8 @@ const API = '/api/replicasets';
   providedIn: 'root'
 })
 export class ReplicaSetRepository extends BaseRepository<ReplicaSet> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {

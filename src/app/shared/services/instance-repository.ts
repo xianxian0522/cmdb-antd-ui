@@ -9,8 +9,8 @@ const API = '/api/instances';
   providedIn: 'root'
 })
 export class InstanceRepository extends BaseRepository<Instance> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {

@@ -9,8 +9,8 @@ const API = '/api/hosts';
   providedIn: 'root'
 })
 export class HostRepository extends BaseRepository<Host> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {

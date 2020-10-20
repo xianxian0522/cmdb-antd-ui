@@ -1,1 +1,65 @@
-<p>chart-edit works!</p>
+<form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+  <div class="chart-head">
+    <h3>{{id ? '修改图表' : '创建图表'}}</h3>
+    <h3 class="chart-head-two">
+      <span>ID：</span>
+      <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
+    </h3>
+  </div>
+  <div nz-form nzLayout="inline">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">名字</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">显示名</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input placeholder="显示名" formControlName="displayName" nzSize="small"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item [formGroup]="referenceIdFormGroup">
+      <nz-form-label [nzSpan]="8">所属应用</nz-form-label>
+      <input nz-input formControlName="appId" [nzAutocomplete]="appIdAuto" class="app-auto" nzSize="small">
+      <nz-autocomplete #appIdAuto>
+        <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-item>
+    <nz-form-item [formGroup]="referenceIdFormGroup">
+      <nz-form-label [nzSpan]="10">所属副本集</nz-form-label>
+      <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
+      <nz-autocomplete #replicaSetIdAuto>
+        <nz-auto-option *ngFor="let option of filteredReplicaSets | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-item>
+    <nz-form-item [formGroup]="referenceIdFormGroup">
+      <nz-form-label [nzSpan]="8">所属实例</nz-form-label>
+      <input nz-input formControlName="instanceId" [nzAutocomplete]="instanceIdAuto" class="app-auto" nzSize="small">
+      <nz-autocomplete #instanceIdAuto>
+        <nz-auto-option *ngFor="let option of filteredInstances | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-item>
+  </div>
+  <div>
+    <nz-form-item>
+      <nz-form-label>备注</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div>
+    <nz-radio-group formGroupName="config" formControlName="radio" (ngModelChange)="statusChange(editForm.get('radio').value)">
+      <label nz-radio [nzValue]="item" formControlName="{{item}}" *ngFor="let item of seasons">{{item}}</label>
+<!--      <label nz-radio nzValue="bars" formControlName="bars" (ngModelChage)="statusChange('bars')">bars</label>-->
+<!--      <label nz-radio nzValue="lines" formControlName="lines" (ngModelChage)="statusChange('lines')">lines</label>-->
+<!--      <label nz-radio nzValue="points" formControlName="points" >points</label>-->
+      <label nz-checkbox formControlName="stack" (ngModelChange)="stackChange()">stack</label>
+    </nz-radio-group>
+  </div>
+</form>
+<div class="btns">
+  <button nz-button (click)="goBackClick()">返回</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

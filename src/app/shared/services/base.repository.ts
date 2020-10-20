@@ -4,7 +4,7 @@ import {Page} from '../models/page';
 
 export abstract class BaseRepository<MODEL extends { id?: number }> {
 
-  protected constructor(protected _httpClient: HttpClient) {
+  protected constructor(protected httpClient: HttpClient) {
   }
 
   protected abstract api(): string;
@@ -12,7 +12,7 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
   queryAll(q?: { [key: string]: any }, select?: string[]): Observable<MODEL[]> {
     const params = this.genParams(q, select);
     const requestUrl = `${this.api()}?${params.toString()}`;
-    return this._httpClient.get<MODEL[]>(requestUrl);
+    return this.httpClient.get<MODEL[]>(requestUrl);
   }
 
   queryPage(page: number, size: number,
@@ -20,23 +20,23 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
     let requestUrl = `${this.api()}?pageSize=${size}&pageNumber=${page}`;
     const params = this.genParams(q, select);
     requestUrl = `${requestUrl}&${params.toString()}`;
-    return this._httpClient.get<Page<MODEL>>(requestUrl);
+    return this.httpClient.get<Page<MODEL>>(requestUrl);
   }
 
   getById(id: number): Observable<MODEL> {
-    return this._httpClient.get<MODEL>(`${this.api()}/${id}`);
+    return this.httpClient.get<MODEL>(`${this.api()}/${id}`);
   }
 
   getByChartId(chartId: number): Observable<MODEL> {
-    return this._httpClient.get<MODEL>(`${this.api()}?chartId=${chartId}`);
+    return this.httpClient.get<MODEL>(`${this.api()}?chartId=${chartId}`);
   }
 
   add(model: MODEL): Observable<MODEL> {
-    return this._httpClient.post<MODEL>(this.api(), model);
+    return this.httpClient.post<MODEL>(this.api(), model);
   }
 
   update(model: MODEL): Observable<MODEL> {
-    return this._httpClient.patch<MODEL>(`${this.api()}/${model.id}`, model);
+    return this.httpClient.patch<MODEL>(`${this.api()}/${model.id}`, model);
   }
 
   protected genParams(q?: { [key: string]: any }, select?: string[]) {

@@ -9,8 +9,8 @@ const API = '/api/dashboards';
   providedIn: 'root'
 })
 export class DashboardRepository extends BaseRepository<Dashboards> {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   protected api(): string {
