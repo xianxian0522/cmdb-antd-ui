@@ -6,7 +6,7 @@
       <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
     </h3>
   </div>
-  <div nz-form nzLayout="inline">
+  <div class="chart-head-name" nz-form nzLayout="inline">
     <nz-form-item>
       <nz-form-label [nzSpan]="8">名字</nz-form-label>
       <nz-form-control [nzSpan]="14">
@@ -59,6 +59,80 @@
     </nz-radio-group>
   </div>
 </form>
+<div style="display: flex;align-items: center">
+  <div>
+    <nz-select [formControl]="stepTime">
+      <nz-option *ngFor="let option of stepTimes" [nzValue]="option" [nzLabel]="option"></nz-option>
+    </nz-select>
+  </div>
+  <div class="select-date">
+    <i class="select-date-icon" (click)="timeChange(-1)" nz-icon nzType="backward" nzTheme="outline"></i>
+    <nz-date-picker
+      nzShowTime
+      nzAllowClear="false"
+      nzFormat="yyyy-MM-dd HH:mm:ss"
+      [formControl]="startTime"
+      nzPlaceHolder="请选择时间"
+      (nzOnOk)="handleStartOpenChange($event)"
+    ></nz-date-picker>
+    <i class="select-date-icon" (click)="timeChange(1)" nz-icon nzType="forward" nzTheme="outline"></i>
+  </div>
+  <div>
+    <input style="width: 80px;margin-right: 20px;" nz-input type="number" [formControl]="step"/>
+  </div>
+  <button nz-button (click)="refresh.emit()" [disabled]="!startTime.valid || !editForm.valid">刷新</button>
+</div>
+<form [formGroup]="editForm">
+  <div class="code-box">
+    <ngx-codemirror formControlName="query" [options]="options"></ngx-codemirror>
+  </div>
+</form>
+<div echarts [options]="echartsOption" [merge]="echartsMerge" class="demo-chart" (chartInit)="onChartInit($event)"></div>
+<div class="content-echarts">
+  <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)" (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of echartsOption.series || []; index as i">
+    <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>
+    <span>{{item.name}}</span>
+  </div>
+</div>
+<div>
+  <button nz-button (click)="showCreateDialog()">Add Rule</button>
+  <div>
+    <nz-table
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="ruleData"
+      [nzScroll]="{ x: '900px', y: '500px' }"
+    >
+      <thead>
+      <tr>
+        <th nzLeft nzWidth="100px">名字</th>
+        <th nzWidth="150px">显示名</th>
+        <th >操作符</th>
+        <th>操作数</th>
+        <th>摘要</th>
+        <th nzWidth="180px">描述</th>
+        <th nzRight nzWidth="80px">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzLeft>{{ data.name }}</td>
+        <td>{{ data.displayName }}</td>
+        <td>{{ getOperation(data.operation) }}</td>
+        <td>{{ data.operand }}</td>
+        <td>{{ data.summary }}</td>
+        <td>{{ data.description }}</td>
+        <td nzRight>
+          <button nz-button nzType="text" (click)="showEditDialog(data)">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
 <div class="btns">
   <button nz-button (click)="goBackClick()">返回</button>
   <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>

@@ -1,0 +1,16 @@
+nz-list-item ul{
+  list-style: none;
+  width: 100%;
+  display: flex;
+  margin: 0px;
+  padding-left: 3px;
+  li{
+    margin: 5px;
+  }
+}
+ul:hover{
+  cursor: pointer;
+  background-color: #3b78e7;
+  border-radius: 5px;
+  color: #ffffff;
+}

@@ -10,7 +10,7 @@ import {App} from '../../../shared/models/app';
 import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 import {Instance} from '../../../shared/models/instance';
 import {ReplicaSet} from '../../../shared/models/replica-set';
-import {RepositoryHelperService} from "../../../shared/services/repository-helper.service";
+import {RepositoryHelperService} from '../../../shared/services/repository-helper.service';
 
 @Component({
   selector: 'app-charts',

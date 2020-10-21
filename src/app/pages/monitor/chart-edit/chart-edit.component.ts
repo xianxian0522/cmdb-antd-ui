@@ -1,15 +1,23 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {merge, Observable, of} from 'rxjs';
 import {Chart} from '../../../shared/models/chart';
-import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 import {App} from '../../../shared/models/app';
 import {ReplicaSet} from '../../../shared/models/replica-set';
 import {Instance} from '../../../shared/models/instance';
 import {RepositoryHelperService} from '../../../shared/services/repository-helper.service';
+import 'codemirror/mode/javascript/javascript';
+import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
+import {formatDate} from '@angular/common';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {Rule} from '../../../shared/models/rule';
+import {RuleRepository} from '../../../shared/services/rule-repository';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {RuleEditorComponent} from '../rule-editor/rule-editor.component';
 
 export interface Data {
   id?: number;
@@ -28,6 +36,15 @@ export interface Data {
   query?: string;
 }
 
+const filteredOperation = {
+  eq: '等于',
+  neq: '不等于',
+  gt: '大于',
+  gte: '大于等于',
+  lt: '小于',
+  lte: '小于等于'
+};
+
 @Component({
   selector: 'app-chart-edit',
   templateUrl: './chart-edit.component.html',
@@ -39,11 +56,19 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private chartRepository: ChartRepository,
     private fb: FormBuilder,
-    private helperService: RepositoryHelperService
-  ) { }
+    private helperService: RepositoryHelperService,
+    private chartGetRepository: PrometheusDatasource,
+    private nzMessageService: NzMessageService,
+    private ruleRepository: RuleRepository,
+    private modal: NzModalService,
+  ) {
+  }
 
   id: number = null;
   data: Data;
+
+  @Output() refresh = new EventEmitter<void>();
+
   @ViewChild('appIdAuto') appIdAuto: NzAutocompleteComponent;
   filteredApps: Observable<App[]>;
   @ViewChild('replicaSetIdAuto') replicaSetIdAuto: NzAutocompleteComponent;
@@ -51,6 +76,15 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   @ViewChild('instanceIdAuto') instanceIdAuto: NzAutocompleteComponent;
   filteredInstances: Observable<Instance[]>;
 
+  ruleData: Rule; // 规则
+  // code参数
+  options = {
+    theme: 'idea',
+    mode: 'javascript',
+    lineNumbers: false, // 显示行号
+    styleActiveLine: true, // 当前行背景高亮
+    lineWrapping: true, // 自动换行
+  };
   editForm = this.fb.group({
     id: [''],
     name: ['', Validators.required],
@@ -73,6 +107,25 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     radio: [''],
   });
   seasons: string[] = ['bars', 'lines', 'points'];
+
+  // 查询条件
+  stepTime = new FormControl('1h');
+  stepTimes: string[] = ['10s', '1m', '5m', '15m', '30m',
+    '1h', '2h', '6h', '12h', '1d', '2d', '1w'];
+  startTime = new FormControl(new Date(), [Validators.required]);
+  step = new FormControl(60, {updateOn: 'blur'});
+
+  // echarts配置
+  echartsOption: any = {};
+  echartsMerge: any = {};
+  echartInstance: any;
+  colors = [
+    '#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
+    '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570',
+    '#c4ccd3'
+  ];
+  dataSeries: [Date, string][][];
+  seriesState: { isShow: boolean }[];
 
   referenceIdFormGroup = this.editForm.get('referenceId');
 
@@ -102,7 +155,13 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
       return value;
     }
   }
+
   ngOnInit(): void {
+  }
+
+  onChartInit(ec): void {
+    this.echartInstance = ec;
+    this.refresh.emit();
   }
 
   statusChange(ts): void {
@@ -120,29 +179,166 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     }
     console.log(config.value);
   }
+
   stackChange(): void {
     const stack = this.editForm.get('config').get('stack').value;
-    console.log(stack, this.editForm.get('radio').value);
-    // if (this.seriesState) {
-    //   const series = this.seriesState.map(v => {
-    //     return stack ? {
-    //       stack: 'counts',
-    //       areaStyle: {normal: {}},
-    //     } : {
-    //       stack: '',
-    //       areaStyle: null,
-    //     };
-    //   });
-    //   this.echartsMerge = {series};
-    // }
+    if (this.seriesState) {
+      const series = this.seriesState.map(v => {
+        return stack ? {
+          stack: 'counts',
+          areaStyle: {normal: {}},
+        } : {
+          stack: '',
+          areaStyle: null,
+        };
+      });
+      this.echartsMerge = {series};
+    }
   }
 
-  selectChart(): void{
-
+  handleStartOpenChange(e): void {
+    console.log(e);
   }
 
-  onSubmit(): void {
-    console.log(this.editForm.get('config').value);
+  timeChange(i): void {
+    let time = this.startTime.value.getTime();
+    time = time + i * this.getStepTime() * 1000;
+    this.startTime.setValue(new Date(time));
+  }
+
+  getStepTime(): number {
+    const t = this.stepTime.value.slice(-1);
+    const n = parseInt(this.stepTime.value.slice(0, -1), 10);
+    if (t === 's') {
+      return n;
+    } else if (t === 'm') {
+      return n * 60;
+    } else if (t === 'h') {
+      return n * 60 * 60;
+    } else if (t === 'd') {
+      return n * 24 * 60 * 60;
+    } else if (t === 'w') {
+      return n * 7 * 24 * 60 * 60;
+    }
+  }
+
+  selectChart(): void {
+    if (this.echartInstance) {
+      this.echartInstance.showLoading();
+    }
+    let query = this.editForm.get('query').value;
+    query = query.replace(/\n/g, '');
+    if (!query) {
+      return;
+    }
+    const start = this.startTime.value / 1000 - this.getStepTime();
+    const end = this.startTime.value / 1000;
+    const step = this.step.value;
+    const config = this.editForm.get('config');
+    this.chartGetRepository.query(
+      query,
+      start,
+      end,
+      step
+    ).subscribe(value => {
+      const series = value.data.result;
+      const colors = this.colors;
+      if (series.length > colors.length) {
+        const num = series.length - colors.length;
+        for (let i = 0; i++; i < num) {
+          this.colors.push(colors[i]);
+        }
+      }
+      const data = series.map(s => {
+        // as声明什么类型
+        return s.values.map(e => [new Date(e[0] * 1000), e[1]] as [Date, string]);
+      });
+      this.dataSeries = data;
+      const names = series.map(s => {
+        return `${s.metric.__name__}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
+      });
+      this.echartsOption = {
+        tooltip: {   // 提示信息
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            animation: false,
+            label: {
+              backgroundColor: '#ccc',
+              borderColor: '#aaa',
+              borderWidth: 1,
+              shadowBlur: 0,
+              shadowOffsetX: 0,
+              shadowOffsetY: 0,
+              color: '#222'
+            }
+          },
+          formatter: params =>
+            this.seriesState.map((s, idx) => {
+              if (s.isShow) {
+                const p = params.length > 1 ? params[idx] : params[0];
+                return `
+<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${p.color}"></div>
+[${formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')}] ${p.data[1]}
+`;
+              } else {
+                return null;
+              }
+            }).filter(x => x !== null).join('<br/>')
+        },
+        xAxis: {
+          type: 'time',
+          silent: false,
+          splitLine: {
+            show: false,
+          },
+        },
+        yAxis: {
+          type: 'value',
+          scale: true
+        },
+        series: data.map((s, i) => ({
+          name: names[i],
+          type: config.get('lines').value ? 'line' : config.get('bars').value ? 'bar' : 'scatter',
+          stack: config.get('stack').value ? 'counts' : '',
+          areaStyle: config.get('stack').value ? {normal: {}} : null,
+          itemStyle: {
+            normal: {
+              color: this.colors[i],
+            },
+          },
+          symbolSize: config.get('lines').value ? 1 : 11,
+          data: s,
+        })),
+        animationEasing: 'elasticOut',
+      };
+      this.seriesState = data.map(_ => ({isShow: true}));
+      if (this.echartInstance) {
+        this.echartInstance.hideLoading();
+      }
+    });
+  }
+
+  onSubmit(): void { // 新增或者提交
+    const value = this.genFormValue();
+    (this.id ?
+      this.chartRepository.update(value) :
+      this.chartRepository.add(value)).subscribe(
+      newValue => {
+        this.data = newValue;
+        this.nzMessageService.success(
+          this.id ? '修改成功' : '创建成功',
+          {nzDuration: 3000}
+        );
+      },
+      err => {
+        this.nzMessageService.error(
+          this.id ? '修改失败' : '创建失败',
+          {nzDuration: 3000}
+        );
+        console.error(err);
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -179,6 +375,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
           if (chart.config) {
             this.editForm.get('config').setValue(chart.config);
           }
+          this.getRuleData(chart.id);
         } else {
           this.filteredApps = this.helperService.appAutoHelp(
             this.appIdAuto,
@@ -197,11 +394,96 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     );
 
     merge(
-      chartChange
+      chartChange,
+      this.refresh,
+      this.step.valueChanges,
+      this.stepTime.valueChanges,
+      this.startTime.valueChanges,
+      this.editForm.get('config').valueChanges
     ).subscribe(_ => this.selectChart());
   }
 
-  goBackClick(): void{
+  getRuleData(id): void {
+    this.ruleRepository.getByChartId(id).subscribe(res => {
+      this.ruleData = res;
+    });
+  }
+
+  goBackClick(): void {
     history.back();
+  }
+
+  highlightCurrentSeries(item: any, index: number): void {
+    if (this.seriesState.every(s => s.isShow)) {
+      const series = this.seriesState.map((s, idx) => {
+        return {
+          itemStyle: {opacity: idx === index ? 1 : 0.25},
+          lineStyle: {opacity: idx === index ? 1 : 0.25}
+        };
+      });
+      this.echartsMerge = {series};
+    }
+  }
+
+  unhighlightCurrentSeries(item: any, index: number): void {
+    if (this.seriesState.every(s => s.isShow)) {
+      const series = this.seriesState.map((s, idx) => {
+        return {
+          itemStyle: {opacity: 1},
+          lineStyle: {opacity: 1}
+        };
+      });
+      this.echartsMerge = {series};
+    }
+  }
+
+  showCurrentSeries(item: any, index: number): void {
+    if (this.seriesState.every(s => s.isShow)) {
+      this.seriesState = this.seriesState.map((s, idx) => ({...s, isShow: idx === index}));
+    } else if (this.seriesState[index].isShow &&
+      this.seriesState.filter((_, idx) => idx !== index).every(s => !s.isShow)) {
+      this.seriesState = this.seriesState.map(s => ({...s, isShow: true}));
+    } else if (!this.seriesState[index].isShow) {
+      this.seriesState = this.seriesState.map((s, idx) => ({...s, isShow: idx === index}));
+    }
+
+    const series = this.seriesState.map((s, ind) => {
+      return {
+        itemStyle: {opacity: s.isShow ? 1 : 0}, lineStyle: {opacity: s.isShow ? 1 : 0},
+        data: s.isShow ? this.dataSeries[ind] : null,
+      };
+    });
+
+    this.echartsMerge = {series};
+  }
+
+  showEditDialog(element): void {
+    this.modal.create({
+      nzContent: RuleEditorComponent,
+      nzComponentParams: {mode: 'edit', data: element},
+      nzWidth: 880,
+      nzFooter: null
+    }).afterClose.subscribe(needRefresh => {
+      if (!!needRefresh) {
+        this.getRuleData(this.id);
+      }
+    });
+  }
+
+  showCreateDialog(): void {
+    this.modal.create({
+      nzContent: RuleEditorComponent,
+      nzComponentParams: {mode: 'create', data: {chartId: this.id}},
+      nzWidth: 880,
+      nzFooter: null
+    }).afterClose.subscribe(needRefresh => {
+      if (!!needRefresh) {
+        this.getRuleData(this.id);
+      }
+    });
+  }
+
+  getOperation(e): string {
+    return filteredOperation[e];
   }
 }

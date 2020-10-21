@@ -23,6 +23,11 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzRadioModule} from 'ng-zorro-antd/radio';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
+import {CodemirrorModule} from '@ctrl/ngx-codemirror';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {GridsterModule} from 'angular-gridster2';
+import {NzListModule} from 'ng-zorro-antd/list';
 
 @NgModule({
   declarations: [
@@ -51,7 +56,14 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
     NzSelectModule,
     NzGridModule,
     NzRadioModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzDatePickerModule,
+    CodemirrorModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
+    GridsterModule,
+    NzListModule
   ]
 })
 export class MonitorModule { }

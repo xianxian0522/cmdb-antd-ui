@@ -7,6 +7,11 @@
     display: flex;
   }
 }
+.chart-head-name {
+  nz-form-item {
+    width: 200px;
+  }
+}
 .app-auto{
   height: 24px;
   width: 120px;
@@ -15,8 +20,62 @@
 }
 .btns{
   text-align: right;
+  margin-top: 5px;
   button{
     margin: 0 8px;
   }
 }
+nz-select {
+  margin: 10px 0;
+  width: 80px;
+}
+nz-date-picker {
+  margin: 10px 8px;
+}
+.select-date{
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+  .select-date-icon{
+    font-size: 24px;
+  }
+}
+::ng-deep .code-box .CodeMirror{
+  height: 30px;
+  border-bottom: 1px solid #cdcdcd;
+}
+::ng-deep .CodeMirror-vscrollbar{
+  overflow-y: hidden;
+}
+::ng-deep .CodeMirror-wrap pre.CodeMirror-line, .CodeMirror-wrap pre.CodeMirror-line-like{
+  padding-left:30px;
+}
 
+.content-echarts{
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 12px;
+  font-family: Arial;
+  white-space: nowrap;
+  overflow:auto;
+  max-height: 100px;
+  margin-bottom: 15px;
+  .content-echarts-text{
+    margin: 5px;
+    height: 18px;
+    line-height: 18px;
+    cursor: pointer;
+    .circular{
+      width: 10px;
+      height: 10px;
+      border-radius: 20%;
+      display: inline-block;
+      text-align: center;
+      margin-right: 5px;
+    }
+  }
+  .content-echarts-text:hover{
+    //background-color: #404040;
+    background-color: #cdcdcd;
+  }
+}

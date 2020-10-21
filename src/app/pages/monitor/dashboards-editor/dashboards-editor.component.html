@@ -1,1 +1,64 @@
-<p>dashboards-editor works!</p>
+<form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+  <div class="chart-head">
+    <h3>{{id ? '修改图表' : '创建图表'}}</h3>
+    <h3 class="chart-head-two">
+      <span>ID：</span>
+      <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
+    </h3>
+  </div>
+  <div class="chart-head-name" nz-form nzLayout="inline">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">名字</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">显示名</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input placeholder="显示名" formControlName="displayName" nzSize="small"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>备注</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input placeholder="备注" nzSize="small" nzAutosize formControlName="comment"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div>
+    <nz-form-item>
+      <nz-form-label>tags</nz-form-label>
+      <nz-form-control>
+        <nz-select nzMode="tags" nzPlaceHolder="Tags" formControlName="tags">
+          <nz-option *ngFor="let option of tagsList" [nzLabel]="option" [nzValue]="option"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item >
+  </div>
+</form>
+<div class="options-header">
+  <button nz-button (click)="addItem()">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>
+  </button>
+  <button nz-button (click)="changeDashboard()">
+    <i nz-icon nzType="reload" nzTheme="outline"></i>
+  </button>
+</div>
+<gridster [options]="options" [ngStyle]="{minHeight: (rowsAll * (options.fixedRowHeight + 10) + 20) + 'px'}">
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <div class="button-chart">
+      <button (click)="childSeries.ngAfterViewInit()" nz-button
+              style="position: absolute;left: 10px;top: 10px;z-index: 10;">刷新</button>
+      <button nz-button (mousedown)="removeItem($event, item)"
+              (touchstart)="removeItem($event, item)" style="position: absolute; right: 10px; top: 10px; z-index: 10;">
+        <i nz-icon nzType="delete" nzTheme="outline"></i>
+      </button>
+      <app-chart-dashboard [chartData]="item.chartData" #childSeries></app-chart-dashboard>
+    </div>
+  </gridster-item>
+</gridster>
+<div class="btns">
+  <button nz-button (click)="goBackClick()">返回</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

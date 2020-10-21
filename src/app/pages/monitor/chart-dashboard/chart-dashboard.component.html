@@ -1,1 +1,11 @@
-<p>chart-dashboard works!</p>
+<div class="charts-list">
+  <div style="text-align: center;">{{chartData.name}}</div>
+  <div class="chart-item" echarts [options]="chartData.echartsOption" [merge]="echartsMerge" (chartInit)="onChartInit($event)"></div>
+  <div class="content-echarts">
+    <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)"
+         (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of chartData.echartsOption.series || []; index as i">
+      <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>
+      <span>{{item.name}}</span>
+    </div>
+  </div>
+</div>

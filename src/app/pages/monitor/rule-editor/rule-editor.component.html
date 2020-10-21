@@ -1,1 +1,51 @@
-<p>rule-editor works!</p>
+<div>
+  <h3>{{mode === 'edit' ? '修改规则' : '创建规则'}}</h3>
+</div>
+<div class="rule-head" nz-form nzLayout="inline" [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">名字</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">显示名</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <input nz-input placeholder="显示名" formControlName="displayName" nzSize="small"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">操作符</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <nz-select formControlName="operation" nzSize="small">
+        <nz-option *ngFor="let option of filteredOperation" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">操作数</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <input nz-input placeholder="操作数" formControlName="operand" nzSize="small"/>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<div nz-form [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label>摘要</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input placeholder="摘要" nzAutosize formControlName="summary" nzSize="small"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<div nz-form [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label>描述</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input placeholder="描述" nzAutosize formControlName="description" nzSize="small"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<div class="btns">
+  <button nz-button (click)="onClose()">返回</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

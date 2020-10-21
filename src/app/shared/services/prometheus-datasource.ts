@@ -9,7 +9,7 @@ const API = 'prometheus/api/v1/query_range';
   providedIn: 'root'
 })
 export class PrometheusDatasource {
-  constructor(protected _httpClient: HttpClient) {}
+  constructor(protected httpClient: HttpClient) {}
 
   query(
       query: string,
@@ -18,6 +18,6 @@ export class PrometheusDatasource {
       step: number
     ): Observable<PrometheusResponse> {
     const params = `?query=${encodeURIComponent(query)}&start=${start}&end=${end}&step=${step}`;
-    return this._httpClient.get<PrometheusResponse>(`${API}${params}`);
+    return this.httpClient.get<PrometheusResponse>(`${API}${params}`);
   }
 }

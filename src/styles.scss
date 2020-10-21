@@ -1,2 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
+@import '~codemirror/lib/codemirror';
+@import '~codemirror/theme/material';
+@import '~codemirror/theme/3024-day';
+@import '~codemirror/theme/idea';
