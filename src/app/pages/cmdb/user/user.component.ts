@@ -42,7 +42,6 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
     mail: [],
   });
   // checked = false;
-  loading = false;
   // indeterminate = false;
   total = 1;
   pageSize = 10;

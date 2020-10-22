@@ -1,1 +1,32 @@
-<p>metrics works!</p>
+<div nz-form nzLayout="inline">
+  <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
+<!--  <nz-form-item>-->
+<!--    <nz-form-label [nzSpan]="6">Filter</nz-form-label>-->
+<!--    <nz-form-control [nzSpan]="14">-->
+<!--      <input nz-input nzSize="small">-->
+<!--    </nz-form-control>-->
+<!--  </nz-form-item >-->
+</div>
+
+<div>
+  <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="data"
+    [nzScroll]="{ x: '1000px', y: '500px' }"
+    [nzLoading]="isLoadingResults"
+  >
+    <thead>
+    <tr>
+      <th>name</th>
+      <th>value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.value }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -1,21 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {RuleRepository} from '../../../shared/services/rule-repository';
+import {ChartRepository} from '../../../shared/services/chart-repository';
 
 @Component({
   selector: 'app-rule-editor',
   templateUrl: './rule-editor.component.html',
   styleUrls: ['./rule-editor.component.scss']
 })
-export class RuleEditorComponent implements OnInit {
+export class RuleEditorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
     private nzModalRef: NzModalRef,
     private nzMessageService: NzMessageService,
     private ruleRepository: RuleRepository,
+    private chartRepository: ChartRepository,
   ) { }
 
   @Input() mode;
@@ -27,13 +29,14 @@ export class RuleEditorComponent implements OnInit {
     operand: [''],
     displayName: [''],
     summary: [''],
-    chartId: [''],
+    chartId: [],
     id: []
   });
   filteredOperation: {id: string, name: string}[] = [
     {id: 'eq', name: '等于'}, {id: 'neq', name: '不等于'},
     {id: 'gt', name: '大于'}, {id: 'gte', name: '大于等于'},
     {id: 'lt', name: '小于'}, {id: 'lte', name: '小于等于'}];
+  chartData = [];
 
   ngOnInit(): void {
     this.editForm.get('id').setValue(this.data.id);
@@ -44,6 +47,12 @@ export class RuleEditorComponent implements OnInit {
     this.editForm.get('operand').setValue(this.data.operand);
     this.editForm.get('displayName').setValue(this.data.displayName);
     this.editForm.get('summary').setValue(this.data.summary);
+  }
+
+  ngAfterViewInit(): void {
+    this.chartRepository.queryAll().subscribe(res => {
+      this.chartData = res;
+    });
   }
 
   onClose(): void {

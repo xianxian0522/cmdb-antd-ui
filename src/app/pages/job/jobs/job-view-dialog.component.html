@@ -1,1 +1,21 @@
-<p>job-view-dialog works!</p>
+<div>
+  <div class="run-spin" *ngIf="isLoadingResults">
+    <nz-spin nzSimple></nz-spin>
+  </div>
+  <h3>
+    {{data.name}}
+    <nz-tag class="head-tag" [nzColor]="data.disabled ? 'error' : 'processing'">{{data.disabled ? '已禁用' : '已启用'}}</nz-tag>
+  </h3>
+  <div>
+    <pre>
+      <code>{{code}}</code>
+    </pre>
+  </div>
+  <div class="btns">
+    <button nz-button nzType="primary" (click)="trigger.emit('enable')" *ngIf="data.disabled">启用</button>
+    <button nz-button nzDanger (click)="trigger.emit('disable')" *ngIf="!data.disabled">禁用</button>
+    <button nz-button nzType="primary" (click)="trigger.emit('start')">手动运行</button>
+    <button nz-button nzType="danger" (click)="onDeleteClick()">删除</button>
+    <button nz-button (click)="onCancelClick()">取消</button>
+  </div>
+</div>

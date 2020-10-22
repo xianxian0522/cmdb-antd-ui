@@ -1,0 +1,27 @@
+nz-date-picker {
+  margin: 10px 20px 10px 0;
+}
+nz-input-number{
+  margin-right: 20px;
+}
+.select-radio{
+  display: flex;
+  align-items: center;
+  height: 32px;
+  margin-bottom: 10px;
+  .app-auto{
+    height: 24px;
+    width: 180px;
+    margin-top: 4px;
+    margin-right: 20px;
+  }
+  nz-form-item{
+    margin: 0px;
+  }
+}
+.btns{
+  text-align: right;
+  button{
+    margin: 0 8px;
+  }
+}

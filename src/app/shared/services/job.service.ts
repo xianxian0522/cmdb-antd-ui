@@ -11,50 +11,50 @@ const API = '/api/jobs';
 })
 export class JobService {
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   addJob(job: Job): Observable<AddJobResponse> {
-    return this._httpClient.post<AddJobResponse>(API, job);
+    return this.httpClient.post<AddJobResponse>(API, job);
   }
 
   findJobs(): Observable<Job[]> {
-    return this._httpClient.get<ListJobsResponse>(API)
+    return this.httpClient.get<ListJobsResponse>(API)
       .pipe(map(r => Object.values(r.jobs)));
   }
 
   deleteAllJob(): Observable<void> {
-    return this._httpClient.delete<void>(`${API}/all`);
+    return this.httpClient.delete<void>(`${API}/all`);
   }
 
   globalStats(): Observable<GlobalStats> {
-    return this._httpClient.get<GlobalStatsResponse>(`${API}/stats`)
+    return this.httpClient.get<GlobalStatsResponse>(`${API}/stats`)
       .pipe(map(r => r.stats));
   }
 
   listJobStats(id: string): Observable<JobStat[]> {
-    return this._httpClient.get<ListJobStatsResponse>(`${API}/stats/${id}`)
+    return this.httpClient.get<ListJobStatsResponse>(`${API}/stats/${id}`)
       .pipe(map(r => r.job_stats));
   }
 
   startJob(id: string): Observable<void> {
-    return this._httpClient.post<void>(`${API}/start/${id}`, null);
+    return this.httpClient.post<void>(`${API}/start/${id}`, null);
   }
 
   enableJob(id: string): Observable<void> {
-    return this._httpClient.post<void>(`${API}/enable/${id}`, null);
+    return this.httpClient.post<void>(`${API}/enable/${id}`, null);
   }
 
   disableJob(id: string): Observable<void> {
-    return this._httpClient.post<void>(`${API}/disable/${id}`, null);
+    return this.httpClient.post<void>(`${API}/disable/${id}`, null);
   }
 
   getJob(id: string): Observable<Job> {
-    return this._httpClient.get<JobResponse>(`${API}/${id}`)
+    return this.httpClient.get<JobResponse>(`${API}/${id}`)
       .pipe(map(r => r.job));
   }
 
   deleteJob(id: string): Observable<void> {
-    return this._httpClient.delete<void>(`${API}/${id}`);
+    return this.httpClient.delete<void>(`${API}/${id}`);
   }
 }
 

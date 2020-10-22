@@ -1,1 +1,80 @@
-<p>job-create-dialog works!</p>
+<h3>新建调度工作</h3>
+<div nz-form nzLayout="inline" [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="name" placeholder="名字" nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+</div>
+<div [formGroup]="editForm" nz-form nzLayout="inline">
+  <div style="display: flex;align-items: center">
+    <label nz-checkbox formControlName="infinite">不限次数</label>
+  </div>
+  <nz-form-item *ngIf="!editForm.get('infinite').value">
+    <nz-form-label [nzSpan]="10">重复次数</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-input-number formControlName="repeat" placeholder="重复次数" nzSize="small"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item >
+  <nz-date-picker
+    nzShowTime
+    nzFormat="yyyy-MM-dd HH:mm:ss"
+    formControlName="startTime"
+    nzPlaceHolder="开始时间"
+    (nzOnOpenChange)="handleEndOpenChange($event)"
+    nzSize="small"
+    nzAllowClear="false"
+  ></nz-date-picker>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">间隔时间</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="interval" placeholder="间隔时间" nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+</div>
+<div [formGroup]="editForm" nz-form nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">Epsilon</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="epsilon" placeholder="Epsilon" nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">retries</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-input-number formControlName="retries" placeholder="retries" nzSize="small"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item >
+  <div style="display: flex;align-items: center">
+    <label nz-checkbox formControlName="resumeAtNextScheduledTime">resumeAtNextScheduledTime</label>
+  </div>
+</div>
+<div [formGroup]="editForm" nz-form class="select-radio">
+  <nz-radio-group formControlName="jobType">
+    <label nz-radio nzValue="cmd">命令</label>
+    <label nz-radio nzValue="shell">sh脚本</label>
+    <label nz-radio nzValue="playbook">剧本</label>
+  </nz-radio-group>
+  <nz-form-item *ngIf="editForm.get('jobType').value === 'playbook'">
+    <nz-form-label [nzSpan]="8">剧本</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="playbookId" [nzAutocomplete]="playbookIdAuto" class="app-auto">
+      <nz-autocomplete #playbookIdAuto>
+        <nz-auto-option [nzValue]="option.id" [nzLabel]="option.name" *ngFor="let option of filteredPlaybooks | async">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-control>
+  </nz-form-item >
+</div>
+<div nz-form [formGroup]="editForm" nzLayout="vertical" [ngStyle]="{'visibility': editForm.get('jobType').value === 'playbook' ? 'hidden' : 'visible'}">
+  <nz-form-item>
+    <nz-form-label>内容</nz-form-label>
+    <nz-form-control>
+      <textarea rows="10" nz-input formControlName="command"></textarea>
+    </nz-form-control>
+  </nz-form-item >
+</div>
+<div class="btns">
+  <button nz-button (click)="onClose()">取消</button>
+  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+</div>

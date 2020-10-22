@@ -1,6 +1,9 @@
 <div>
   <h3>{{mode === 'edit' ? '修改规则' : '创建规则'}}</h3>
 </div>
+
+<!--<div>{{data.chartId ? '监控表' : '规则管理的'}}</div>-->
+
 <div class="rule-head" nz-form nzLayout="inline" [formGroup]="editForm">
   <nz-form-item>
     <nz-form-label [nzSpan]="8">名字</nz-form-label>
@@ -26,6 +29,14 @@
     <nz-form-label [nzSpan]="8">操作数</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <input nz-input placeholder="操作数" formControlName="operand" nzSize="small"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">chartId</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <nz-select formControlName="chartId" nzSize="small" [nzDisabled]="data.chartId" [nzShowArrow]="data.chartId ? '' : 'true'">
+        <nz-option *ngFor="let option of chartData" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 </div>
