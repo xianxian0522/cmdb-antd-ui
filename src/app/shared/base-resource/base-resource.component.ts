@@ -115,4 +115,5 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
       }
     });
   }
+
 }

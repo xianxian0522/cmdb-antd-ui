@@ -31,6 +31,14 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
     return this.httpClient.get<MODEL>(`${this.api()}?chartId=${chartId}`);
   }
 
+  getByAlertId(AlertId: number, page: number, size: number,
+               q?: { [key: string]: any }, select?: string[]): Observable<Page<MODEL>> {
+    let requestUrl = `${this.api()}/${AlertId}/alertevents?pageSize=${size}&pageNumber=${page}`;
+    const params = this.genParams(q, select);
+    requestUrl = `${requestUrl}&${params.toString()}`;
+    return this.httpClient.get<Page<MODEL>>(requestUrl);
+  }
+
   add(model: MODEL): Observable<MODEL> {
     return this.httpClient.post<MODEL>(this.api(), model);
   }
@@ -39,7 +47,7 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
     return this.httpClient.patch<MODEL>(`${this.api()}/${model.id}`, model);
   }
 
-  protected genParams(q?: { [key: string]: any }, select?: string[]) {
+  protected genParams(q?: { [key: string]: any }, select?: string[]): URLSearchParams {
     const params = new URLSearchParams();
     const addValue = (key, value) => {
       if (value === 0) {
@@ -51,7 +59,7 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
       if (value) {
         params.append(key, value);
       }
-    }
+    };
     if (q) {
       Object.keys(q).forEach(k => {
         const v = q[k];

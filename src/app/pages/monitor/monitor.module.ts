@@ -28,6 +28,9 @@ import {CodemirrorModule} from '@ctrl/ngx-codemirror';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {GridsterModule} from 'angular-gridster2';
 import {NzListModule} from 'ng-zorro-antd/list';
+import { RuleEditWarningComponent } from './rule-edit-warning/rule-edit-warning.component';
+import {NzAlertModule} from 'ng-zorro-antd/alert';
+import {NzTagModule} from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import {NzListModule} from 'ng-zorro-antd/list';
     DashboardsAddComponent,
     ChartsComponent,
     ChartEditComponent,
-    ChartDashboardComponent
+    ChartDashboardComponent,
+    RuleEditWarningComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +67,9 @@ import {NzListModule} from 'ng-zorro-antd/list';
       echarts: () => import('echarts')
     }),
     GridsterModule,
-    NzListModule
+    NzListModule,
+    NzAlertModule,
+    NzTagModule
   ]
 })
 export class MonitorModule { }

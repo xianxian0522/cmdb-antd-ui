@@ -27,7 +27,7 @@
       [nzTotal]="total"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
-      [nzScroll]="{ x: '1000px', y: '500px' }"
+      [nzScroll]="{ x: '1100px', y: '500px' }"
       [nzLoading]="isLoadingResults"
     >
       <thead>
@@ -37,9 +37,9 @@
         <th nzWidth="150px">显示名</th>
         <th >操作符</th>
         <th>操作数</th>
-        <th>摘要</th>
+        <th nzWidth="200px">摘要</th>
         <th nzWidth="180px">描述</th>
-        <th nzRight nzWidth="80px">操作</th>
+        <th nzRight nzWidth="120px">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -55,9 +55,12 @@
         <td>{{ data.operand }}</td>
         <td>{{ data.summary }}</td>
         <td>{{ data.description }}</td>
-        <td nzRight>
+        <td nzRight style="display: flex;">
           <button nz-button nzType="text" (click)="showEditDialog(data)">
             <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzType="text" (click)="showViewDialog(data)">
+            <i nz-icon nzType="search" nzTheme="outline"></i>
           </button>
         </td>
       </tr>

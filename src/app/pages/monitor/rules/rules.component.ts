@@ -5,6 +5,7 @@ import {FormBuilder} from '@angular/forms';
 import {BaseResourceComponent} from '../../../shared/base-resource/base-resource.component';
 import {RuleEditorComponent} from '../rule-editor/rule-editor.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {RuleEditWarningComponent} from '../rule-edit-warning/rule-edit-warning.component';
 
 const filteredOperation = {
   eq: '等于',
@@ -56,6 +57,18 @@ export class RulesComponent extends BaseResourceComponent<Rule, RuleEditorCompon
   // showEditDialog(element): void {
   //
   // }
+  showViewDialog(element): void {
+    this.modal.create({
+      nzContent: RuleEditWarningComponent,
+      nzWidth: '80vw',
+      nzFooter: null,
+      nzComponentParams: {data: element},
+    }).afterClose.subscribe(needRefresh => {
+      if (!!needRefresh) {
+        this.refresh.emit();
+      }
+    });
+  }
 
   protected editDialogType(): Type<RuleEditorComponent> {
     return RuleEditorComponent;
