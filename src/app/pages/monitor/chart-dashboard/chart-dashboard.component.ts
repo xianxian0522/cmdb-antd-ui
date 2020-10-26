@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {formatDate} from '@angular/common';
+import {merge} from "rxjs";
 
 @Component({
   selector: 'app-chart-dashboard',

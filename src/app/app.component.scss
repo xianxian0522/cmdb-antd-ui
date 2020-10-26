@@ -70,6 +70,23 @@ nz-header {
   transition: color 0.3s;
   background-color: #ffffff;
 }
+.app-head{
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding-right: 24px;
+}
+
+.app-header-right{
+  //position: relative;
+  //top: 0;
+  //right: 50px;
+  .docs-angular-logo {
+    height: 26px;
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+  }
+}
 
 nz-content {
   margin: 24px;

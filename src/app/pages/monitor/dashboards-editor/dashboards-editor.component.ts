@@ -8,6 +8,8 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {DashboardsAddComponent} from '../dashboards-add/dashboards-add.component';
 import {ChartDashboardComponent} from '../chart-dashboard/chart-dashboard.component';
 import {DisplayGrid, GridsterConfig, GridsterItemComponent, GridType} from 'angular-gridster2';
+import * as screenfull from 'screenfull';
+import {Screenfull} from 'screenfull';
 
 @Component({
   selector: 'app-dashboards-editor',
@@ -30,6 +32,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
   @ViewChild(ChartDashboardComponent)
   private chartDashboard: ChartDashboardComponent;
 
+  @ViewChild('fullScreen') fullScreen;
+  isFullScreen = false;
+
   id: number = null;
   editForm = this.fb.group({
     id: [''],
@@ -49,9 +54,32 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
   rowsAll = 2;
   tagsList = [];
 
+  onClickScreenFull(): void { // 全屏
+    const sf = screenfull as Screenfull;
+    this.isFullScreen = true;
+    console.log(this.fullScreen);
+    if (sf.isEnabled) {
+      sf.toggle(this.fullScreen.nativeElement).then(r => {
+        console.log(this.options.fixedRowHeight, '这元素的...');
+      });
+    }
+  }
+
+  onCloseScreenFull(): void{ // 退出全屏
+    const sf = screenfull as Screenfull;
+    this.isFullScreen = false;
+    console.log(this.fullScreen);
+    if (sf.isEnabled) {
+      sf.exit().then(r => {
+        console.log(this.options.fixedRowHeight, '这元素的...');
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.options = {
       gridType: GridType.VerticalFixed,
+      margin: 2,
       fixedRowHeight: 48,
       displayGrid: DisplayGrid.Always,
       itemChangeCallback: (item, itemComponent) => {
@@ -60,17 +88,22 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
         //   console.log(canvas, '元素');
         //   canvas.style.height = itemComponent.height - 140 + 'px';
         // }
-        const gridster = itemComponent.el;
-        gridster.style.minHeight = itemComponent.height + 'px';
+
+        // const gridster = itemComponent.el;
+        // gridster.style.minHeight = itemComponent.height + 'px';
       },
-      itemInitCallback: (item, itemComponent) => {
-        const gridster = itemComponent.el;
-        gridster.style.minHeight = itemComponent.height + 'px';
+      itemResizeCallback: (item, itemComponent) => {
+        const targetHeight = itemComponent.gridster.curColWidth * 0.618;
+        if (Math.round(Math.abs(this.options.fixedRowHeight / targetHeight - 1) * 100) !== 0) {
+          console.log('set size');
+          this.options.fixedRowHeight = targetHeight;
+          this.options.api.optionsChanged();
+        }
       },
       gridSizeChangedCallback: gridsterComponent => {
-        console.log(gridsterComponent, '这个元素的宽', gridsterComponent.curColWidth);
-        const width = gridsterComponent.curColWidth;
-        gridsterComponent.curRowHeight = width / 1.68;
+        // console.log(gridsterComponent, '这个元素的宽', gridsterComponent.curColWidth);
+        // this.options.fixedRowHeight = gridsterComponent.curColWidth * 0.618;
+        // this.options.api.optionsChanged();
       },
       pushItems: true,
       draggable: {
@@ -121,6 +154,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
   changeDashboard(): void { // 刷新所有图标 调用子组件
     if (this.chartDashboard) {
       this.chartDashboard.getDashboard(this.dashboard);
+      this.options.api.optionsChanged();
     }
   }
 
@@ -161,6 +195,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
       if (result) {
         result = {...result, echartsOption: {}};
         this.dashboard.push({chartData: result, x: 0, y: 0, cols: 4, rows: 4});
+        this.changeDashboard();
       }
     });
   }

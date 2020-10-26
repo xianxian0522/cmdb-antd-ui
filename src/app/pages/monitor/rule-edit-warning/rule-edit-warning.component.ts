@@ -5,7 +5,6 @@ import {flow} from '../../../shared/stream/stream';
 import {merge} from 'rxjs';
 import {debounceTime, map, switchMap} from 'rxjs/operators';
 import {NzTableComponent} from 'ng-zorro-antd/table';
-import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-rule-edit-warning',

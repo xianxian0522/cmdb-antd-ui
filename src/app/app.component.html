@@ -8,7 +8,7 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
+        <h1>cmdb</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngFor="let menu of sectionItem">
@@ -18,20 +18,26 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header style="display: flex; background-color: #ffffff">
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+    <nz-header class="app-head">
+      <div style="display: flex">
+        <div class="app-header">
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
             <i class="trigger"
                nz-icon
                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             ></i>
-        </span>
+          </span>
+        </div>
+        <ul nz-menu nzMode="horizontal" *ngFor="let item of sections">
+          <li nz-menu-item [nzMatchRouter]="item.id">
+            <a [routerLink]="item.id">{{item.name}}</a>
+          </li>
+        </ul>
       </div>
-      <ul nz-menu nzMode="horizontal" *ngFor="let item of sections">
-        <li nz-menu-item [nzMatchRouter]="item.id">
-          <a [routerLink]="item.id">{{item.name}}</a>
-        </li>
-      </ul>
+      <a class="app-header-right" href="/">
+        <img class="docs-angular-logo" src="../assets/img/face.png" alt="Shane Xu">
+        Shane Xu
+      </a>
     </nz-header>
     <nz-content>
       <div class="inner-content">
