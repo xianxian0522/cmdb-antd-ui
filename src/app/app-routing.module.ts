@@ -1,9 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {MobileComponent} from './mobile.component';
 
 const routes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/cmdb/user'
+  },
+  {
+    path: 'alerttickets/:id', component: MobileComponent
   },
   {
     path: 'cmdb',

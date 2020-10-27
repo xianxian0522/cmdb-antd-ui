@@ -2,7 +2,6 @@ import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {formatDate} from '@angular/common';
-import {merge} from "rxjs";
 
 @Component({
   selector: 'app-chart-dashboard',
@@ -44,7 +43,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
 
   onChartInit(ec): void {
     this.echartsInstance = ec;
-    this.getCharts(this.chartData);
+    // this.getCharts(this.chartData);
   }
 
   getDashboard(chartData): void {
@@ -58,10 +57,11 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   getCharts(chartData): void {
     if (this.echartsInstance) {
       this.echartsInstance.showLoading();
+      // this.echartsInstance.clear();
+      this.echartsInstance.resize();
     }
     console.log(chartData, '传过来的chartData');
     if (chartData) {
-      // this._chartRepository.getById(this.chartId).subscribe(options => {
       const end = new Date().getTime() / 1000;
       const start = end - 60 * 60;
       if (!chartData.query) {
@@ -138,10 +138,11 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           animationEasing: 'elasticOut',
         };
         if (this.echartsInstance) {
+          // this.echartsInstance.setOption(chartData.echartsOption);
+          // this.echartsInstance.resize();
           this.echartsInstance.hideLoading();
         }
       });
-      // });
     }
 
   }

@@ -57,7 +57,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
   onClickScreenFull(): void { // 全屏
     const sf = screenfull as Screenfull;
     this.isFullScreen = true;
-    console.log(this.fullScreen);
+    console.log(this.fullScreen, sf.element, '是全屏描述');
     if (sf.isEnabled) {
       sf.toggle(this.fullScreen.nativeElement).then(r => {
         console.log(this.options.fixedRowHeight, '这元素的...');
@@ -68,7 +68,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
   onCloseScreenFull(): void{ // 退出全屏
     const sf = screenfull as Screenfull;
     this.isFullScreen = false;
-    console.log(this.fullScreen);
+    console.log(sf.element, 'fei全屏模式');
     if (sf.isEnabled) {
       sf.exit().then(r => {
         console.log(this.options.fixedRowHeight, '这元素的...');
@@ -99,6 +99,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
           this.options.fixedRowHeight = targetHeight;
           this.options.api.optionsChanged();
         }
+        const sf = screenfull as Screenfull;
+        // console.log(sf.isFullscreen, sf);
+        this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
       },
       gridSizeChangedCallback: gridsterComponent => {
         // console.log(gridsterComponent, '这个元素的宽', gridsterComponent.curColWidth);
@@ -194,7 +197,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
     }).afterClose.subscribe(result => {
       if (result) {
         result = {...result, echartsOption: {}};
-        this.dashboard.push({chartData: result, x: 0, y: 0, cols: 4, rows: 4});
+        this.dashboard.push({chartData: result, x: 0, y: 0, cols: 5, rows: 5});
         this.changeDashboard();
       }
     });

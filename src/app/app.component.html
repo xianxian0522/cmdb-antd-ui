@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout class="app-layout" *ngIf="isPc">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="180px"
@@ -46,3 +46,6 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+<div *ngIf="!isPc">
+  <app-iphone></app-iphone>
+</div>

@@ -1,0 +1,16 @@
+<div style="width: 100vw">
+  <nz-alert style="width: 100%" nzBanner nzType="error" [nzMessage]="alertHeadData"></nz-alert>
+  <div class="alert-content">
+    <h2>[{{alertTotal}}] Firing</h2>
+    <div *ngFor="let item of alertData || []; index as i">
+      <h3>Labels</h3>
+      <ul>
+        <li *ngFor="let label of item.labels">{{label}}</li>
+      </ul>
+      <h3>Annotations</h3>
+      <ul>
+        <li *ngFor="let annotations of item.annotations">{{annotations}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
