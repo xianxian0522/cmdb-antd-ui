@@ -142,6 +142,9 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           // this.echartsInstance.resize();
           this.echartsInstance.hideLoading();
         }
+      }, err => {
+        console.error(err);
+        this.echartsInstance.hideLoading();
       });
     }
 

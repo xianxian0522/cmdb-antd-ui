@@ -21,13 +21,13 @@ export class AppComponent implements OnInit{
   isPc: boolean;
 
   ngOnInit(): void {
+    this.isMobile();
     this.sections = this.menuItems.getAllSections();
     this.location.onUrlChange((url, state) => {
       console.log('url: ', url, 'state: ', state);
       this.section = url.split('/')[1];
       this.sectionItem = this.menuItems.getItems(this.section);
     });
-    this.isMobile();
   }
 
   isMobile(): void{

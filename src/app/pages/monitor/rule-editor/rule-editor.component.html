@@ -56,6 +56,42 @@
     </nz-form-control>
   </nz-form-item>
 </div>
+<div nz-form [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label>报警方式</nz-form-label>
+    <nz-form-control>
+<!--      <nz-checkbox-group [(ngModel)]="vias" (ngModelChange)="viaChange($event)"></nz-checkbox-group>-->
+      <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="viaChange($event)">
+        <div nz-row>
+          <div nz-col ><label nz-checkbox nzValue="dingtalk" formControlName="dingtalk">dingtalk</label></div>
+          <div nz-col ><label nz-checkbox nzValue="email" formControlName="email">email</label></div>
+        </div>
+      </nz-checkbox-wrapper>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<div nz-form [formGroup]="editForm">
+  <nz-form-item>
+    <nz-form-label>接收人</nz-form-label>
+    <nz-form-control>
+      <nz-select #selectTags
+        nzMode="tags"
+        nzPlaceHolder="Please select"
+        formControlName="targets"
+        nzShowSearch
+        nzServerSearch
+        (nzOnSearch)="onSearch($event)"
+      >
+        <ng-container *ngFor="let option of optionList">
+          <nz-option *ngIf="!isLoading" [nzValue]="option" [nzLabel]="option"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+          <i nz-icon nzType="loading" class="loading-icon"></i> Loading Data...
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</div>
 <div class="btns">
   <button nz-button (click)="onClose()">返回</button>
   <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>

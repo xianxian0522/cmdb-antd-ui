@@ -316,6 +316,10 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
       if (this.echartInstance) {
         this.echartInstance.hideLoading();
       }
+    }, err => {
+      console.error(err);
+      this.echartInstance.hideLoading();
+      this.nzMessageService.error(err.message, {nzDuration: 3000});
     });
   }
 
@@ -406,6 +410,9 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   getRuleData(id): void {
     this.ruleRepository.getByChartId(id).subscribe(res => {
       this.ruleData = res;
+    }, err => {
+      console.error(err);
+      this.nzMessageService.error('获取失败', {nzDuration: 3000});
     });
   }
 

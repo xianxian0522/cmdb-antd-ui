@@ -18,7 +18,7 @@ import {Screenfull} from 'screenfull';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardsEditorComponent implements OnInit, AfterViewInit{
+export class DashboardsEditorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +27,8 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
     private chartGetRepository: PrometheusDatasource,
     private nzMessageService: NzMessageService,
     private modal: NzModalService,
-  ) { }
+  ) {
+  }
 
   @ViewChild(ChartDashboardComponent)
   private chartDashboard: ChartDashboardComponent;
@@ -65,7 +66,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
     }
   }
 
-  onCloseScreenFull(): void{ // 退出全屏
+  onCloseScreenFull(): void { // 退出全屏
     const sf = screenfull as Screenfull;
     this.isFullScreen = false;
     console.log(sf.element, 'fei全屏模式');
@@ -147,6 +148,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
             .reduce((res, item) => res < item ? item : res, 2);
         });
       }
+    }, err => {
+      console.error(err);
+      this.nzMessageService.error(err.message, {nzDuration: 3000});
     });
   }
 
@@ -170,7 +174,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit{
     ).subscribe(newValue => {
       this.nzMessageService.success(
         this.id ? '修改成功' : '创建成功',
-        { nzDuration: 3000}
+        {nzDuration: 3000}
       );
     }, error => {
       this.nzMessageService.error(

@@ -1,4 +1,4 @@
-<div style="width: 100vw">
+<div [ngStyle]="{'width': ispc === undefined ? '100%' : '100vw'}">
   <nz-alert style="width: 100%" nzBanner nzType="error" [nzMessage]="alertHeadData"></nz-alert>
   <div class="alert-content">
     <h2>[{{alertTotal}}] Firing</h2>
