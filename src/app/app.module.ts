@@ -14,6 +14,7 @@ import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {MobileComponent} from './mobile.component';
 import {NzAlertModule} from 'ng-zorro-antd/alert';
+import {NzIconModule} from 'ng-zorro-antd/icon';
 
 registerLocaleData(zh);
 
@@ -31,7 +32,8 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NzAlertModule
+    NzAlertModule,
+    NzIconModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },

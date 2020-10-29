@@ -223,7 +223,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   }
 
   selectChart(): void {
-    if (this.echartInstance) {
+    if (this.echartInstance && this.id) {
       this.echartInstance.showLoading();
     }
     let query = this.editForm.get('query').value;

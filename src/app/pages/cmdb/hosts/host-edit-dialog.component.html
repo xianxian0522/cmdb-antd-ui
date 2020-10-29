@@ -16,7 +16,7 @@
     <div nz-col [nzSpan]="6">
       <nz-form-item>
         <nz-form-label [nzSpan]="10">内网IP</nz-form-label>
-        <nz-form-control [nzSpan]="16">
+        <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必填项">
           <input nz-input placeholder="内网IP" formControlName="hostInnerip" nzSize="small"/>
         </nz-form-control>
       </nz-form-item>
@@ -70,9 +70,9 @@
     <div nz-col [nzSpan]="6">
       <nz-form-item>
         <nz-form-label [nzSpan]="10">状态</nz-form-label>
-        <nz-form-control [nzSpan]="16">
+        <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必选">
           <nz-select formControlName="state" style="width: 100px;" nzSize="small">
-            <nz-option nzValue="" nzLabel="All"></nz-option>
+            <nz-option nzValue="all" nzLabel="All"></nz-option>
             <nz-option nzValue="idle" nzLabel="闲置"></nz-option>
             <nz-option nzValue="common" nzLabel="正常"></nz-option>
             <nz-option nzValue="fault" nzLabel="故障"></nz-option>
@@ -84,7 +84,7 @@
     <div nz-col [nzSpan]="6">
       <nz-form-item>
         <nz-form-label [nzSpan]="10">主机名</nz-form-label>
-        <nz-form-control [nzSpan]="16">
+        <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必填项">
           <input nz-input placeholder="主机名" formControlName="hostName" nzSize="small"/>
         </nz-form-control>
       </nz-form-item>

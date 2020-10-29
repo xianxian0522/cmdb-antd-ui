@@ -74,6 +74,21 @@ export class HostsComponent extends BaseResourceComponent<Host, HostEditDialogCo
     return HostEditDialogComponent;
   }
 
+  stateDisplay(state: string): string {
+    switch (state) {
+      case 'idle':
+        return '闲置';
+      case 'common':
+        return '正常';
+      case 'fault':
+        return '故障';
+      case 'abandon':
+        return '废弃';
+      default:
+        return '未知';
+    }
+  }
+
   // getData(): void {
   //   this.hostRepository.queryPage(0, 10).subscribe(res => {
   //     console.log(res, '请求的数据');

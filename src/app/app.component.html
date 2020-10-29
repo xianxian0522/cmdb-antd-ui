@@ -1,4 +1,4 @@
-<nz-layout class="app-layout" *ngIf="isPc">
+<nz-layout class="app-layout" *ngIf="isPc || section != 'alerttickets'; else elseNoPc">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="180px"
@@ -12,8 +12,10 @@
       </a>
     </div>
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngFor="let menu of sectionItem">
-      <li nz-menu-item [nzMatchRouter]="section + '/' +menu.id">
-        <a [routerLink]="section + '/' + menu.id">{{menu.name}}</a>
+      <li nz-menu-item [nzMatchRouter]="section + '/' +menu.id" >
+        <i nz-icon [nzType]="menu.icon"></i>
+<!--        <a [routerLink]="section + '/' + menu.id">{{menu.name}}</a>-->
+        <span><a [routerLink]="section + '/' + menu.id">{{menu.name}}</a></span>
       </li>
     </ul>
   </nz-sider>
@@ -46,6 +48,6 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
-<div *ngIf="!isPc">
+<ng-template #elseNoPc>
   <app-mobile [ispc]="isPc"></app-mobile>
-</div>
+</ng-template>

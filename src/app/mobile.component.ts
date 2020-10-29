@@ -32,10 +32,10 @@ export class MobileComponent implements OnInit, AfterViewInit{
     this.getAlertTicket();
   }
   ngAfterViewInit(): void {
-    if (this.ispc === undefined) {
+    // if (this.ispc === undefined) {
       const id = this.location.path(true).split('/')[2];
       this.getData(id);
-    }
+    // }
   }
 
   getAlertTicket(): void {

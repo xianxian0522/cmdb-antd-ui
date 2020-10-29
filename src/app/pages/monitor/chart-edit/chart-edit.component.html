@@ -42,14 +42,14 @@
     </nz-form-item>
   </div>
   <div>
-    <nz-form-item>
+    <nz-form-item style="margin-bottom: 5px;">
       <nz-form-label>备注</nz-form-label>
       <nz-form-control>
         <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div>
+  <div style="display: flex; align-items: center">
     <nz-radio-group formGroupName="config" formControlName="radio" (ngModelChange)="statusChange(editForm.get('radio').value)">
       <label nz-radio [nzValue]="item" formControlName="{{item}}" *ngFor="let item of seasons">{{item}}</label>
 <!--      <label nz-radio nzValue="bars" formControlName="bars" (ngModelChage)="statusChange('bars')">bars</label>-->
@@ -57,6 +57,12 @@
 <!--      <label nz-radio nzValue="points" formControlName="points" >points</label>-->
       <label nz-checkbox formControlName="stack" (ngModelChange)="stackChange()">stack</label>
     </nz-radio-group>
+    <div formGroupName="config" style="margin-left: 20px;">
+      <nz-select formControlName="type" nzAllowClear nzPlaceHolder="Choose" nzSize="small">
+        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+        <nz-option nzValue="text" nzLabel="text"></nz-option>
+      </nz-select>
+    </div>
   </div>
 </form>
 <div style="display: flex;align-items: center">

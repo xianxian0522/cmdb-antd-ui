@@ -65,6 +65,27 @@ export class HostEditDialogComponent extends BaseEditDialogComponent<Host> imple
     this.editForm.get('sshUser').setValue(this.data.sshUser);
     this.editForm.get('sshPort').setValue(this.data.sshPort);
     this.editForm.get('comment').setValue(this.data.comment);
+
+    // this.editForm.setValue({
+    //   id: this.data.id,
+    //   hostInnerip: this.data.hostInnerip,
+    //   hostOuterip: this.data.hostOuterip,
+    //   mac: this.data.mac,
+    //   outerMac: this.data.outerMac,
+    //   assertId: this.data.assertId,
+    //   sn: this.data.sn,
+    //   state: this.data.state,
+    //   hostName: this.data.hostName,
+    //   osType: this.data.osType,
+    //   osName: this.data.osName,
+    //   osVersion: this.data.osVersion,
+    //   osBit: this.data.osBit,
+    //   mem: this.data.mem,
+    //   disk: this.data.disk,
+    //   sshUser: this.data.sshUser,
+    //   sshPort: this.data.sshPort,
+    //   comment: this.data.comment
+    // });
   }
 
   // onClose(): void {

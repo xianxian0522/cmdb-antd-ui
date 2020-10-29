@@ -13,11 +13,11 @@ export interface Chart {
   createdAt?: string;
   updatedAt?: string;
   config?: {
-    bars: true,
-    lines: true,
-    points: true,
-    stack: true,
-    type: string
+    bars: boolean;
+    lines: boolean;
+    points: boolean;
+    stack: boolean;
+    type: string;
   };
 }
 
