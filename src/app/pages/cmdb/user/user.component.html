@@ -23,7 +23,7 @@
   </nz-form-item >
   <nz-form-item>
     <nz-form-label [nzSpan]="6">邮箱</nz-form-label>
-    <nz-form-control [nzSpan]="14">
+    <nz-form-control [nzSpan]="18">
       <input formControlName="mail" placeholder="邮箱" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
@@ -40,7 +40,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1000px', y: '500px' }"
+    [nzScroll]="{ x: '1000px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>

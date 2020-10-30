@@ -97,3 +97,12 @@ nz-content {
   background: #fff;
   min-height: 100%;
 }
+
+// 对全局进行了修改
+::ng-deep .cdk-overlay-pane{
+  width: auto !important;
+  nz-option-container.ant-select-dropdown{
+    width: 94px;
+  }
+}
+

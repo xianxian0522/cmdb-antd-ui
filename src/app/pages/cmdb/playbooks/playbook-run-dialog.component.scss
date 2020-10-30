@@ -4,4 +4,13 @@
     margin: 0 8px;
   }
 }
+  .pre-scroll{
+    overflow-y: scroll;
+    height: 30vh;
+  }
 
+.run-content{
+  height: 30vh;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}

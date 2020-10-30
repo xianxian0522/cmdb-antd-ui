@@ -21,10 +21,10 @@
 </div>
 
 <div>
-  <div class="example-loading-shade"
-       *ngIf="isLoadingResults">
-    <nz-spin nzSimple *ngIf="isLoadingResults"></nz-spin>
-  </div>
+<!--  <div class="example-loading-shade"-->
+<!--       *ngIf="isLoadingResults">-->
+<!--    <nz-spin nzSimple *ngIf="isLoadingResults"></nz-spin>-->
+<!--  </div>-->
   <nz-table
     #rowSelectionTable
     nzShowPagination
@@ -35,7 +35,8 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1000px', y: '500px' }"
+    [nzScroll]="{ x: '1000px' }"
+    [nzLoading]="isLoadingResults"
   >
     <thead>
     <tr>

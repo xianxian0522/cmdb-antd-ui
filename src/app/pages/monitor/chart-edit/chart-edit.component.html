@@ -90,7 +90,9 @@
 </div>
 <form [formGroup]="editForm">
   <div class="code-box">
-    <ngx-codemirror formControlName="query" [options]="options"></ngx-codemirror>
+    <textarea nz-input formControlName="query" rows="1"></textarea>
+<!--    <ngx-codemirror formControlName="query" [options]="options"></ngx-codemirror>-->
+<!--    <nz-code-editor style="height: 22px;" formControlName="query" [nzEditorOption]="{scrollBeyondLastColumn : 1}"></nz-code-editor>-->
   </div>
 </form>
 <div echarts [options]="echartsOption" [merge]="echartsMerge" class="demo-chart" (chartInit)="onChartInit($event)"></div>

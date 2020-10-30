@@ -29,6 +29,7 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
 import {NzAutocompleteModule} from 'ng-zorro-antd/auto-complete';
+import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {NzAutocompleteModule} from 'ng-zorro-antd/auto-complete';
     NzGridModule,
     NzSpinModule,
     NzAutocompleteModule,
+    NzCodeEditorModule
   ]
 })
 export class CmdbModule { }

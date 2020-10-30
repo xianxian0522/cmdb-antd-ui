@@ -73,9 +73,10 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="3">剧本内容</nz-form-label>
       <nz-form-control [nzSpan]="21">
-        <code>
-          <textarea nz-input placeholder="剧本内容" nzAutosize rows="10" formControlName="content"></textarea>
-        </code>
+<!--        <code class="code-text">-->
+<!--          <textarea nz-input placeholder="剧本内容" nzAutosize rows="10" formControlName="content"></textarea>-->
+<!--        </code>-->
+        <nz-code-editor style="height: 30vh;" formControlName="content" [nzEditorOption]="{ language: 'yaml' }"></nz-code-editor>
       </nz-form-control>
     </nz-form-item>
   </div>

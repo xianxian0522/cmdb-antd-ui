@@ -23,11 +23,13 @@
     </div>
     <div nz-col [nzSpan]="12">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">所在应用</nz-form-label>
-        <input nz-input formControlName="appId" [nzAutocomplete]="appIdAuto" class="app-auto" nzSize="small">
-        <nz-autocomplete #appIdAuto>
-          <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
-        </nz-autocomplete>
+        <nz-form-label [nzSpan]="6">所在应用</nz-form-label>
+        <nz-form-control nzSpan="16">
+          <input nz-input formControlName="appId" [nzAutocomplete]="appIdAuto" class="app-auto" nzSize="small">
+          <nz-autocomplete #appIdAuto>
+            <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+          </nz-autocomplete>
+        </nz-form-control>
       </nz-form-item>
     </div>
   </div>

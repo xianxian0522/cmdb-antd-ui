@@ -4,30 +4,36 @@
   <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
   <nz-form-item>
     <nz-form-label [nzSpan]="6">名字</nz-form-label>
-    <nz-form-control [nzSpan]="14">
+    <nz-form-control [nzSpan]="18">
       <input nz-input formControlName="name" placeholder="名字" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
     <nz-form-label [nzSpan]="10">所属应用</nz-form-label>
-    <input nz-input formControlName="appId" [nzAutocomplete]="auto" class="app-auto" nzSize="small">
-    <nz-autocomplete #auto>
-      <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
-    </nz-autocomplete>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="appId" [nzAutocomplete]="auto" class="app-auto" nzSize="small">
+      <nz-autocomplete #auto>
+        <nz-auto-option *ngFor="let option of filteredApps | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-control>
   </nz-form-item >
   <nz-form-item>
     <nz-form-label [nzSpan]="10">所属集群</nz-form-label>
-    <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
-    <nz-autocomplete #replicaSetIdAuto>
-      <nz-auto-option *ngFor="let option of filteredReplicaSets | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
-    </nz-autocomplete>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
+      <nz-autocomplete #replicaSetIdAuto>
+        <nz-auto-option *ngFor="let option of filteredReplicaSets | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-control>
   </nz-form-item >
   <nz-form-item>
     <nz-form-label [nzSpan]="10">所在机器</nz-form-label>
-    <input nz-input formControlName="hostId" [nzAutocomplete]="hostIdAuto" class="app-auto" nzSize="small">
-    <nz-autocomplete #hostIdAuto>
-      <nz-auto-option *ngFor="let option of filteredHosts | async" [nzValue]="option.id" [nzLabel]="option.hostName">{{option.hostName}}</nz-auto-option>
-    </nz-autocomplete>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input formControlName="hostId" [nzAutocomplete]="hostIdAuto" class="app-auto" nzSize="small">
+      <nz-autocomplete #hostIdAuto>
+        <nz-auto-option *ngFor="let option of filteredHosts | async" [nzValue]="option.id" [nzLabel]="option.hostName">{{option.hostName}}</nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-control>
   </nz-form-item >
 </div>
 
@@ -42,7 +48,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1500px', y: '500px' }"
+    [nzScroll]="{ x: '1500px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
