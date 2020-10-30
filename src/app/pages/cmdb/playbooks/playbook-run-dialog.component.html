@@ -1,9 +1,9 @@
-<div>
+<div class="run-playbook">
   <div class="run-spin" *ngIf="isLoadingResults">
     <nz-spin nzSimple></nz-spin>
   </div>
   <h2>执行副本</h2>
-  <div>
+  <div class="run-content">
     <h3>内容</h3>
     <pre>
       <code>{{data.content}}</code>
@@ -11,18 +11,21 @@
   </div>
   <div>
     <h3>执行结果</h3>
-    <ng-container *ngIf="error">
-      <h4>错误</h4>
-      <pre><code>{{error}}</code></pre>
-    </ng-container>
-    <ng-container *ngIf="stdout">
-      <h4>标准输出</h4>
-      <pre><code>{{stdout}}</code></pre>
-    </ng-container>
-    <ng-container *ngIf="stderr">
-      <h4>标准错误输出</h4>
-      <pre><code>{{stderr}}</code></pre>
-    </ng-container>
+    <div class="pre-scroll">
+      <ng-container *ngIf="error">
+        <h4>错误</h4>
+        <pre><code>{{error}}</code></pre>
+      </ng-container>
+      <ng-container *ngIf="stdout">
+        <h4>标准输出</h4>
+        <pre><code>{{stdout}}</code></pre>
+      </ng-container>
+      <ng-container *ngIf="stderr">
+        <h4>标准错误输出</h4>
+        <pre><code>{{stderr}}</code></pre>
+      </ng-container>
+    </div>
+
   </div>
   <div class="btns">
     <button nz-button (click)="onClose()">取消</button>
