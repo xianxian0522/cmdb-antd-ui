@@ -99,10 +99,13 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;
         if (Math.round(Math.abs(this.options.fixedRowHeight / targetHeight - 1) * 100) !== 0) {
-          console.log('set size');
           this.options.fixedRowHeight = targetHeight;
           this.options.api.optionsChanged();
+          console.log('set size', this.options.fixedRowHeight);
         }
+        this.rowsAll = this.dashboard.map(t => t.rows + t.y)
+          .reduce((res, tt) => res < tt ? tt : res, 6);
+        console.log(this.rowsAll, '行数');
         const sf = screenfull as Screenfull;
         // console.log(sf.isFullscreen, sf);
         this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
@@ -162,7 +165,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
   //     this.nzMessageService.error(err.message, {nzDuration: 3000});
   //   });
     merge(
-      paramsChange
+      paramsChange,
     ).subscribe(_ => this.changeDashboard());
   }
 
