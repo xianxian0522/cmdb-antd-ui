@@ -56,7 +56,7 @@
     </nz-form-control>
   </nz-form-item>
 </div>
-<div nz-form [formGroup]="editForm">
+<div nz-form [formGroup]="editForm" nzLayout="inline">
   <nz-form-item>
     <nz-form-label>报警方式</nz-form-label>
     <nz-form-control>
@@ -67,6 +67,15 @@
           <div nz-col ><label nz-checkbox nzValue="email" formControlName="email">email</label></div>
         </div>
       </nz-checkbox-wrapper>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>严重级别</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="severity" nzAllowClear nzSize="small" style="width: 120px;">
+        <nz-option nzValue="warning" nzLabel="warning"></nz-option>
+        <nz-option nzValue="critical" nzLabel="critical"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 </div>

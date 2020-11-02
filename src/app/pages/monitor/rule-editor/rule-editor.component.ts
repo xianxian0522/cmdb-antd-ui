@@ -45,6 +45,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     email: [false],
     targets: [], // 接收人
     mode: [''], // 有无图表的新增页面
+    severity: [''], // 严重级别
   });
   isLoading = false;
   optionList: string[] = [];
@@ -69,6 +70,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     this.editForm.get('operand').setValue(this.data.operand);
     this.editForm.get('displayName').setValue(this.data.displayName);
     this.editForm.get('summary').setValue(this.data.summary);
+    this.editForm.get('severity').setValue(this.data.severity);
     this.editForm.get('via').setValue(this.data.via);
     this.editForm.get('targets').setValue(this.data.targets);
     if (this.data.via) {
