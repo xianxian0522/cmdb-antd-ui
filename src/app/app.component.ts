@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem, MenuItems} from './shared/menu-items';
 import {Location} from '@angular/common';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class AppComponent implements OnInit{
   constructor(
     private  menuItems: MenuItems,
     private location: Location,
+    private titleService: Title,
   ) {}
 
   isCollapsed = false;
@@ -28,6 +30,9 @@ export class AppComponent implements OnInit{
       this.section = url.split('/')[1];
       this.sectionItem = this.menuItems.getItems(this.section);
       console.log(this.section, 'section');
+      const titleName = this.sectionItem.filter(v => v.id === url.split('/')[2]).map(n => n.name)[0];
+      // 修改当前 HTML 文档的标题
+      this.titleService.setTitle(this.section.toUpperCase() + '-' + titleName);
     });
   }
 

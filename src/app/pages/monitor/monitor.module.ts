@@ -32,6 +32,7 @@ import { RuleEditWarningComponent } from './rule-edit-warning/rule-edit-warning.
 import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {NzTagModule} from 'ng-zorro-antd/tag';
 import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
     NzListModule,
     NzAlertModule,
     NzTagModule,
-    NzCodeEditorModule
+    NzCodeEditorModule,
+    NzToolTipModule,
   ]
 })
 export class MonitorModule { }

@@ -66,6 +66,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
 
   id: number = null;
   data: Data;
+  isReadOnly: boolean;
 
   @Output() refresh = new EventEmitter<void>();
 
@@ -347,7 +348,10 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const chartChange = this.activatedRoute.queryParams.pipe(
-      switchMap(params => params.id ? this.chartRepository.getById(params.id) : of(null)),
+      switchMap(params => {
+        setTimeout(() => params.isReadOnly ? this.isReadOnly = true : this.isReadOnly = false);
+        return params.id ? this.chartRepository.getById(params.id) : of(null);
+      }),
       map((chart: Chart) => {
         if (chart) {
           setTimeout(() => this.id = chart.id);

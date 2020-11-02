@@ -65,7 +65,7 @@
       <th>所属实例名</th>
       <th nzWidth="170px">创建时间</th>
       <th nzWidth="170px">更新时间</th>
-      <th nzRight nzWidth="80px">操作</th>
+      <th nzRight nzWidth="120px">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -89,6 +89,9 @@
       <td nzRight style="display: flex">
         <a routerLink="edit" [queryParams]="{id: data.id}" nz-button nzType="text">
           <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </a>
+        <a routerLink="edit" [queryParams]="{id: data.id, isReadOnly: true}" nz-button nzType="text">
+          <i nz-icon nzType="search" nzTheme="outline"></i>
         </a>
       </td>
     </tr>

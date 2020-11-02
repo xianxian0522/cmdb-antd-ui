@@ -10,6 +10,8 @@ import {ChartDashboardComponent} from '../chart-dashboard/chart-dashboard.compon
 import {DisplayGrid, GridsterConfig, GridsterItemComponent, GridType} from 'angular-gridster2';
 import * as screenfull from 'screenfull';
 import {Screenfull} from 'screenfull';
+import {map, switchMap} from 'rxjs/operators';
+import {merge, of} from 'rxjs';
 
 @Component({
   selector: 'app-dashboards-editor',
@@ -52,8 +54,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
   options: GridsterConfig;
   itemToPush: GridsterItemComponent;
 
-  rowsAll = 2;
+  rowsAll = 8;
   tagsList = [];
+  isReadOnly: boolean;
 
   onClickScreenFull(): void { // 全屏
     const sf = screenfull as Screenfull;
@@ -132,26 +135,35 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.activatedRoute.queryParams.subscribe(v => {
-      setTimeout(() => this.id = v.id);
-      if (v.id) {
-        this.dashboardRepository.getById(v.id).subscribe(vv => {
-          this.editForm.get('id').setValue(vv.id);
-          this.editForm.get('name').setValue(vv.name);
-          this.editForm.get('displayName').setValue(vv.displayName);
-          this.editForm.get('comment').setValue(vv.comment);
-          this.editForm.get('tags').setValue(vv.tags);
-          this.tagsList = vv.tags;
-          this.dashboard = vv.config.layout;
+    const paramsChange = this.activatedRoute.queryParams.pipe(
+      switchMap(params => {
+        setTimeout(() => params.isReadOnly ? this.isReadOnly = true : this.isReadOnly = false);
+        return params.id ? this.dashboardRepository.getById(params.id) : of(null);
+      }),
+      map(v => {
+        if (v) {
+          setTimeout(() => this.id = v.id);
+          this.editForm.get('id').setValue(v.id);
+          this.editForm.get('name').setValue(v.name);
+          this.editForm.get('displayName').setValue(v.displayName);
+          this.editForm.get('comment').setValue(v.comment);
+          this.editForm.get('tags').setValue(v.tags);
+          this.tagsList = v.tags;
+          this.dashboard = v.config.layout;
           this.rowsAll = this.dashboard
             .map(item => item.rows + item.y)
-            .reduce((res, item) => res < item ? item : res, 2);
-        });
-      }
-    }, err => {
-      console.error(err);
-      this.nzMessageService.error(err.message, {nzDuration: 3000});
-    });
+            .reduce((res, item) => res < item ? item : res, 6);
+        }
+      })
+    );
+  // .subscribe(v => {
+  //   }, err => {
+  //     console.error(err);
+  //     this.nzMessageService.error(err.message, {nzDuration: 3000});
+  //   });
+    merge(
+      paramsChange
+    ).subscribe(_ => this.changeDashboard());
   }
 
   goBackClick(): void {
@@ -162,6 +174,8 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
     if (this.chartDashboard) {
       this.chartDashboard.getDashboard(this.dashboard);
       this.options.api.optionsChanged();
+    } else {
+      console.log('isnull');
     }
   }
 

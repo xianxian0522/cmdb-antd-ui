@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+<form nz-form [formGroup]="editForm" class="ant-advanced-search-form" *ngIf="!isReadOnly; else elseTitle">
   <div class="chart-head">
     <h3>{{id ? '修改图表' : '创建图表'}}</h3>
     <h3 class="chart-head-two">
@@ -37,8 +37,18 @@
     </nz-form-item >
   </div>
 </form>
-<div #fullScreen [ngStyle]="{backgroundColor: isFullScreen ? '#fffbe6' : '#ffffff'}">
-  <div class="options-header">
+<ng-template #elseTitle>
+  <div class="read-only-title">
+    <span nz-tooltip [nzTooltipTitle]="editForm.get('comment').value" class="read-title">
+      ID: <span>{{editForm.get('id').value}}</span>
+      名字: <span >{{editForm.get('name').value}}</span>
+      显示名: <span >{{editForm.get('displayName').value}}</span>
+    </span>
+  </div>
+</ng-template>
+
+<div #fullScreen [ngStyle]="{'backgroundColor': isFullScreen ? '#fffbe6' : '#ffffff'}">
+  <div class="options-header" [ngStyle]="{'marginTop': isReadOnly ? '10px' : '0'}">
     <button nz-button (click)="addItem()" *ngIf="!isFullScreen">
       <i nz-icon nzType="plus" nzTheme="outline"></i>
     </button>
