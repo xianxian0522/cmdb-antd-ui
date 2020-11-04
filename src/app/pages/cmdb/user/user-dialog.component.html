@@ -20,6 +20,12 @@
       <input formControlName="realName" placeholder="中文名" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
+  <nz-form-item *ngIf="mode === 'create'">
+    <nz-form-label [nzSpan]="6">密码</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input type="password" formControlName="password" placeholder="密码" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
   <nz-form-item>
     <nz-form-label [nzSpan]="6">电话</nz-form-label>
     <nz-form-control [nzSpan]="14">
@@ -30,6 +36,12 @@
     <nz-form-label [nzSpan]="6">邮箱</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="mail" placeholder="邮箱" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">是否是管理员</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <label nz-checkbox formControlName="admin">Checkbox</label>
     </nz-form-control>
   </nz-form-item >
 </form>

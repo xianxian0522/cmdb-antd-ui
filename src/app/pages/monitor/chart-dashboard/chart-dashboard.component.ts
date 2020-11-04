@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {formatDate} from '@angular/common';
@@ -6,13 +16,15 @@ import {formatDate} from '@angular/common';
 @Component({
   selector: 'app-chart-dashboard',
   templateUrl: './chart-dashboard.component.html',
-  styleUrls: ['./chart-dashboard.component.scss']
+  styleUrls: ['./chart-dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private chartGetRepository: PrometheusDatasource,
     private chartRepository: ChartRepository,
+    private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -38,7 +50,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    console.log(changes, '有无？？changes');
   }
 
   onChartInit(ec): void {
@@ -47,6 +59,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   getDashboard(chartData): void {
+    console.log(chartData, '没传过来吗');
     if (chartData) {
       chartData.map(chart => {
         this.getCharts(chart.chartData);
@@ -142,6 +155,8 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           // this.echartsInstance.resize();
           this.echartsInstance.hideLoading();
         }
+        // 变更检测 检测该组件 渲染视图
+        this.ref.markForCheck();
       }, err => {
         console.error(err);
         this.echartsInstance.hideLoading();

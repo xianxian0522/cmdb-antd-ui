@@ -6,5 +6,13 @@
   "/prometheus": {
     "target": "http://127.0.0.1:2112",
     "secure": false
+  },
+  "/token": {
+    "target": "http://127.0.0.1:2112",
+    "secure": false
+  },
+  "/userinfo": {
+    "target": "http://127.0.0.1:2112",
+    "secure": false
   }
 }

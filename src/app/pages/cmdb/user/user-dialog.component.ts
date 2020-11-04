@@ -28,8 +28,10 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
     id: [],
     mobile: [''],
     username: ['', Validators.required],
+    password: ['', Validators.required],
     realName: [''],
     mail: ['', Validators.email],
+    admin: [false],
   });
 
   ngOnInit(): void {

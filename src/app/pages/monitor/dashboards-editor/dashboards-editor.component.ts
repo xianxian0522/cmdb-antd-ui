@@ -1,5 +1,15 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {DashboardRepository} from '../../../shared/services/dashboard-repository';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
@@ -20,7 +30,7 @@ import {merge, of} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardsEditorComponent implements OnInit, AfterViewInit {
+export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChanges{
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +39,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
     private chartGetRepository: PrometheusDatasource,
     private nzMessageService: NzMessageService,
     private modal: NzModalService,
+    private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -41,7 +52,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
   id: number = null;
   editForm = this.fb.group({
     id: [''],
-    name: [''],
+    name: ['', Validators.required],
     displayName: [''],
     comment: [''],
     tags: [],
@@ -87,14 +98,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
       fixedRowHeight: 48,
       displayGrid: DisplayGrid.Always,
       itemChangeCallback: (item, itemComponent) => {
-        // if (this.chartDashboard) {
-        //   const canvas = this.chartDashboard.echartsInstance._dom;
-        //   console.log(canvas, '元素');
-        //   canvas.style.height = itemComponent.height - 140 + 'px';
-        // }
-
-        // const gridster = itemComponent.el;
-        // gridster.style.minHeight = itemComponent.height + 'px';
+        this.rowsAll = this.dashboard.map(t => t.rows + t.y)
+          .reduce((res, tt) => res < tt ? tt : res, 0);
+        console.log(this.rowsAll, '行数');
       },
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;
@@ -102,13 +108,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
           this.options.fixedRowHeight = targetHeight;
           this.options.api.optionsChanged();
           console.log('set size', this.options.fixedRowHeight);
+          const sf = screenfull as Screenfull;
+          this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
         }
-        this.rowsAll = this.dashboard.map(t => t.rows + t.y)
-          .reduce((res, tt) => res < tt ? tt : res, 6);
-        console.log(this.rowsAll, '行数');
-        const sf = screenfull as Screenfull;
-        // console.log(sf.isFullscreen, sf);
-        this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
       },
       gridSizeChangedCallback: gridsterComponent => {
         // console.log(gridsterComponent, '这个元素的宽', gridsterComponent.curColWidth);
@@ -160,13 +162,23 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
       })
     );
   // .subscribe(v => {
+  //   console.log(this.chartDashboard, '有无');
   //   }, err => {
   //     console.error(err);
   //     this.nzMessageService.error(err.message, {nzDuration: 3000});
   //   });
     merge(
       paramsChange,
-    ).subscribe(_ => this.changeDashboard());
+    ).subscribe(_ => {
+      // // 重新渲染数据 检查该视图及其子视图
+      // this.ref.markForCheck();
+      // this.ref.detectChanges();
+      this.changeDashboard();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes, 'ngchanges会变化吗');
   }
 
   goBackClick(): void {
@@ -174,6 +186,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
   }
 
   changeDashboard(): void { // 刷新所有图标 调用子组件
+    // 重新渲染数据 检查该视图及其子视图
+    this.ref.markForCheck();
+    this.ref.detectChanges();
     if (this.chartDashboard) {
       this.chartDashboard.getDashboard(this.dashboard);
       this.options.api.optionsChanged();
@@ -219,7 +234,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit {
       if (result) {
         result = {...result, echartsOption: {}};
         this.dashboard.push({chartData: result, x: 0, y: 0, cols: 5, rows: 5});
-        this.changeDashboard();
+        this.ref.detectChanges();
       }
     });
   }

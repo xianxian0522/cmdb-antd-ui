@@ -5,6 +5,14 @@
       <span>ID：</span>
       <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
     </h3>
+    <div class="btns" *ngIf="!isReadOnly">
+      <button nz-button (click)="goBackClick()">
+        <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
+      </button>
+      <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">
+        <i nz-icon nzType="save" nzTheme="outline"></i>
+      </button>
+    </div>
   </div>
   <div class="chart-head-name" nz-form nzLayout="inline">
     <nz-form-item>
@@ -73,7 +81,7 @@
   </gridster>
 </div>
 
-<div class="btns">
-  <button nz-button (click)="goBackClick()">返回</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
-</div>
+<!--<div class="btns" *ngIf="!isReadOnly">-->
+<!--  <button nz-button (click)="goBackClick()">返回</button>-->
+<!--  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>-->
+<!--</div>-->
