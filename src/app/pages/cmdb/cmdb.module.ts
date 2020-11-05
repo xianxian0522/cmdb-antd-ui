@@ -31,6 +31,8 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
 import {NzAutocompleteModule} from 'ng-zorro-antd/auto-complete';
 import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import { AppAddOwnerComponent } from './apps/app-add-owner.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
     PlaybookEditDialogComponent,
     PlaybookRunDialogComponent,
     ReplicaSetsComponent,
-    ReplicaSetEditDialogComponent
+    ReplicaSetEditDialogComponent,
+    AppAddOwnerComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +70,8 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
     NzSpinModule,
     NzAutocompleteModule,
     NzCodeEditorModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzToolTipModule
   ]
 })
 export class CmdbModule { }

@@ -13,10 +13,11 @@ import {UserDialogComponent} from './user-dialog.component';
 import {BaseResourceComponent} from '../../../shared/base-resource/base-resource.component';
 import {User} from '../../../shared/models/user';
 import {UserRepository} from '../../../shared/services/user-repository';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormControl} from '@angular/forms';
 import {ComponentType} from '@angular/cdk/overlay';
 import {merge} from 'rxjs';
 import {NzTableComponent} from 'ng-zorro-antd/table';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-user',
@@ -31,6 +32,7 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
 
     protected userRepository: UserRepository,
     private fb: FormBuilder,
+    private nzMessageService: NzMessageService,
   ) {
     super(userRepository, modal);
   }
@@ -50,6 +52,10 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
   // setOfCheckedId = new Set<number>();
   // @Output() refresh = new EventEmitter<void>();
   // @ViewChild(NzTableComponent) table: NzTableComponent;
+
+  isVisible = false;
+  password = new FormControl('');
+  userId: number;
 
   protected editDialogType(): ComponentType<UserDialogComponent> {
     return UserDialogComponent;
@@ -75,6 +81,25 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
     //   });
     // });
     // this.refresh.emit();
+  }
+
+  // 修改密码
+  showPasswordDialog(ele): void {
+    this.isVisible = true;
+    this.userId = ele.id;
+  }
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+  handleOk(): void {
+    const value = {id: this.userId, password: this.password.value};
+    this.userRepository.update(value).subscribe(res => {
+      this.nzMessageService.info('修改成功', {nzDuration: 3000});
+      this.isVisible = false;
+    }, err => {
+      this.nzMessageService.error('修改失败', {nzDuration: 3000});
+      this.isVisible = false;
+    });
   }
 
   getData(): void {

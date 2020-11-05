@@ -28,7 +28,7 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
     id: [],
     mobile: [''],
     username: ['', Validators.required],
-    password: ['', Validators.required],
+    password: [''],
     realName: [''],
     mail: ['', Validators.email],
     admin: [false],
@@ -42,6 +42,7 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
       this.editForm.get('username').setValue(this.data.username);
       this.editForm.get('realName').setValue(this.data.realName);
       this.editForm.get('mail').setValue(this.data.mail);
+      this.editForm.get('admin').setValue(this.data.admin);
     }
   }
 

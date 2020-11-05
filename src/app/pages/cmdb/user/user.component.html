@@ -40,7 +40,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1000px' }"
+    [nzScroll]="{ x: '1100px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -53,7 +53,7 @@
         <th nzWidth="200px">邮箱</th>
         <th nzWidth="170px">创建时间</th>
         <th nzWidth="170px">更新时间</th>
-        <th nzRight nzWidth="80px">操作</th>
+        <th nzRight nzWidth="120px">操作</th>
       </tr>
     </thead>
     <tbody>
@@ -70,12 +70,25 @@
         <td>{{ data.mail }}</td>
         <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
-        <td nzRight>
+        <td nzRight style="display: flex;">
           <button nz-button nzType="text" (click)="showEditDialog(data)">
             <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzType="text" (click)="showPasswordDialog(data)">
+            <i nz-icon nzType="key" nzTheme="outline"></i>
           </button>
         </td>
       </tr>
     </tbody>
   </nz-table>
 </div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="修改密码" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form >
+    <nz-form-item>
+      <nz-form-label>密码</nz-form-label>
+      <nz-form-control>
+        <input type="password" [formControl]="password" placeholder="密码" nz-input nzSize="small">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

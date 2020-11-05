@@ -50,6 +50,9 @@ export abstract class BaseEditDialogComponent<MODEL extends {id?: number}> imple
   onSubmit(): void {
     this.isLoadingResults = true;
     const value = this.genFormValue();
+    if (this.mode === 'edit') {
+      delete value.password;
+    }
     (this.mode === 'edit' ?
       this.baseRepository.update(value) :
       this.baseRepository.add(value)).subscribe(

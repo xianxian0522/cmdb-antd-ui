@@ -1,6 +1,6 @@
 export interface App {
   id: number;
-  name: string;
+  name?: string;
   cnName?: string;
   programmingLanguage?: string;
   comment?: string;
@@ -8,4 +8,6 @@ export interface App {
   repository?: string;
   createdAt?: string;
   updatedAt?: string;
+  ownerId?: number;
+  reporters?: number[];
 }
