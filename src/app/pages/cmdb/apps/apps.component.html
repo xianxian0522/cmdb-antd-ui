@@ -39,7 +39,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1500px' }"
+    [nzScroll]="{ x: '1700px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -50,7 +50,7 @@
       <th nzWidth="150px">中文名</th>
       <th nzWidth="100px">语言</th>
       <th nzWidth="80px">级别</th>
-      <th>负责人</th>
+      <th nzWidth="120px">负责人</th>
       <th>报告人</th>
       <th>仓库</th>
       <th nzWidth="170px">创建时间</th>
@@ -74,7 +74,9 @@
         <span nz-tooltip [nzTooltipTitle]="data.ownerRealName">{{ data.ownerUsername}}</span>
       </td>
       <td>
-        <span nz-tooltip nzTooltipTitle="prompt text">baogaoren</span>
+        <span nz-tooltip [nzTooltipTitle]="item.realName" *ngFor="let item of data.reporters">
+          <nz-tag>{{item.username}}</nz-tag>
+        </span>
       </td>
       <td>{{ data.repository }}</td>
       <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>

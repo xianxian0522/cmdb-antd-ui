@@ -33,6 +33,7 @@ import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import { AppAddOwnerComponent } from './apps/app-add-owner.component';
+import {NzTagModule} from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { AppAddOwnerComponent } from './apps/app-add-owner.component';
     NzAutocompleteModule,
     NzCodeEditorModule,
     NzCheckboxModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzTagModule
   ]
 })
 export class CmdbModule { }

@@ -20,7 +20,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="8">操作符</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <nz-select formControlName="operation" nzSize="small">
+      <nz-select formControlName="operation" nzSize="small" [nzDisabled]="editForm.get('mode').value === 'proxy'" [nzShowArrow]="editForm.get('mode').value === 'proxy' ? false : true">
         <nz-option *ngFor="let option of filteredOperation" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
       </nz-select>
     </nz-form-control>
@@ -28,14 +28,24 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="8">操作数</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <input nz-input placeholder="操作数" formControlName="operand" nzSize="small"/>
+      <input nz-input placeholder="操作数" formControlName="operand" [readOnly]="editForm.get('mode').value === 'proxy'" nzSize="small"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="8">chartId</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <nz-select formControlName="chartId" nzSize="small" [nzDisabled]="data.chartId" [nzShowArrow]="data.chartId ? '' : 'true'">
+      <nz-select formControlName="chartId" nzSize="small" [nzDisabled]="data.chartId || editForm.get('mode').value === 'proxy'" [nzShowArrow]="data.chartId || editForm.get('mode').value === 'proxy' ? '' : 'true'">
         <nz-option *ngFor="let option of chartData" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8">模式</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+<!--      新增规则的时候从规则管理进入可选(无name值) 图表进入不能选 都不能修改(有chartId或者name)不能选-->
+      <nz-select formControlName="mode" nzSize="small" [nzDisabled]="data.chartId || data.name" [nzShowArrow]="data.chartId || data.name ? false : true">
+        <nz-option nzValue="normal" nzLabel="normal"></nz-option>
+        <nz-option nzValue="proxy" nzLabel="proxy"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

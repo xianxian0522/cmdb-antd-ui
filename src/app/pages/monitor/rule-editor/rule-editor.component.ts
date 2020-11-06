@@ -34,7 +34,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
   editForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    operation: ['', Validators.required],
+    operation: [''],
     operand: [''],
     displayName: [''],
     summary: [''],
@@ -84,7 +84,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
       });
     }
     this.data.chartId ? this.editForm.get('mode').setValue('normal') :
-      this.editForm.get('mode').setValue('proxy');
+      this.editForm.get('mode').setValue(this.data.mode);
   }
 
   ngAfterViewInit(): void {
@@ -228,6 +228,11 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     }
     if (this.editForm.get('dingtalk').value) {
       via.push('dingtalk');
+    }
+    if (this.editForm.get('mode').value === 'proxy') {
+      this.editForm.get('chartId').reset();
+      this.editForm.get('operation').setValue('eq');
+      this.editForm.get('operand').setValue('0');
     }
     this.editForm.get('via').setValue(via);
     const value = this.editForm.value;

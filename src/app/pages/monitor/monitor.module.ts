@@ -33,6 +33,7 @@ import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {NzTagModule} from 'ng-zorro-antd/tag';
 import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import {NzCollapseModule} from 'ng-zorro-antd/collapse';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
     NzTagModule,
     NzCodeEditorModule,
     NzToolTipModule,
+    NzCollapseModule
   ]
 })
 export class MonitorModule { }

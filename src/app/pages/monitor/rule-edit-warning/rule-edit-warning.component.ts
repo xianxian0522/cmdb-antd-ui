@@ -5,6 +5,7 @@ import {flow} from '../../../shared/stream/stream';
 import {merge} from 'rxjs';
 import {debounceTime, map, switchMap} from 'rxjs/operators';
 import {NzTableComponent} from 'ng-zorro-antd/table';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-rule-edit-warning',
@@ -16,10 +17,16 @@ export class RuleEditWarningComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private ruleRepository: RuleRepository,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   @Input() data;
+  ruleId: number;
   ruleData = [];
+  stateData: any = [];
+  stateTitle: string;
+  stateBackground: number;
+  backgroundColor: string;
   searchForm = this.fb.group({
     status: [],
     startTime: [],
@@ -47,7 +54,27 @@ export class RuleEditWarningComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
+    this.activatedRoute.paramMap.pipe(
+      switchMap(params => {
+        this.ruleId = parseInt(params.get('id'), 10);
+        return this.ruleRepository.getStateByAlertId(this.ruleId);
+      }),
+    ).subscribe(res => {
+      this.stateData = res;
+      let firing = 0;
+      let resolved = 0;
+      this.stateData.map(item => {
+        item.labels = Object.keys(item.labels).sort().map(k => `${k}=${item.labels[k]}`);
+        item.status === 'firing' ? ++firing : ++resolved;
+      });
+      console.log(this.stateData, '当前states', firing, resolved);
+      this.stateTitle = `当前状态：firing总共：${firing}，resolved总共：${resolved}`;
+      // this.stateData.every(item => item.status === 'firing') ? this.stateBackground = 0 :
+      //   this.stateData.every(item => item.status === 'resolved') ? this.stateBackground = 1 : this.stateBackground = 2;
+      this.stateData.every(item => item.status === 'firing') ? this.backgroundColor = '#fff2f0' :
+        this.stateData.every(item => item.status === 'resolved') ? this.backgroundColor = '#f6ffed' :
+          this.backgroundColor = '#fffbe6';
+    });
   }
 
   ngAfterViewInit(): void {
@@ -62,7 +89,7 @@ export class RuleEditWarningComponent implements OnInit, AfterViewInit {
           if (value.stopTime) {
             value.stopTime = JSON.stringify(value.stopTime).slice(1, -1);
           }
-          return this.ruleRepository.getByAlertId(this.data.id,
+          return this.ruleRepository.getByAlertId(this.ruleId,
             this.table.nzPageIndex - 1,
             this.table.nzPageSize,
             value);

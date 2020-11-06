@@ -36,6 +36,45 @@
     </nz-form-item >
   </div>
 
+<!--  <nz-collapse style="margin: 10px 0px;" [ngStyle]="{'background-color': stateBackground === 0 ? '#fff2f0' : stateBackground === 1 ? '#f6ffed' : '#fffbe6'}">-->
+  <nz-collapse style="margin: 10px 0px;" [style.background-color]="backgroundColor">
+    <nz-collapse-panel [nzHeader]="stateTitle">
+      <div>
+        <nz-table
+          #stateTable
+          [nzFrontPagination]="false"
+          [nzData]="stateData"
+          [nzScroll]="{ x: '1300px', y: '500px' }"
+        >
+          <thead>
+          <tr>
+            <th nzLeft nzWidth="100px">status</th>
+            <th>labels</th>
+            <th nzWidth="170px">fingerprint</th>
+            <th nzWidth="170px">创建时间</th>
+            <th nzWidth="170px">更新时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let data of stateTable.data">
+            <tr [ngStyle]="{'background-color': data.status === 'firing' ? '#fff2f0' : '#f6ffed'}">
+             <td>
+                <nz-alert [nzType]="data.status === 'firing' ? 'error' : 'success'" [nzMessage]="data.status"></nz-alert>
+              </td>
+              <td >
+                <nz-tag class="tag-style" [nzColor]="'blue'" *ngFor="let label of data.labels">{{label}}</nz-tag>
+              </td>
+              <td>{{ data.fingerprint }}</td>
+              <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+
   <div>
     <nz-table
         #rowSelectionTable
@@ -78,7 +117,7 @@
           <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
           <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
         </tr>
-<!--        是否可展开-->
+<!--        是否可展开的内容-->
 <!--        <tr [nzExpand]="expandSet.has(data.id)">-->
 <!--          <nz-tag class="tag-style" [nzColor]="'blue'" *ngFor="let label of data.labels">{{label}}</nz-tag>-->
 <!--        </tr>-->

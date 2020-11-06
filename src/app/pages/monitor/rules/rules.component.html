@@ -61,9 +61,12 @@
           <button nz-button nzType="text" (click)="showEditDialog(data)">
             <i nz-icon nzType="edit" nzTheme="outline"></i>
           </button>
-          <button nz-button nzType="text" (click)="showViewDialog(data)">
+<!--          <button nz-button nzType="text" (click)="showViewDialog(data)">-->
+<!--            <i nz-icon nzType="search" nzTheme="outline"></i>-->
+<!--          </button>-->
+          <a [routerLink]="['warning', data.id]" nz-button nzType="text">
             <i nz-icon nzType="search" nzTheme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>
