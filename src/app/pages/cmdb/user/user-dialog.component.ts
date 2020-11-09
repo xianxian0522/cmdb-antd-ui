@@ -28,7 +28,7 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
     id: [],
     mobile: [''],
     username: ['', Validators.required],
-    password: [''],
+    password: ['', Validators.minLength(6)],
     realName: [''],
     mail: ['', Validators.email],
     admin: [false],
