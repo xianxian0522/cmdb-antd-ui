@@ -1,6 +1,6 @@
 <div nz-form>
   <nz-form-item>
-    <nz-form-label >负责人</nz-form-label>
+    <nz-form-label nzNoColon>负责人</nz-form-label>
     <nz-form-control>
       <nz-select [formControl]="owner" nzAllowClear nzPlaceHolder="Choose" nzSize="small">
         <nz-option *ngFor="let option of userAll" [nzValue]="option.id" [nzLabel]="option.username"></nz-option>
@@ -8,7 +8,7 @@
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label >报告人</nz-form-label>
+    <nz-form-label nzNoColon>报告人</nz-form-label>
     <nz-form-control>
       <nz-select [formControl]="reporters" nzSize="small" nzMode="tags" nzPlaceHolder="Please select">
         <nz-option *ngFor="let option of userAll" [nzLabel]="option.username" [nzValue]="option.id"></nz-option>
@@ -18,5 +18,5 @@
 </div>
 <div class="btns">
   <button nz-button (click)="handleCancel()">取消</button>
-  <button nz-button (click)="handleOk()" [disabled]="!owner.valid">确定</button>
+  <button nz-button nzType="primary" (click)="handleOk()" [disabled]="!owner.valid">确定</button>
 </div>

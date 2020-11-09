@@ -3,25 +3,25 @@
   <button nz-button nzType="primary" nzDanger>删除</button>
   <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="name" placeholder="名字" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">中文名</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>中文名</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="cnName" placeholder="中文名" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">语言</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>语言</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="programmingLanguage" placeholder="语言" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">级别</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>级别</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="level" placeholder="级别" nz-input nzSize="small">
     </nz-form-control>
@@ -39,7 +39,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1700px' }"
+    [nzScroll]="{ x: '1800px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -53,8 +53,8 @@
       <th nzWidth="120px">负责人</th>
       <th>报告人</th>
       <th>仓库</th>
-      <th nzWidth="170px">创建时间</th>
-      <th nzWidth="170px">更新时间</th>
+      <th nzWidth="200px">创建时间</th>
+      <th nzWidth="200px">更新时间</th>
       <th nzRight nzWidth="120px">操作</th>
     </tr>
     </thead>

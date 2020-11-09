@@ -1,7 +1,7 @@
 <h3>新建调度工作</h3>
 <div nz-form nzLayout="inline" [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="name" placeholder="名字" nzSize="small">
     </nz-form-control>
@@ -9,10 +9,10 @@
 </div>
 <div [formGroup]="editForm" nz-form nzLayout="inline">
   <div style="display: flex;align-items: center">
-    <label nz-checkbox formControlName="infinite">不限次数</label>
+    <label nz-checkbox formControlName="infinite" nzNoColon>不限次数</label>
   </div>
   <nz-form-item *ngIf="!editForm.get('infinite').value">
-    <nz-form-label [nzSpan]="10">重复次数</nz-form-label>
+    <nz-form-label [nzSpan]="10" nzNoColon>重复次数</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <nz-input-number formControlName="repeat" placeholder="重复次数" nzSize="small"></nz-input-number>
     </nz-form-control>
@@ -27,7 +27,7 @@
     nzAllowClear="false"
   ></nz-date-picker>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">间隔时间</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>间隔时间</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="interval" placeholder="间隔时间" nzSize="small">
     </nz-form-control>
@@ -35,13 +35,13 @@
 </div>
 <div [formGroup]="editForm" nz-form nzLayout="inline">
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">Epsilon</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>Epsilon</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="epsilon" placeholder="Epsilon" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">retries</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>retries</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <nz-input-number formControlName="retries" placeholder="retries" nzSize="small"></nz-input-number>
     </nz-form-control>
@@ -57,7 +57,7 @@
     <label nz-radio nzValue="playbook">剧本</label>
   </nz-radio-group>
   <nz-form-item *ngIf="editForm.get('jobType').value === 'playbook'">
-    <nz-form-label [nzSpan]="8">剧本</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>剧本</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="playbookId" [nzAutocomplete]="playbookIdAuto" class="app-auto">
       <nz-autocomplete #playbookIdAuto>
@@ -68,7 +68,7 @@
 </div>
 <div nz-form [formGroup]="editForm" nzLayout="vertical" [ngStyle]="{'visibility': editForm.get('jobType').value === 'playbook' ? 'hidden' : 'visible'}">
   <nz-form-item>
-    <nz-form-label>内容</nz-form-label>
+    <nz-form-label nzNoColon>内容</nz-form-label>
     <nz-form-control>
       <textarea rows="10" nz-input formControlName="command"></textarea>
     </nz-form-control>

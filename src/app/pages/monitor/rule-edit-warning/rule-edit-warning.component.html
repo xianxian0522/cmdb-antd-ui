@@ -2,7 +2,7 @@
   <div nz-form nzLayout="inline" [formGroup]="searchForm">
     <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
     <nz-form-item>
-      <nz-form-label [nzSpan]="8">状态</nz-form-label>
+      <nz-form-label [nzSpan]="8" nzNoColon>状态</nz-form-label>
       <nz-form-control [nzSpan]="14">
         <nz-select formControlName="status" nzAllowClear nzSize="small" style="width: 100px;">
           <nz-option nzValue="firing" nzLabel="firing"></nz-option>
@@ -11,7 +11,7 @@
       </nz-form-control>
     </nz-form-item >
     <nz-form-item>
-      <nz-form-label [nzSpan]="6">开始时间</nz-form-label>
+      <nz-form-label [nzSpan]="6" nzNoColon>开始时间</nz-form-label>
       <nz-form-control [nzSpan]="18">
         <nz-date-picker
           nzShowTime
@@ -23,7 +23,7 @@
       </nz-form-control>
     </nz-form-item >
     <nz-form-item>
-      <nz-form-label [nzSpan]="6">结束时间</nz-form-label>
+      <nz-form-label [nzSpan]="6" nzNoColon>结束时间</nz-form-label>
       <nz-form-control [nzSpan]="18">
         <nz-date-picker
           nzShowTime
@@ -44,15 +44,15 @@
           #stateTable
           [nzFrontPagination]="false"
           [nzData]="stateData"
-          [nzScroll]="{ x: '1300px', y: '500px' }"
+          [nzScroll]="{ x: '1400px', y: '500px' }"
         >
           <thead>
           <tr>
             <th nzLeft nzWidth="100px">status</th>
             <th>labels</th>
             <th nzWidth="170px">fingerprint</th>
-            <th nzWidth="170px">创建时间</th>
-            <th nzWidth="170px">更新时间</th>
+            <th nzWidth="200px">创建时间</th>
+            <th nzWidth="200px">更新时间</th>
           </tr>
           </thead>
           <tbody>
@@ -85,7 +85,7 @@
         [nzTotal]="total"
         [nzPageSize]="pageSize"
         [nzPageIndex]="pageIndex"
-        [nzScroll]="{ x: '1500px', y: '500px' }"
+        [nzScroll]="{ x: '1600px', y: '500px' }"
         [nzLoading]="isLoadingResults"
     >
       <thead>
@@ -96,8 +96,8 @@
         <th>labels</th>
         <th >annotations</th>
         <th nzWidth="170px">fingerprint</th>
-        <th nzWidth="170px">创建时间</th>
-        <th nzWidth="170px">更新时间</th>
+        <th nzWidth="200px">创建时间</th>
+        <th nzWidth="200px">更新时间</th>
       </tr>
       </thead>
       <tbody>

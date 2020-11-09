@@ -5,7 +5,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">ID</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>ID</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
         </nz-form-control>
@@ -15,7 +15,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">内网IP</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>内网IP</nz-form-label>
         <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必填项">
           <input nz-input placeholder="内网IP" formControlName="hostInnerip" nzSize="small"/>
         </nz-form-control>
@@ -23,7 +23,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">外网IP</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>外网IP</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="外网IP" formControlName="hostOuterip" nzSize="small"/>
         </nz-form-control>
@@ -33,7 +33,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">内网MAC</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>内网MAC</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="内网MAC" formControlName="mac" nzSize="small"/>
         </nz-form-control>
@@ -41,7 +41,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">内网MAC</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>内网MAC</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="内网MAC" formControlName="outerMac" nzSize="small"/>
         </nz-form-control>
@@ -51,7 +51,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">资产ID</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>资产ID</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="资产ID" formControlName="assertId" nzSize="small"/>
         </nz-form-control>
@@ -59,7 +59,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">SN</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>SN</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="SN" formControlName="sn" nzSize="small"/>
         </nz-form-control>
@@ -69,7 +69,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">状态</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>状态</nz-form-label>
         <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必选">
           <nz-select formControlName="state" style="width: 100px;" nzSize="small">
             <nz-option nzValue="all" nzLabel="All"></nz-option>
@@ -83,7 +83,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">主机名</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>主机名</nz-form-label>
         <nz-form-control [nzSpan]="16" nzValidateStatus="error" nzErrorTip="必填项">
           <input nz-input placeholder="主机名" formControlName="hostName" nzSize="small"/>
         </nz-form-control>
@@ -93,7 +93,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">OS类型</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>OS类型</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <nz-select formControlName="osType" style="width: 100px;" nzSize="small">
             <nz-option nzValue="" nzLabel="All"></nz-option>
@@ -105,7 +105,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">OS名字</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>OS名字</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="OS名字" formControlName="osName" nzSize="small"/>
         </nz-form-control>
@@ -113,7 +113,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">OS版本</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>OS版本</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="OS版本" formControlName="osVersion" nzSize="small"/>
         </nz-form-control>
@@ -121,7 +121,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">OS位数</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>OS位数</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <nz-select formControlName="osBit" style="width: 100px;" nzSize="small">
             <nz-option nzValue="" nzLabel="All"></nz-option>
@@ -135,7 +135,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">内存</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>内存</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="内存" type="number" formControlName="mem" nzSize="small"/>
         </nz-form-control>
@@ -143,7 +143,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">磁盘</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>磁盘</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="磁盘" type="number" formControlName="disk" nzSize="small"/>
         </nz-form-control>
@@ -153,7 +153,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">SSH用户名</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>SSH用户名</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="SSH用户名" formControlName="sshUser" nzSize="small"/>
         </nz-form-control>
@@ -161,7 +161,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">SSH端口号</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>SSH端口号</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="SSH端口号" type="number" formControlName="sshPort" nzSize="small"/>
         </nz-form-control>
@@ -172,5 +172,5 @@
 </form>
 <div class="btns">
   <button nz-button (click)="onClose()">取消</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+  <button nz-button nzType="primary" (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
 </div>

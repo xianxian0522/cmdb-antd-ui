@@ -4,25 +4,25 @@
   <button nz-button nzType="primary" nzDanger>删除</button>
   <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">用户名</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>用户名</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="username" placeholder="用户名" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">中文名</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>中文名</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="realName" placeholder="中文名" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">电话</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>电话</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="mobile" placeholder="电话" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">邮箱</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>邮箱</nz-form-label>
     <nz-form-control [nzSpan]="18">
       <input formControlName="mail" placeholder="邮箱" nz-input nzSize="small">
     </nz-form-control>
@@ -40,7 +40,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1100px' }"
+    [nzScroll]="{ x: '1300px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -49,10 +49,10 @@
         <th nzLeft nzWidth="50px">ID</th>
         <th nzLeft nzWidth="100px">用户名</th>
         <th>中文名</th>
-        <th nzWidth="120px">电话</th>
-        <th nzWidth="200px">邮箱</th>
-        <th nzWidth="170px">创建时间</th>
-        <th nzWidth="170px">更新时间</th>
+        <th nzWidth="140px">电话</th>
+        <th nzWidth="230px">邮箱</th>
+        <th nzWidth="200px">创建时间</th>
+        <th nzWidth="200px">更新时间</th>
         <th nzRight nzWidth="120px">操作</th>
       </tr>
     </thead>
@@ -75,7 +75,7 @@
             <i nz-icon nzType="edit" nzTheme="outline"></i>
           </button>
           <button nz-button nzType="text" (click)="showPasswordDialog(data)">
-            <i nz-icon nzType="key" nzTheme="outline"></i>
+            <i nz-icon nzType="lock" nzTheme="outline"></i>
           </button>
         </td>
       </tr>
@@ -85,7 +85,7 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="修改密码" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <form nz-form >
     <nz-form-item>
-      <nz-form-label>密码</nz-form-label>
+      <nz-form-label nzNoColon>密码</nz-form-label>
       <nz-form-control>
         <input type="password" [formControl]="password" placeholder="密码" nz-input nzSize="small">
       </nz-form-control>

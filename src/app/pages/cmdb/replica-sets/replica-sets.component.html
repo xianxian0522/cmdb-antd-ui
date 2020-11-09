@@ -3,13 +3,13 @@
   <button nz-button nzType="primary" nzDanger>删除</button>
   <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="name" placeholder="名字" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="10">所属应用</nz-form-label>
+    <nz-form-label [nzSpan]="10" nzNoColon>所属应用</nz-form-label>
 <!--    <nz-form-control [nzSpan]="14">-->
 <!--      <input formControlName="appId" placeholder="所属应用" nz-input nzSize="small">-->
 <!--    </nz-form-control>-->
@@ -35,7 +35,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1000px' }"
+    [nzScroll]="{ x: '1200px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -43,10 +43,10 @@
       <th nzLeft nzWidth="30px" [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
       <th nzLeft nzWidth="50px">ID</th>
       <th nzLeft nzWidth="200px">名字</th>
-      <th>所属应用ID</th>
+      <th nzWidth="120px">所属应用ID</th>
       <th>所属应用名</th>
-      <th nzWidth="170px">创建时间</th>
-      <th nzWidth="170px">更新时间</th>
+      <th nzWidth="200px">创建时间</th>
+      <th nzWidth="200px">更新时间</th>
       <th nzRight nzWidth="80px">操作</th>
     </tr>
     </thead>

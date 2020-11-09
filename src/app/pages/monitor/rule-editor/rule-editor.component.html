@@ -6,19 +6,19 @@
 
 <div class="rule-head" nz-form nzLayout="inline" [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">名字</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">显示名</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>显示名</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <input nz-input placeholder="显示名" formControlName="displayName" nzSize="small"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">操作符</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>操作符</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <nz-select formControlName="operation" nzSize="small" [nzDisabled]="editForm.get('mode').value === 'proxy'" [nzShowArrow]="editForm.get('mode').value === 'proxy' ? false : true">
         <nz-option *ngFor="let option of filteredOperation" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
@@ -26,13 +26,13 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">操作数</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>操作数</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <input nz-input placeholder="操作数" formControlName="operand" [readOnly]="editForm.get('mode').value === 'proxy'" nzSize="small"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">chartId</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>chartId</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <nz-select formControlName="chartId" nzSize="small" [nzDisabled]="data.chartId || editForm.get('mode').value === 'proxy'" [nzShowArrow]="data.chartId || editForm.get('mode').value === 'proxy' ? '' : 'true'">
         <nz-option *ngFor="let option of chartData" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
@@ -40,7 +40,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="8">模式</nz-form-label>
+    <nz-form-label [nzSpan]="8" nzNoColon>模式</nz-form-label>
     <nz-form-control [nzSpan]="16">
 <!--      新增规则的时候从规则管理进入可选(无name值) 图表进入不能选 都不能修改(有chartId或者name)不能选-->
       <nz-select formControlName="mode" nzSize="small" [nzDisabled]="data.chartId || data.name" [nzShowArrow]="data.chartId || data.name ? false : true">
@@ -52,7 +52,7 @@
 </div>
 <div nz-form [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label>摘要</nz-form-label>
+    <nz-form-label nzNoColon>摘要</nz-form-label>
     <nz-form-control>
       <textarea nz-input placeholder="摘要" nzAutosize formControlName="summary" nzSize="small"></textarea>
     </nz-form-control>
@@ -60,7 +60,7 @@
 </div>
 <div nz-form [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label>描述</nz-form-label>
+    <nz-form-label nzNoColon>描述</nz-form-label>
     <nz-form-control>
       <textarea nz-input placeholder="描述" nzAutosize formControlName="description" nzSize="small"></textarea>
     </nz-form-control>
@@ -68,7 +68,7 @@
 </div>
 <div nz-form [formGroup]="editForm" nzLayout="inline">
   <nz-form-item>
-    <nz-form-label>报警方式</nz-form-label>
+    <nz-form-label nzNoColon>报警方式</nz-form-label>
     <nz-form-control>
 <!--      <nz-checkbox-group [(ngModel)]="vias" (ngModelChange)="viaChange($event)"></nz-checkbox-group>-->
       <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="viaChange($event)">
@@ -80,7 +80,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label>严重级别</nz-form-label>
+    <nz-form-label nzNoColon>严重级别</nz-form-label>
     <nz-form-control>
       <nz-select formControlName="severity" nzAllowClear nzSize="small" style="width: 120px;">
         <nz-option nzValue="warning" nzLabel="warning"></nz-option>
@@ -91,7 +91,7 @@
 </div>
 <div nz-form [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label>接收人</nz-form-label>
+    <nz-form-label nzNoColon>接收人</nz-form-label>
     <nz-form-control>
       <nz-select #selectTags
         nzMode="tags"
@@ -113,5 +113,5 @@
 </div>
 <div class="btns">
   <button nz-button (click)="onClose()">返回</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+  <button nz-button nzType="primary" (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
 </div>

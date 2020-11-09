@@ -3,13 +3,13 @@
   <button nz-button nzType="primary" nzDanger>删除</button>
   <button nz-button nzType="primary" (click)="refresh.emit()">刷新</button>
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">名字</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="18">
       <input nz-input formControlName="name" placeholder="名字" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="10">所属应用</nz-form-label>
+    <nz-form-label [nzSpan]="10" nzNoColon>所属应用</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="appId" [nzAutocomplete]="auto" class="app-auto" nzSize="small">
       <nz-autocomplete #auto>
@@ -18,7 +18,7 @@
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="10">所属集群</nz-form-label>
+    <nz-form-label [nzSpan]="10" nzNoColon>所属集群</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
       <nz-autocomplete #replicaSetIdAuto>
@@ -27,7 +27,7 @@
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="10">所在机器</nz-form-label>
+    <nz-form-label [nzSpan]="10" nzNoColon>所在机器</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="hostId" [nzAutocomplete]="hostIdAuto" class="app-auto" nzSize="small">
       <nz-autocomplete #hostIdAuto>
@@ -48,7 +48,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1500px' }"
+    [nzScroll]="{ x: '1600px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -62,8 +62,8 @@
       <th nzWidth="180px">所属机器名</th>
       <th>所属应用ID</th>
       <th>所属应用名</th>
-      <th nzWidth="170px">创建时间</th>
-      <th nzWidth="170px">更新时间</th>
+      <th nzWidth="200px">创建时间</th>
+      <th nzWidth="200px">更新时间</th>
       <th nzRight nzWidth="80px">操作</th>
     </tr>
     </thead>

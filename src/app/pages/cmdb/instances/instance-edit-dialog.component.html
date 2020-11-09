@@ -5,7 +5,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">ID</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>ID</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="ID" readonly formControlName="id" nzSize="small"/>
         </nz-form-control>
@@ -15,7 +15,7 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">名字</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>名字</nz-form-label>
         <nz-form-control [nzSpan]="16">
           <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
         </nz-form-control>
@@ -23,7 +23,7 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">所属副本集</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>所属副本集</nz-form-label>
         <input nz-input formControlName="replicaSetId" [nzAutocomplete]="replicaSetIdAuto" class="app-auto" nzSize="small">
         <nz-autocomplete #replicaSetIdAuto>
           <nz-auto-option *ngFor="let option of filteredReplicaSets | async" [nzValue]="option.id" [nzLabel]="option.name">{{option.name}}</nz-auto-option>
@@ -32,7 +32,7 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="10">所在机器</nz-form-label>
+        <nz-form-label [nzSpan]="10" nzNoColon>所在机器</nz-form-label>
         <input nz-input formControlName="hostId" [nzAutocomplete]="hostIdAuto" class="app-auto" nzSize="small">
         <nz-autocomplete #hostIdAuto>
           <nz-auto-option *ngFor="let option of filteredHosts | async" [nzValue]="option.id" [nzLabel]="option.hostName">{{option.hostName}}</nz-auto-option>
@@ -42,7 +42,7 @@
   </div>
   <div nz-col [nzSpan]="24">
     <nz-form-item>
-      <nz-form-label [nzSpan]="3">工作目录</nz-form-label>
+      <nz-form-label [nzSpan]="3" nzNoColon>工作目录</nz-form-label>
       <nz-form-control [nzSpan]="21">
         <input nz-input placeholder="工作目录" formControlName="workDir" nzSize="small"/>
       </nz-form-control>
@@ -50,7 +50,7 @@
   </div>
   <div nz-col [nzSpan]="24">
     <nz-form-item>
-      <nz-form-label [nzSpan]="3">监控采集url</nz-form-label>
+      <nz-form-label [nzSpan]="3" nzNoColon>监控采集url</nz-form-label>
       <nz-form-control [nzSpan]="21">
         <input nz-input placeholder="监控采集url" formControlName="metricUrl" nzSize="small"/>
       </nz-form-control>
@@ -58,7 +58,7 @@
   </div>
   <div nz-col [nzSpan]="24">
     <nz-form-item>
-      <nz-form-label [nzSpan]="3">备注</nz-form-label>
+      <nz-form-label [nzSpan]="3" nzNoColon>备注</nz-form-label>
       <nz-form-control [nzSpan]="21">
         <textarea nz-input placeholder="备注" nzAutosize formControlName="comment"></textarea>
       </nz-form-control>
@@ -67,5 +67,5 @@
 </form>
 <div class="btns">
   <button nz-button (click)="onClose()">取消</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+  <button nz-button nzType="primary" (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
 </div>

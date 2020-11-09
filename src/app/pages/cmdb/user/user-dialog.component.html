@@ -3,43 +3,43 @@
 </h2>
 <form nz-form nzLayout="horizontal" [formGroup]="editForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">ID</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>ID</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="id" placeholder="ID" readonly nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">用户名</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>用户名</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input formControlName="username" placeholder="用户名" nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">中文名</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>中文名</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="realName" placeholder="中文名" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item *ngIf="mode === 'create'">
-    <nz-form-label [nzSpan]="6">密码</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>密码</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input type="password" formControlName="password" placeholder="密码" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">电话</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>电话</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="mobile" placeholder="电话" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">邮箱</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>邮箱</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input formControlName="mail" placeholder="邮箱" nz-input nzSize="small">
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
-    <nz-form-label [nzSpan]="6">是否是管理员</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzNoColon>是否是管理员</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <label nz-checkbox formControlName="admin">Checkbox</label>
     </nz-form-control>
@@ -47,7 +47,7 @@
 </form>
 <div class="btns">
   <button nz-button (click)="onClose()">取消</button>
-  <button nz-button (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
+  <button nz-button nzType="primary" (click)="onSubmit()" [disabled]="!editForm.valid">确定</button>
 </div>
 
 
