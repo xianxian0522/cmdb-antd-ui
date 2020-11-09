@@ -110,6 +110,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
           console.log('set size', this.options.fixedRowHeight);
           const sf = screenfull as Screenfull;
           this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
+          this.changeDashboard();
         }
       },
       gridSizeChangedCallback: gridsterComponent => {
@@ -233,8 +234,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     }).afterClose.subscribe(result => {
       if (result) {
         result = {...result, echartsOption: {}};
-        this.dashboard.push({chartData: result, x: 0, y: 0, cols: 5, rows: 5});
+        this.dashboard.push({chartData: result, x: 0, y: 0, cols: 7, rows: 7});
         this.ref.detectChanges();
+        this.ref.markForCheck();
       }
     });
   }

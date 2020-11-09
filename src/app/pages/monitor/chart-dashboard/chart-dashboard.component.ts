@@ -51,6 +51,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes, '有无？？changes');
+    // this.getCharts(changes.chartData.currentValue);
   }
 
   onChartInit(ec): void {
