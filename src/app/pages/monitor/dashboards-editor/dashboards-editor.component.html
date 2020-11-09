@@ -69,7 +69,7 @@
   <gridster style="background-color: #fffbe6" [options]="options" [ngStyle]="{minHeight: (rowsAll * options.fixedRowHeight + 20) + 'px'}">
     <gridster-item [item]="item" *ngFor="let item of dashboard">
       <div class="button-chart">
-        <button (click)="childSeries.ngAfterViewInit()" nz-button
+        <button (click)="childSeries.getCharts(item.chartData)" nz-button
                 style="position: absolute;left: 10px;top: 10px;z-index: 10;">刷新</button>
         <button nz-button (mousedown)="removeItem($event, item)"
                 (touchstart)="removeItem($event, item)" style="position: absolute; right: 10px; top: 10px; z-index: 10;">

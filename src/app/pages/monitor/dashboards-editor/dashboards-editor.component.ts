@@ -192,6 +192,10 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     this.ref.detectChanges();
     if (this.chartDashboard) {
       this.chartDashboard.getDashboard(this.dashboard);
+      // this.dashboard.map(item => {
+      //   this.chartDashboard.getCharts(item.chartData);
+      //   console.log('调用几次？？');
+      // });
       this.options.api.optionsChanged();
     } else {
       console.log('isnull');
