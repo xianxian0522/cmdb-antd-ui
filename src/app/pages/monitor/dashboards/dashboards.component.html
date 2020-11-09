@@ -67,13 +67,15 @@
       <td>{{ data.comment }}</td>
       <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
       <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
-      <td nzRight style="display: flex;">
-        <a routerLink="edit" [queryParams]="{id: data.id}" nz-button nzType="text">
-          <i nz-icon nzType="edit" nzTheme="outline"></i>
-        </a>
-        <a routerLink="edit" [queryParams]="{id: data.id, isReadOnly: true}" nz-button nzType="text">
-          <i nz-icon nzType="search" nzTheme="outline"></i>
-        </a>
+      <td nzRight>
+        <div style="display: flex;">
+          <a routerLink="edit" [queryParams]="{id: data.id}" nz-button nzType="text">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </a>
+          <a routerLink="edit" [queryParams]="{id: data.id, isReadOnly: true}" nz-button nzType="text">
+            <i nz-icon nzType="search" nzTheme="outline"></i>
+          </a>
+        </div>
       </td>
     </tr>
     </tbody>

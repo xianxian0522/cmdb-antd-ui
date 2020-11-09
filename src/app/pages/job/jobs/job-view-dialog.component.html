@@ -7,9 +7,7 @@
     <nz-tag class="head-tag" [nzColor]="data.disabled ? 'error' : 'processing'">{{data.disabled ? '已禁用' : '已启用'}}</nz-tag>
   </h3>
   <div>
-    <pre>
-      <code>{{code}}</code>
-    </pre>
+    <pre><code>{{code}}</code></pre>
   </div>
   <div class="btns">
     <button nz-button nzType="primary" (click)="trigger.emit('enable')" *ngIf="data.disabled">启用</button>

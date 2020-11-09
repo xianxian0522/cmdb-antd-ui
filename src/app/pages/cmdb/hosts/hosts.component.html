@@ -108,7 +108,7 @@
       <tr>
         <th nzLeft nzWidth="30px" [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
         <th nzLeft nzWidth="50px">ID</th>
-        <th nzLeft nzWidth="120px">内外IP</th>
+        <th nzLeft nzWidth="150px">内外IP</th>
         <th nzWidth="120px">外网IP</th>
         <th>状态</th>
         <th>资产ID</th>
@@ -146,7 +146,8 @@
         <td>{{ data.osName }}</td>
         <td>{{ data.osVersion }}</td>
         <td>{{ data.osBit }}</td>
-        <td>{{ data.mem}}</td>
+<!--        <td>{{ (data.mem||0) | filesize }}</td>-->
+        <td>{{ (data.mem||0) | nzBytes }}</td>
         <td>{{ data.sshUser }}</td>
         <td>{{ data.sshPort }}</td>
         <td>{{ data.mac }}</td>

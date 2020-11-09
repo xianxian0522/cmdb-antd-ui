@@ -62,6 +62,20 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
     return PlaybookEditDialogComponent;
   }
 
+  showEditDialog(row: Playbook): void {
+    const record = {...row};
+    this.modal.create({
+      nzContent: this.editDialogType(),
+      nzFooter: null,
+      nzComponentParams: {mode: 'edit', data: record},
+      nzWidth: '80vw',
+    }).afterClose.subscribe(needRefresh => {
+      if (!!needRefresh) {
+        this.refresh.emit();
+      }
+    });
+  }
+
   showRunDialog(row): void{
     this.modal.create({
       nzContent: PlaybookRunDialogComponent,

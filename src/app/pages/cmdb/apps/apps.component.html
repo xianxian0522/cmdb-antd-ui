@@ -81,13 +81,15 @@
       <td>{{ data.repository }}</td>
       <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
       <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
-      <td nzRight style="display: flex">
-        <button nz-button nzType="text" (click)="showEditDialog(data)">
-          <i nz-icon nzType="edit" nzTheme="outline"></i>
-        </button>
-        <button nz-button nzType="text" (click)="addEditDialog(data)">
-          <i nz-icon nzType="user-add" nzTheme="outline"></i>
-        </button>
+      <td nzRight>
+        <div style="display: flex">
+          <button nz-button nzType="text" (click)="showEditDialog(data)">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzType="text" (click)="addEditDialog(data)">
+            <i nz-icon nzType="user-add" nzTheme="outline"></i>
+          </button>
+        </div>
       </td>
     </tr>
     </tbody>

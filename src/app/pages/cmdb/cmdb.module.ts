@@ -34,6 +34,8 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import { AppAddOwnerComponent } from './apps/app-add-owner.component';
 import {NzTagModule} from 'ng-zorro-antd/tag';
+import {NgxFilesizeModule} from 'ngx-filesize';
+import {NzPipesModule} from 'ng-zorro-antd/pipes';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import {NzTagModule} from 'ng-zorro-antd/tag';
     NzCodeEditorModule,
     NzCheckboxModule,
     NzToolTipModule,
-    NzTagModule
+    NzTagModule,
+    NgxFilesizeModule,
+    NzPipesModule
   ]
 })
 export class CmdbModule { }
