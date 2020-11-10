@@ -5,22 +5,27 @@
   <h2>执行副本</h2>
   <div class="run-content">
     <h3>内容</h3>
-    <pre><code>{{data.content}}</code></pre>
+    <nz-code-editor style="height: 90%" [(ngModel)]="data.content" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+<!--    <pre><code>{{data.content}}</code></pre>-->
   </div>
   <div>
     <h3>执行结果</h3>
     <div class="pre-scroll">
       <ng-container *ngIf="error">
         <h4>错误</h4>
-        <pre><code>{{error}}</code></pre>
+        <nz-code-editor style="height: 90%;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+
+        <!--        <pre><code>{{error}}</code></pre>-->
       </ng-container>
       <ng-container *ngIf="stdout">
         <h4>标准输出</h4>
-        <pre><code>{{stdout}}</code></pre>
+<!--        <pre><code>{{stdout}}</code></pre>-->
+        <nz-code-editor style="height: 90%" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
       </ng-container>
       <ng-container *ngIf="stderr">
         <h4>标准错误输出</h4>
-        <pre><code>{{stderr}}</code></pre>
+<!--        <pre><code>{{stderr}}</code></pre>-->
+        <nz-code-editor style="height: 90%;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
       </ng-container>
     </div>
 

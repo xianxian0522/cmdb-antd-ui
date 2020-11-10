@@ -126,6 +126,12 @@ const routes: Routes = [
     loadChildren: () => import('../../pages/monitor/monitor.module').then(m => m.MonitorModule)
   },
   {
+    path: 'supervisord',
+    data: {section: 'supervisord'},
+    component: LayoutComponent,
+    loadChildren: () => import('../../pages/supervisord/supervisord.module').then(m => m.SupervisordModule)
+  },
+  {
     path: '**', component: LayoutComponent
   },
 ];

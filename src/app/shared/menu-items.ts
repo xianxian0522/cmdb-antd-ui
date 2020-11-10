@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export interface MenuItem {
   id: string;
@@ -9,6 +9,7 @@ export interface MenuItem {
 const CMDB = 'cmdb';
 const MONITOR = 'monitor';
 const JOB = 'job';
+const SUPERVISORD = 'supervisord';
 const MENUS: { [key: string]: MenuItem[] } = {
   [CMDB]: [
     {
@@ -70,11 +71,19 @@ const MENUS: { [key: string]: MenuItem[] } = {
       name: '运行状态',
       icon: 'play-square',
     }
-  ]
+  ],
+  [SUPERVISORD]: [
+    {
+      id: 'admin',
+      name: '后台管理',
+      icon: 'cluster',
+    }
+  ],
 };
 const ALL_CMDB = MENUS[CMDB];
 const ALL_MONITOR = MENUS[MONITOR];
 const ALL_JOB = MENUS[JOB];
+const ALL_SUPERVISORD = MENUS[SUPERVISORD];
 const ALL_SECTIONS: MenuItem[] = [
   {
     id: CMDB,
@@ -90,6 +99,11 @@ const ALL_SECTIONS: MenuItem[] = [
     id: JOB,
     name: '调度中心',
     icon: 'star',
+  },
+  {
+    id: SUPERVISORD,
+    name: '后台管理',
+    icon: 'cluster',
   }
 ];
 
@@ -110,6 +124,9 @@ export class MenuItems {
     }
     if (section === JOB) {
       return ALL_JOB;
+    }
+    if (section === SUPERVISORD) {
+      return ALL_SUPERVISORD;
     }
     return [];
   }

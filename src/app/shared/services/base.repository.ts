@@ -23,6 +23,12 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
     return this.httpClient.get<Page<MODEL>>(requestUrl);
   }
 
+  queryListAll(q?: { [key: string]: any }, select?: string[]): Observable<MODEL[]> {
+    const params = this.genParams(q, select);
+    const requestUrl = `${this.api()}/list?${params.toString()}`;
+    return this.httpClient.get<MODEL[]>(requestUrl);
+  }
+
   getById(id: number): Observable<MODEL> {
     return this.httpClient.get<MODEL>(`${this.api()}/${id}`);
   }
