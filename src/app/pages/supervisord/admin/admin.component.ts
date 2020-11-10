@@ -65,6 +65,11 @@ export class AdminComponent implements OnInit, AfterViewInit {
         this.nzMessageService.success('已运行', {nzDuration: 3000});
       }
     });
+    // this.modal.confirm({
+    //   nzTitle: `你确定要停止${name}任务？`,
+    //   nzOnOk: () => {
+    //   }
+    // });
   }
   // 停止运行
   stopSelect(): void {
@@ -79,11 +84,16 @@ export class AdminComponent implements OnInit, AfterViewInit {
     });
   }
   stopProgram(name: string): void {
-    this.nzMessageService.info('正在请求', {nzDuration: 3000});
-    this.adminSupervisordServices.stopName(name).subscribe(res => {
-      if (res.success) {
-        this.getAllList();
-        this.nzMessageService.success('已停止', {nzDuration: 3000});
+    // this.nzMessageService.info('正在请求', {nzDuration: 3000});
+    this.modal.confirm({
+      nzTitle: `你确定要停止${name}的任务`,
+      nzOnOk: () => {
+        this.adminSupervisordServices.stopName(name).subscribe(res => {
+          if (res.success) {
+            this.getAllList();
+            this.nzMessageService.success('已停止', {nzDuration: 3000});
+          }
+        });
       }
     });
   }

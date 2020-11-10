@@ -75,7 +75,7 @@ const MENUS: { [key: string]: MenuItem[] } = {
   [SUPERVISORD]: [
     {
       id: 'admin',
-      name: '后台管理',
+      name: '后台服务',
       icon: 'cluster',
     }
   ],
@@ -102,7 +102,7 @@ const ALL_SECTIONS: MenuItem[] = [
   },
   {
     id: SUPERVISORD,
-    name: '后台管理',
+    name: '后台服务',
     icon: 'cluster',
   }
 ];
