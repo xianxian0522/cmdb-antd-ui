@@ -36,6 +36,7 @@ import { AppAddOwnerComponent } from './apps/app-add-owner.component';
 import {NzTagModule} from 'ng-zorro-antd/tag';
 import {NgxFilesizeModule} from 'ngx-filesize';
 import {NzPipesModule} from 'ng-zorro-antd/pipes';
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {NzPipesModule} from 'ng-zorro-antd/pipes';
     NzToolTipModule,
     NzTagModule,
     NgxFilesizeModule,
-    NzPipesModule
+    NzPipesModule,
+    NzTabsModule
   ]
 })
 export class CmdbModule { }

@@ -81,7 +81,7 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
       nzContent: PlaybookRunDialogComponent,
       nzFooter: null,
       nzComponentParams: {data: row},
-      nzWidth: 830,
+      nzWidth: '80vw',
     });
   }
 }

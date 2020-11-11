@@ -14,3 +14,6 @@
 .code-text textarea{
   max-height: 30vh;
 }
+::ng-deep .ant-modal-body{
+  //height: 85vh;
+}

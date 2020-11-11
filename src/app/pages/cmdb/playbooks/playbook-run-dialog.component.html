@@ -11,22 +11,33 @@
   <div>
     <h3>执行结果</h3>
     <div class="pre-scroll">
-      <ng-container *ngIf="error">
-        <h4>错误</h4>
-        <nz-code-editor style="height: 90%;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+      <nz-tabset nzType="card">
+        <nz-tab nzTitle="错误" *ngIf="error">
+          <nz-code-editor style="height: 40vh;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+        </nz-tab>
+        <nz-tab nzTitle="标准输出" *ngIf="stdout">
+          <nz-code-editor style="height: 40vh" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+        </nz-tab>
+        <nz-tab nzTitle="标准错误输出" *ngIf="stderr">
+          <nz-code-editor style="height: 40vh;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+        </nz-tab>
+      </nz-tabset>
+<!--      <ng-container *ngIf="error">-->
+<!--        <h4>错误</h4>-->
+<!--        <nz-code-editor style="height: 90%;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>-->
 
-        <!--        <pre><code>{{error}}</code></pre>-->
-      </ng-container>
-      <ng-container *ngIf="stdout">
-        <h4>标准输出</h4>
-<!--        <pre><code>{{stdout}}</code></pre>-->
-        <nz-code-editor style="height: 90%" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
-      </ng-container>
-      <ng-container *ngIf="stderr">
-        <h4>标准错误输出</h4>
-<!--        <pre><code>{{stderr}}</code></pre>-->
-        <nz-code-editor style="height: 90%;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
-      </ng-container>
+<!--        &lt;!&ndash;        <pre><code>{{error}}</code></pre>&ndash;&gt;-->
+<!--      </ng-container>-->
+<!--      <ng-container *ngIf="stdout">-->
+<!--        <h4>标准输出</h4>-->
+<!--&lt;!&ndash;        <pre><code>{{stdout}}</code></pre>&ndash;&gt;-->
+<!--        <nz-code-editor style="height: 90%" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>-->
+<!--      </ng-container>-->
+<!--      <ng-container *ngIf="stderr">-->
+<!--        <h4>标准错误输出</h4>-->
+<!--&lt;!&ndash;        <pre><code>{{stderr}}</code></pre>&ndash;&gt;-->
+<!--        <nz-code-editor style="height: 90%;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>-->
+<!--      </ng-container>-->
     </div>
 
   </div>
