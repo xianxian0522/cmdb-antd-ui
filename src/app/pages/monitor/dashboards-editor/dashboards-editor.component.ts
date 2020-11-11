@@ -40,8 +40,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     private nzMessageService: NzMessageService,
     private modal: NzModalService,
     private ref: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   @ViewChild(ChartDashboardComponent)
   private chartDashboard: ChartDashboardComponent;

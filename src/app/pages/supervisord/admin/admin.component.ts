@@ -66,7 +66,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
       }
     });
     // this.modal.confirm({
-    //   nzTitle: `你确定要停止${name}任务？`,
+    //   nzTitle: `你确定要开始${name}任务？`,
     //   nzOnOk: () => {
     //   }
     // });
@@ -84,7 +84,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
     });
   }
   stopProgram(name: string): void {
-    // this.nzMessageService.info('正在请求', {nzDuration: 3000});
     this.modal.confirm({
       nzTitle: `你确定要停止${name}的任务`,
       nzOnOk: () => {
