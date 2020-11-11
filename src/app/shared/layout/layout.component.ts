@@ -93,7 +93,7 @@ export class LayoutComponent implements OnInit{
   getUserInfo(): void{
     const token = localStorage.getItem('token');
     if (token) {
-      this.httpClient.get<{admin?: boolean, username?: string}>('/userinfo?Authorization=' + token).subscribe(res => {
+      this.httpClient.get<{admin?: boolean, username?: string}>('/userinfo').subscribe(res => {
         this.userName = res.username;
       });
     }
