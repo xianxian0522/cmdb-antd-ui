@@ -88,12 +88,20 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
         60
       ).subscribe(value => {
         const series = value.data.result;
+        const colors = this.colors;
+        if (series.length > colors.length) {
+          const num = series.length - colors.length;
+          for (let i = 0; i < num; i++) {
+            this.colors.push(colors[i]);
+          }
+        }
         const data = series.map(v => {
           return v.values.map(s => [new Date(s[0] * 1000), s[1]]);
         });
         this.seriesData = data;
         const names = series.map(v => {
-          return `${v.metric.__name__}{${Object.keys(v.metric).filter(k => k !== '__name__').sort().map(k => `${k} = ${v.metric[k]}`).join(',')}}`;
+          const m = v.metric.__name__ ? v.metric.__name__ : '';
+          return `${m}{${Object.keys(v.metric).filter(k => k !== '__name__').sort().map(k => `${k} = ${v.metric[k]}`).join(',')}}`;
         });
         this.seriesState = data.map(v => ({isShow: true}));
         chartData.echartsOption = {
@@ -116,10 +124,17 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
               this.seriesState.map((s, idx) => {
                 if (s.isShow) {
                   const p = params.length > 1 ? params[idx] : params[0];
-                  return `
-<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${p.color}"></div>
-[${formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')}] ${p.data[1]}
+                  const c = p ? p.color : '';
+                  const d = p ? [formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')] : '';
+                  const d1 = p ? p.data[1] : '';
+                  if (d) {
+                    return `
+<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>
+${d} ${d1}
 `;
+                  } else {
+                    return null;
+                  }
                 } else {
                   return null;
                 }

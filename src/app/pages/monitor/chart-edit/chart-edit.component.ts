@@ -246,7 +246,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
       const colors = this.colors;
       if (series.length > colors.length) {
         const num = series.length - colors.length;
-        for (let i = 0; i++; i < num) {
+        for (let i = 0; i < num; i++) {
           this.colors.push(colors[i]);
         }
       }
@@ -256,7 +256,8 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
       });
       this.dataSeries = data;
       const names = series.map(s => {
-        return `${s.metric.__name__}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
+        const m = s.metric.__name__ ? s.metric.__name__ : '';
+        return `${m}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
       });
       this.echartsOption = {
         tooltip: {   // 提示信息
@@ -278,10 +279,17 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
             this.seriesState.map((s, idx) => {
               if (s.isShow) {
                 const p = params.length > 1 ? params[idx] : params[0];
-                return `
-<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${p.color}"></div>
-[${formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')}] ${p.data[1]}
+                const c = p ? p.color : '';
+                const d = p ? [formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')] : '';
+                const d1 = p ? p.data[1] : '';
+                if (d) {
+                  return `
+<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>
+${d} ${d1}
 `;
+                } else {
+                  return null;
+                }
               } else {
                 return null;
               }

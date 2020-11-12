@@ -66,7 +66,7 @@
     <button nz-button (click)="onClickScreenFull()" *ngIf="!isFullScreen">全屏</button>
     <button nz-button (click)="onCloseScreenFull()" *ngIf="isFullScreen">退出全屏</button>
   </div>
-  <gridster style="background-color: #fffbe6" [options]="options" [ngStyle]="{minHeight: (rowsAll * options.fixedRowHeight + 20) + 'px'}">
+  <gridster style="background-color: #e6f7ff" [options]="options" [ngStyle]="{minHeight: (rowsAll * options.fixedRowHeight + 20) + 'px'}">
     <gridster-item [item]="item" *ngFor="let item of dashboard">
       <div class="button-chart">
         <button (click)="childSeries.getCharts(item.chartData)" nz-button
