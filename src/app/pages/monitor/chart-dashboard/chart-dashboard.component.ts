@@ -7,11 +7,12 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges, ViewChild
 } from '@angular/core';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {formatDate} from '@angular/common';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-chart-dashboard',
@@ -29,6 +30,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   @Input() chartData: any = {};
+  @Input() index: number;
   echartsOption: any = {};
   echartsMerge: any = {};
   echartsInstance: any;
@@ -40,6 +42,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
     '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570',
     '#c4ccd3'
   ];
+  @ViewChild('echartId') echartId;
 
   ngOnInit(): void {
 
@@ -60,20 +63,19 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   getDashboard(chartData): void {
-    console.log(chartData, '没传过来吗');
+    // console.log(chartData, '没传过来吗');
     if (chartData) {
-      chartData.map(chart => {
-        this.getCharts(chart.chartData);
+      chartData.map((chart, index) => {
+        this.getCharts(chart.chartData, index);
       });
     }
   }
 
-  getCharts(chartData): void {
-    if (this.echartsInstance) {
-      this.echartsInstance.showLoading();
-      // this.echartsInstance.clear();
-      this.echartsInstance.resize();
-    }
+  getCharts(chartData, index?): void {
+    // if (this.echartsInstance) {
+    //   this.echartsInstance.showLoading();
+    //   // this.echartsInstance.resize();
+    // }
     console.log(chartData, '传过来的chartData');
     if (chartData) {
       const end = new Date().getTime() / 1000;
@@ -166,11 +168,19 @@ ${d} ${d1}
           })),
           animationEasing: 'elasticOut',
         };
-        if (this.echartsInstance) {
-          // this.echartsInstance.setOption(chartData.echartsOption);
-          // this.echartsInstance.resize();
-          this.echartsInstance.hideLoading();
+        const ix = index ? index : this.index;
+        const ec = echarts.init(document.getElementById('echartId' + ix));
+        if (ec) {
+          ec.showLoading();
         }
+        ec.setOption(chartData.echartsOption, true);
+        if (ec) {
+          setTimeout(() => ec.hideLoading());
+        }
+        // if (this.echartsInstance) {
+        //   // this.echartsInstance.resize();
+        //   this.echartsInstance.hideLoading();
+        // }
         // 变更检测 检测该组件 渲染视图
         this.ref.markForCheck();
       }, err => {
