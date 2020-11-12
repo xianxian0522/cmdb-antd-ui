@@ -98,7 +98,7 @@
   <div>
     <input style="width: 80px;margin-right: 20px;" nz-input type="number" [formControl]="step"/>
   </div>
-  <button nz-button (click)="refresh.emit()" [disabled]="!startTime.valid || !editForm.valid">刷新</button>
+  <button nz-button (click)="refresh.emit()" [disabled]="!startTime.valid">刷新</button>
 </div>
 <form [formGroup]="editForm" *ngIf="!isReadOnly">
   <div class="code-box">
