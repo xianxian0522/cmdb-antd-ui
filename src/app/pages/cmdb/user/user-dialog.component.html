@@ -39,9 +39,15 @@
     </nz-form-control>
   </nz-form-item >
   <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzNoColon>钉钉ID</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input formControlName="dingTalkUserId" placeholder="钉钉ID" nz-input nzSize="small">
+    </nz-form-control>
+  </nz-form-item >
+  <nz-form-item>
     <nz-form-label [nzSpan]="6" nzNoColon>是否是管理员</nz-form-label>
     <nz-form-control [nzSpan]="14">
-      <label nz-checkbox formControlName="admin">Checkbox</label>
+      <label nz-checkbox formControlName="admin"></label>
     </nz-form-control>
   </nz-form-item >
 </form>

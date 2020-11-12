@@ -6,4 +6,5 @@ export interface User {
   realName?: string;
   updatedAt?: string;
   username?: string;
+  dingTalkUserId?: string;
 }

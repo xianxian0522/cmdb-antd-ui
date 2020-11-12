@@ -40,7 +40,7 @@
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     [nzPageIndex]="pageIndex"
-    [nzScroll]="{ x: '1300px' }"
+    [nzScroll]="{ x: '1400px' }"
     [nzLoading]="isLoadingResults"
   >
     <thead>
@@ -51,6 +51,7 @@
         <th>中文名</th>
         <th nzWidth="140px">电话</th>
         <th nzWidth="230px">邮箱</th>
+        <th>钉钉ID</th>
         <th nzWidth="200px">创建时间</th>
         <th nzWidth="200px">更新时间</th>
         <th nzRight nzWidth="120px">操作</th>
@@ -68,6 +69,7 @@
         <td>{{ data.realName }}</td>
         <td>{{ data.mobile }}</td>
         <td>{{ data.mail }}</td>
+        <td>{{ data.dingTalkUserId }}</td>
         <td>{{ data.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
         <td nzRight>

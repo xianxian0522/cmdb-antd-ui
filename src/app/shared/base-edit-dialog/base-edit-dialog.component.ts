@@ -44,7 +44,7 @@ export abstract class BaseEditDialogComponent<MODEL extends {id?: number}> imple
   }
 
   ngAfterViewInit(): void {
-    console.log(this.data, this.mode, '有值吗');
+    // console.log(this.data, this.mode, '有值吗');
   }
 
   onSubmit(): void {

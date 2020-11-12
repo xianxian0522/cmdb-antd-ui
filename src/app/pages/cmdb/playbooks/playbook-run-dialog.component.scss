@@ -5,13 +5,33 @@
   }
 }
   .pre-scroll{
-    overflow-y: scroll;
-    height: 40vh;
+    //overflow-y: scroll;
+    //height: 40vh;
     margin-bottom: 20px;
   }
 
 .run-content{
   height: 30vh;
   margin-bottom: 20px;
-  //overflow-y: scroll;
 }
+
+.pre-scroll ::ng-deep > .ant-tabs-card .ant-tabs-content {
+  //height: 120px;
+  margin-top: -16px;
+}
+.pre-scroll ::ng-deep > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+  //background: #fff;
+  //padding: 16px;
+}
+.pre-scroll ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.pre-scroll ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+.pre-scroll ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
+

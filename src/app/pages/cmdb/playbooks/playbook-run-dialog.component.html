@@ -11,15 +11,41 @@
   <div>
     <h3>执行结果</h3>
     <div class="pre-scroll">
+<!--      <nz-tabset nzType="card">-->
+<!--        <nz-tab nzTitle="错误">-->
+<!--          <ng-template nz-tab>-->
+<!--            <nz-code-editor style="height: 40vh;" ngModel="xxx111" [nzEditorOption]="{ language: 'yaml',readOnly: true}">&ndash;&gt;-->
+<!--            </nz-code-editor>-->
+<!--          </ng-template>-->
+<!--        </nz-tab>-->
+<!--        <nz-tab nzTitle="标准输出">-->
+<!--          <ng-template nz-tab>-->
+<!--            <nz-code-editor style="height: 40vh" ngModel="xxx222" [nzEditorOption]="{ language: 'yaml',readOnly: true}">-->
+<!--            </nz-code-editor>-->
+<!--          </ng-template>-->
+<!--        </nz-tab>-->
+<!--        <nz-tab nzTitle="标准错误输出">-->
+<!--          <ng-template nz-tab>-->
+<!--            <nz-code-editor style="height: 40vh;" ngModel="xxx333" [nzEditorOption]="{ language: 'yaml',readOnly: true}">-->
+<!--            </nz-code-editor>-->
+<!--          </ng-template>-->
+<!--        </nz-tab>-->
+<!--      </nz-tabset>-->
       <nz-tabset nzType="card">
         <nz-tab nzTitle="错误" *ngIf="error">
-          <nz-code-editor style="height: 40vh;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
-        </nz-tab>
+          <ng-template nz-tab>
+            <nz-code-editor style="height: 40vh;" [(ngModel)]="error" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+          </ng-template>
+          </nz-tab>
         <nz-tab nzTitle="标准输出" *ngIf="stdout">
-          <nz-code-editor style="height: 40vh" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
-        </nz-tab>
+          <ng-template nz-tab>
+            <nz-code-editor style="height: 40vh" [(ngModel)]="stdout" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+          </ng-template>
+           </nz-tab>
         <nz-tab nzTitle="标准错误输出" *ngIf="stderr">
-          <nz-code-editor style="height: 40vh;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+          <ng-template nz-tab>
+            <nz-code-editor style="height: 40vh;" [(ngModel)]="stderr" [nzEditorOption]="{ language: 'yaml',theme: 'vs-dark' ,readOnly: true}"></nz-code-editor>
+          </ng-template>
         </nz-tab>
       </nz-tabset>
 <!--      <ng-container *ngIf="error">-->

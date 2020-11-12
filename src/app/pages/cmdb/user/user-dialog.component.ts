@@ -32,6 +32,7 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
     realName: [''],
     mail: ['', Validators.email],
     admin: [false],
+    dingTalkUserId: [''],
   });
 
   ngOnInit(): void {
@@ -43,6 +44,7 @@ export class UserDialogComponent extends BaseEditDialogComponent<User> implement
       this.editForm.get('realName').setValue(this.data.realName);
       this.editForm.get('mail').setValue(this.data.mail);
       this.editForm.get('admin').setValue(this.data.admin);
+      this.editForm.get('dingTalkUserId').setValue(this.data.dingTalkUserId);
     }
   }
 

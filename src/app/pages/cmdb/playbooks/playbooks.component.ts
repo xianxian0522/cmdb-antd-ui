@@ -75,6 +75,18 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
       }
     });
   }
+  showCreateDialog(): void {
+    this.modal.create({
+      nzContent: this.editDialogType(),
+      nzComponentParams: {mode: 'create', data: {}},
+      nzFooter: null,
+      nzWidth: '80vw',
+    }).afterClose.subscribe(needRefresh => {
+      if (!!needRefresh) {
+        this.refresh.emit();
+      }
+    });
+  }
 
   showRunDialog(row): void{
     this.modal.create({
