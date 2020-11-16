@@ -122,6 +122,16 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
                 color: '#222'
               }
             },
+            position: (pos, params, dom, rect, size) => {
+              let obj;
+              if (params.length > 8) {
+                obj = {top: 2};
+              } else {
+                obj = {top: 60};
+              }
+              obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
+              return obj;
+            },
             formatter: params =>
               this.seriesState.map((s, idx) => {
                 if (s.isShow) {
@@ -170,6 +180,7 @@ ${d} ${d1}
         };
         const ix = index ? index : this.index;
         const ec = echarts.init(document.getElementById('echartId' + ix));
+        chartData.ec = ec;
         if (ec) {
           ec.showLoading();
         }
@@ -200,6 +211,7 @@ ${d} ${d1}
     } else if (!this.seriesState[i].isShow) {
       this.seriesState = this.seriesState.map((s, index) => ({...s, isShow: i === index}));
     }
+
     const series = this.seriesState.map((s, index) => {
       return {
         itemStyle: {opacity: s.isShow ? 1 : 0},
@@ -233,5 +245,6 @@ ${d} ${d1}
       this.echartsMerge = {series};
     }
   }
+
 
 }

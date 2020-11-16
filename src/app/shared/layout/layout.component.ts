@@ -58,6 +58,11 @@ export class LayoutComponent implements OnInit{
     // 修改当前 HTML 文档的标题
     this.titleService.setTitle(this.section.toUpperCase() + '-' + titleName);
 
+    this.location.onUrlChange(r => {
+      const t = this.sectionItem.filter(v => v.id === r.split('/')[2]).map(n => n.name)[0];
+      this.titleService.setTitle(this.section.toUpperCase() + '-' + t);
+    });
+
     this.getUserInfo();
   }
 

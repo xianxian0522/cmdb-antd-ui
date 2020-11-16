@@ -35,8 +35,12 @@
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  //background: #001529;
   transition: all .3s;
+}
+
+.sidebar-logo i {
+  vertical-align: middle;
+  font-size: 32px;
 }
 
 .sidebar-logo img {
@@ -78,9 +82,6 @@ nz-header {
 }
 
 .app-header-right{
-  //position: relative;
-  //top: 0;
-  //right: 50px;
   .docs-angular-logo {
     height: 26px;
     margin: 0 4px 3px 0;
