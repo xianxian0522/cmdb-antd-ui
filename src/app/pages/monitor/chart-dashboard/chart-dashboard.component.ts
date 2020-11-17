@@ -124,10 +124,16 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
                 color: '#222'
               }
             },
+            textStyle: {
+              fontSize: 12,
+            },
+            enterable: true, // 鼠标可以进入悬浮框
+            extraCssText: 'overflow-y: scroll; max-height: 90%;',
+            hideDelay: 1000, // 延迟浮层隐藏
             position: (pos, params, dom, rect, size) => {
               let obj;
               if (params.length > 8) {
-                obj = {top: -20};
+                obj = {top: 30};
               } else {
                 obj = {top: 60};
               }
@@ -143,7 +149,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
                   const d = p ? [formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')] : '';
                   const d1 = p ? p.data[1] : '';
                   if (d) {
-                    return `<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>${d} ${d1}`;
+                    return `<div style="width: 8px;height: 8px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>${d} ${d1}`;
                   } else {
                     return null;
                   }
