@@ -276,23 +276,21 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
             }
           },
           formatter: params =>
-            this.seriesState.map((s, idx) => {
-              if (s.isShow) {
-                const p = params.length > 1 ? params[idx] : params[0];
+            // this.seriesState.map((s, idx) => {
+            params.map(p => {
+              // if (s.isShow) {
+                // const p = params.length > 1 ? params[idx] : params[0];
                 const c = p ? p.color : '';
                 const d = p ? [formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')] : '';
                 const d1 = p ? p.data[1] : '';
                 if (d) {
-                  return `
-<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>
-${d} ${d1}
-`;
+                  return `<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>${d} ${d1}`;
                 } else {
                   return null;
                 }
-              } else {
-                return null;
-              }
+              // } else {
+              //   return null;
+              // }
             }).filter(x => x !== null).join('<br/>')
         },
         xAxis: {
@@ -316,7 +314,7 @@ ${d} ${d1}
               color: this.colors[i],
             },
           },
-          symbolSize: config.get('lines').value ? 1 : 11,
+          symbolSize: config.get('lines').value ? 1 : 8,
           data: s,
         })),
         animationEasing: 'elasticOut',

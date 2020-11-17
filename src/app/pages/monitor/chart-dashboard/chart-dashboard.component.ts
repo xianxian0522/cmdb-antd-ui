@@ -105,7 +105,9 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           const m = v.metric.__name__ ? v.metric.__name__ : '';
           return `${m}{${Object.keys(v.metric).filter(k => k !== '__name__').sort().map(k => `${k} = ${v.metric[k]}`).join(',')}}`;
         });
-        this.seriesState = data.map(v => ({isShow: true}));
+        // this.seriesState = data.map(v => ({isShow: true}));
+        // 放入chartData里面 每个点击事件以及鼠标事件都是单独的seriesState 不会出现都只是第一个的数据
+        chartData.seriesState = data.map(v => ({isShow: true}));
         chartData.echartsOption = {
           tooltip: { // 提示信息
             trigger: 'axis',
@@ -125,7 +127,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
             position: (pos, params, dom, rect, size) => {
               let obj;
               if (params.length > 8) {
-                obj = {top: 2};
+                obj = {top: -20};
               } else {
                 obj = {top: 60};
               }
@@ -133,23 +135,21 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
               return obj;
             },
             formatter: params =>
-              this.seriesState.map((s, idx) => {
-                if (s.isShow) {
-                  const p = params.length > 1 ? params[idx] : params[0];
+              // chartData.seriesState.map((s, idx) => {
+              params.map(p => {
+                // if (s.isShow) {
+                //   const p = params.length > 1 ? params[idx] : params[0];
                   const c = p ? p.color : '';
                   const d = p ? [formatDate(new Date(p.data[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans')] : '';
                   const d1 = p ? p.data[1] : '';
                   if (d) {
-                    return `
-<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>
-${d} ${d1}
-`;
+                    return `<div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px; background-color: ${c}"></div>${d} ${d1}`;
                   } else {
                     return null;
                   }
-                } else {
-                  return null;
-                }
+                // } else {
+                //   return null;
+                // }
               }).filter(v => v !== null).join('<br/>')
           },
           xAxis: {
@@ -168,7 +168,7 @@ ${d} ${d1}
             type: chartData.config.lines ? 'line' : chartData.config.bars ? 'bar' : 'scatter',
             stack: chartData.config.stack ? 'counts' : '',
             areaStyle: chartData.config.stack ? {normal: {}} : null,
-            symbolSize: chartData.config.lines ? 1 : 11,
+            symbolSize: chartData.config.lines ? 1 : 8,
             itemStyle: {
               normal: {
                 color: this.colors[i],
@@ -203,28 +203,29 @@ ${d} ${d1}
   }
 
   showCurrentSeries(item, i): void { // 点击事件
-    if (this.seriesState.every(v => v.isShow)) {
-      this.seriesState = this.seriesState.map((s, index) => ({...s, isShow: i === index}));
-    } else if (this.seriesState.filter((_, index) => index !== i).every(v => !v.isShow)
-      && this.seriesState[i].isShow) {
-      this.seriesState = this.seriesState.map((s, index) => ({...s, isShow: true}));
-    } else if (!this.seriesState[i].isShow) {
-      this.seriesState = this.seriesState.map((s, index) => ({...s, isShow: i === index}));
+    if (this.chartData.seriesState.every(v => v.isShow)) {
+      this.chartData.seriesState = this.chartData.seriesState.map((s, index) => ({...s, isShow: i === index}));
+    } else if (this.chartData.seriesState.filter((_, index) => index !== i).every(v => !v.isShow)
+      && this.chartData.seriesState[i].isShow) {
+      this.chartData.seriesState = this.chartData.seriesState.map((s, index) => ({...s, isShow: true}));
+    } else if (!this.chartData.seriesState[i].isShow) {
+      this.chartData.seriesState = this.chartData.seriesState.map((s, index) => ({...s, isShow: i === index}));
     }
 
-    const series = this.seriesState.map((s, index) => {
+    const series = this.chartData.seriesState.map((s, index) => {
       return {
         itemStyle: {opacity: s.isShow ? 1 : 0},
         lineStyle: {opacity: s.isShow ? 1 : 0},
         data: s.isShow ? this.seriesData[index] : null,
       };
     });
+    // console.log(this.chartData, '是什么数据吗');
     this.echartsMerge = {series};
   }
 
   unhighlightCurrentSeries(item, i): void { // 移出事件
-    if (this.seriesState.every(v => v.isShow)) {
-      const series = this.seriesState.map((s, index) => {
+    if (this.chartData.seriesState.every(v => v.isShow)) {
+      const series = this.chartData.seriesState.map((s, index) => {
         return {
           itemStyle: {opacity: 1},
           lineStyle: {opacity: 1}
@@ -235,8 +236,8 @@ ${d} ${d1}
   }
 
   highlightCurrentSeries(item, i): void { // 鼠标进入事件
-    if (this.seriesState.every(v => v.isShow)) {
-      const series = this.seriesState.map((s, index) => {
+    if (this.chartData.seriesState.every(v => v.isShow)) {
+      const series = this.chartData.seriesState.map((s, index) => {
         return {
           itemStyle: {opacity: i === index ? 1 : 0.25},
           lineStyle: {opacity: i === index ? 1 : 0.25},
