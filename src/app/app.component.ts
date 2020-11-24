@@ -10,7 +10,7 @@ import {Title} from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit{
   constructor(
-    private  menuItems: MenuItems,
+    private menuItems: MenuItems,
     private location: Location,
     private titleService: Title,
   ) {}

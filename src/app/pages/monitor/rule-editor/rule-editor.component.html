@@ -6,6 +6,12 @@
 
 <div class="rule-head" nz-form nzLayout="inline" [formGroup]="editForm">
   <nz-form-item>
+    <nz-form-label [nzSpan]="8" nzNoColon>ID</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+      <input nz-input placeholder="ID" formControlName="id" nzSize="small" readonly/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSpan]="8" nzNoColon>名字</nz-form-label>
     <nz-form-control [nzSpan]="16">
       <input nz-input placeholder="名字" formControlName="name" nzSize="small"/>
