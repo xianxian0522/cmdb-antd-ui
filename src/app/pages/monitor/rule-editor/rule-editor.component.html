@@ -76,11 +76,16 @@
   <nz-form-item>
     <nz-form-label nzNoColon>报警方式</nz-form-label>
     <nz-form-control>
-<!--      <nz-checkbox-group [(ngModel)]="vias" (ngModelChange)="viaChange($event)"></nz-checkbox-group>-->
+<!--      <nz-checkbox-group formControlName="via" (ngModelChange)="viaChange($event)"></nz-checkbox-group>-->
       <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="viaChange($event)">
+<!--        <div nz-row>-->
+<!--          <div nz-col ><label nz-checkbox nzValue="dingtalk" formControlName="dingtalk">dingtalk</label></div>-->
+<!--          <div nz-col ><label nz-checkbox nzValue="email" formControlName="email">email</label></div>-->
+<!--        </div>-->
         <div nz-row>
-          <div nz-col ><label nz-checkbox nzValue="dingtalk" formControlName="dingtalk">dingtalk</label></div>
-          <div nz-col ><label nz-checkbox nzValue="email" formControlName="email">email</label></div>
+          <div nz-col *ngFor="let via of viaNames">
+            <label nz-checkbox [nzValue]="via" [nzChecked]="viaIncludesName(via)">{{via}}</label>
+          </div>
         </div>
       </nz-checkbox-wrapper>
     </nz-form-control>

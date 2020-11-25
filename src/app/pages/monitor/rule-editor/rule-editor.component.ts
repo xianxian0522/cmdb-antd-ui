@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {RuleRepository} from '../../../shared/services/rule-repository';
+import {RuleNotifiers, RuleRepository} from '../../../shared/services/rule-repository';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {BehaviorSubject, of} from 'rxjs';
 import {UserRepository} from '../../../shared/services/user-repository';
@@ -22,6 +22,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     private ruleRepository: RuleRepository,
     private chartRepository: ChartRepository,
     private userRepository: UserRepository,
+    private ruleNotifiers: RuleNotifiers,
   ) {
     // 构造函数里重写方法
     // this.onSearch = this.debounce(200, (value) => {
@@ -58,10 +59,13 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     {id: 'gt', name: '大于'}, {id: 'gte', name: '大于等于'},
     {id: 'lt', name: '小于'}, {id: 'lte', name: '小于等于'}];
   chartData = [];
-  vias = [{label: 'dingtalk', value: 'dingtalk', checked: false},
-    {label: 'email', value: 'email', checked: false}];
+  viaNames = [];
 
   ngOnInit(): void {
+    this.ruleNotifiers.getNotifiersName().subscribe(names => {
+      this.viaNames = names.map(name => name.name);
+    });
+    console.log(this.data, 'shem');
     this.editForm.get('id').setValue(this.data.id);
     this.editForm.get('chartId').setValue(parseInt(this.data.chartId, 10));
     this.editForm.get('name').setValue(this.data.name);
@@ -73,16 +77,16 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     this.editForm.get('severity').setValue(this.data.severity);
     this.editForm.get('via').setValue(this.data.via);
     this.editForm.get('targets').setValue(this.data.targets);
-    if (this.data.via) {
-      this.data.via.forEach(item => {
-        if (item === 'dingtalk') {
-          this.editForm.get('dingtalk').setValue(true);
-        }
-        if (item === 'email') {
-          this.editForm.get('email').setValue(true);
-        }
-      });
-    }
+    // if (this.data.via) {
+    //   this.data.via.forEach(item => {
+    //     if (item === 'dingtalk') {
+    //       this.editForm.get('dingtalk').setValue(true);
+    //     }
+    //     if (item === 'email') {
+    //       this.editForm.get('email').setValue(true);
+    //     }
+    //   });
+    // }
     this.data.chartId ? this.editForm.get('mode').setValue('normal') :
       this.editForm.get('mode').setValue(this.data.mode);
   }
@@ -199,42 +203,51 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
   }
 
   viaChange(event): void {
-    const s = event.filter(v => v.checked).map(v => v.value);
-    console.log(s);
-    // this.editForm.get('via').setValue(s);
-    console.log(this.editForm.get('email').value, this.editForm.get('dingtalk').value);
-    const via = [];
-    if (this.editForm.get('email').value) {
-      via.push('email');
-    }
-    if (this.editForm.get('dingtalk').value) {
-      via.push('dingtalk');
-    }
-    console.log(via);
+    console.log(event, 'shen me');
+    this.editForm.get('via').setValue(event);
+    // const s = event.filter(v => v.checked).map(v => v.value);
+    // console.log(s);
+    // // this.editForm.get('via').setValue(s);
+    // console.log(this.editForm.get('email').value, this.editForm.get('dingtalk').value);
+    // const via = [];
+    // if (this.editForm.get('email').value) {
+    //   via.push('email');
+    // }
+    // if (this.editForm.get('dingtalk').value) {
+    //   via.push('dingtalk');
+    // }
+    // console.log(via);
+  }
+  viaIncludesName(name): boolean {
+    const via = this.editForm.get('via').value;
+    return via ? via.includes(name) : false;
   }
 
   onClose(): void {
     this.nzModalRef.close();
   }
   onSubmit(): void { // 提交
-    // const s = this.vias.filter(v => v.checked).map(v => v.value);
-    const via = [];
-    if (!this.editForm.get('email').value && !this.editForm.get('dingtalk').value) {
+    // const via = [];
+    // if (!this.editForm.get('email').value && !this.editForm.get('dingtalk').value) {
+    //   this.nzMessageService.warning('至少选择一个报警方式');
+    //   return;
+    // }
+    // if (this.editForm.get('email').value) {
+    //   via.push('email');
+    // }
+    // if (this.editForm.get('dingtalk').value) {
+    //   via.push('dingtalk');
+    // }
+    if (!this.editForm.get('via').value) {
       this.nzMessageService.warning('至少选择一个报警方式');
       return;
-    }
-    if (this.editForm.get('email').value) {
-      via.push('email');
-    }
-    if (this.editForm.get('dingtalk').value) {
-      via.push('dingtalk');
     }
     if (this.editForm.get('mode').value === 'proxy') {
       this.editForm.get('chartId').reset();
       this.editForm.get('operation').setValue('eq');
       this.editForm.get('operand').setValue('0');
     }
-    this.editForm.get('via').setValue(via);
+    // this.editForm.get('via').setValue(via);
     const value = this.editForm.value;
     console.log(value, '提交的每次');
     (this.mode === 'edit' ? this.ruleRepository.update(value) :

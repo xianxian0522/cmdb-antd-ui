@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BaseRepository} from './base.repository';
 import {Rule} from '../models/rule';
+import {Observable} from 'rxjs';
 
 const API = '/api/alerts';
 
@@ -17,3 +18,15 @@ export class RuleRepository extends BaseRepository<Rule> {
     return API;
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RuleNotifiers {
+  constructor(protected httpClient: HttpClient) {}
+
+  getNotifiersName(): Observable<any> {
+    return this.httpClient.get('/api/notifiers');
+  }
+}
+
