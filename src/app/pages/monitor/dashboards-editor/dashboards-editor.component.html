@@ -69,13 +69,13 @@
   <gridster style="background-color: #e6f7ff" [options]="options" [ngStyle]="{minHeight: (rowsAll * options.fixedRowHeight + 20) + 'px'}">
     <gridster-item [item]="item" *ngFor="let item of dashboard; let i = index">
       <div class="button-chart">
-        <button (click)="childSeries.getCharts(item.chartData)" nz-button
+        <button (click)="childSeries.getCharts(item.chartDataID.id)" nz-button
                 style="position: absolute;left: 10px;top: 10px;z-index: 10;">刷新</button>
         <button nz-button (mousedown)="removeItem($event, item)"
                 (touchstart)="removeItem($event, item)" style="position: absolute; right: 10px; top: 10px; z-index: 10;">
           <i nz-icon nzType="delete" nzTheme="outline"></i>
         </button>
-        <app-chart-dashboard [chartData]="item.chartData" [index]="i" #childSeries></app-chart-dashboard>
+        <app-chart-dashboard [chartDataID]="item.chartDataID" [index]="i" #childSeries></app-chart-dashboard>
       </div>
     </gridster-item>
   </gridster>

@@ -22,6 +22,7 @@
     "@ctrl/ngx-codemirror": "^4.0.1",
     "angular-gridster2": "^10.1.6",
     "codemirror": "^5.58.1",
+    "cron-validator": "^1.2.0",
     "echarts": "^4.9.0",
     "filesize": "^6.1.0",
     "monaco-editor": "^0.21.2",

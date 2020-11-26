@@ -38,7 +38,7 @@ export abstract class BaseRepository<MODEL extends { id?: number }> {
   }
 
   getByChartId(chartId: number): Observable<MODEL> {
-    return this.httpClient.get<MODEL>(`${this.api()}?chartId=${chartId}`);
+    return this.httpClient.get<MODEL>(`${this.api()}/${chartId}`);
   }
 
   getByAlertId(AlertId: number, page: number, size: number,

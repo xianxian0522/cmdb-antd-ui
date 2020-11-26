@@ -161,12 +161,6 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
         }
       })
     );
-  // .subscribe(v => {
-  //   console.log(this.chartDashboard, '有无');
-  //   }, err => {
-  //     console.error(err);
-  //     this.nzMessageService.error(err.message, {nzDuration: 3000});
-  //   });
     merge(
       paramsChange,
     ).subscribe(_ => {
@@ -237,9 +231,10 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     }).afterClose.subscribe(result => {
       if (result) {
         result = {...result, echartsOption: {}};
-        this.dashboard.push({chartData: result, x: 0, y: 0, cols: 7, rows: 7});
-        this.ref.detectChanges();
-        this.ref.markForCheck();
+        this.dashboard.push({chartDataID: result, x: 0, y: 0, cols: 7, rows: 7});
+        // this.ref.detectChanges();
+        // this.ref.markForCheck();
+        this.changeDashboard();
       }
     });
   }

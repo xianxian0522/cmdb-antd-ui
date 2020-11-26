@@ -7,6 +7,8 @@ import {ChartRepository} from '../../../shared/services/chart-repository';
 import {BehaviorSubject, of} from 'rxjs';
 import {UserRepository} from '../../../shared/services/user-repository';
 import {debounceTime, map, switchMap} from 'rxjs/operators';
+import { isValidCron } from 'cron-validator';
+import {conditionallyCreateMapObjectLiteral} from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-rule-editor',
@@ -42,11 +44,12 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     chartId: [],
     id: [],
     via: [], // 报警方式
-    dingtalk: [false],
-    email: [false],
+    // dingtalk: [false],
+    // email: [false],
     targets: [], // 接收人
     mode: [''], // 有无图表的新增页面
     severity: [''], // 严重级别
+    schedule: [''], // 告警时段
   });
   isLoading = false;
   optionList: string[] = [];
@@ -77,6 +80,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     this.editForm.get('severity').setValue(this.data.severity);
     this.editForm.get('via').setValue(this.data.via);
     this.editForm.get('targets').setValue(this.data.targets);
+    this.editForm.get('schedule').setValue(this.data.schedule);
     // if (this.data.via) {
     //   this.data.via.forEach(item => {
     //     if (item === 'dingtalk') {
@@ -238,6 +242,7 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
     // if (this.editForm.get('dingtalk').value) {
     //   via.push('dingtalk');
     // }
+
     if (!this.editForm.get('via').value) {
       this.nzMessageService.warning('至少选择一个报警方式');
       return;
@@ -247,7 +252,13 @@ export class RuleEditorComponent implements OnInit, AfterViewInit {
       this.editForm.get('operation').setValue('eq');
       this.editForm.get('operand').setValue('0');
     }
+
     // this.editForm.get('via').setValue(via);
+    const cron = this.editForm.get('schedule').value;
+    if (cron && !isValidCron(cron)) {
+      this.nzMessageService.warning('报警时段格式不正确');
+      return;
+    }
     const value = this.editForm.value;
     console.log(value, '提交的每次');
     (this.mode === 'edit' ? this.ruleRepository.update(value) :

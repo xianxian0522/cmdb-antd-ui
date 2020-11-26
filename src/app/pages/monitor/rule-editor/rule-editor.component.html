@@ -102,6 +102,14 @@
 </div>
 <div nz-form [formGroup]="editForm">
   <nz-form-item>
+    <nz-form-label nzNoColon>告警时段</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input placeholder="告警时段" nzAutosize formControlName="schedule" nzSize="small"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<div nz-form [formGroup]="editForm">
+  <nz-form-item>
     <nz-form-label nzNoColon>接收人</nz-form-label>
     <nz-form-control>
       <nz-select #selectTags

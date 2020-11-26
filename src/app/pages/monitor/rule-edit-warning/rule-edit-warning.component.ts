@@ -71,7 +71,8 @@ export class RuleEditWarningComponent implements OnInit, AfterViewInit {
       this.stateTitle = `当前状态：firing总共：${firing}，resolved总共：${resolved}`;
       // this.stateData.every(item => item.status === 'firing') ? this.stateBackground = 0 :
       //   this.stateData.every(item => item.status === 'resolved') ? this.stateBackground = 1 : this.stateBackground = 2;
-      this.stateData.every(item => item.status === 'firing') ? this.backgroundColor = '#fff2f0' :
+      this.stateData.length === 0 ? this.backgroundColor = '#f6ffed' :
+        this.stateData.every(item => item.status === 'firing') ? this.backgroundColor = '#fff2f0' :
         this.stateData.every(item => item.status === 'resolved') ? this.backgroundColor = '#f6ffed' :
           this.backgroundColor = '#fffbe6';
     });
