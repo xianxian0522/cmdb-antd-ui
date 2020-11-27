@@ -81,7 +81,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
     //   // this.echartsInstance.resize();
     // }
     console.log(chartDataID, 'wu ma');
-    this.chartRepository.getByChartId(chartDataID).subscribe(chartData => {
+    this.chartRepository.getById(chartDataID).subscribe(chartData => {
       console.log(chartData, 'sm shu ju');
       if (chartData) {
         const end = new Date().getTime() / 1000;
