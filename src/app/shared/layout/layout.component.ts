@@ -4,9 +4,7 @@ import {Title} from '@angular/platform-browser';
 import {CommonModule, Location} from '@angular/common';
 import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
 import {NZ_I18N, zh_CN} from 'ng-zorro-antd/i18n';
-import {HttpService} from '../services/httpService';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from '../services/http-interceptors';
+import {HttpClient} from '@angular/common/http';
 import {IconsProviderModule} from '../../icons-provider.module';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
@@ -15,6 +13,7 @@ import {NzMenuModule} from 'ng-zorro-antd/menu';
 import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {LoginService} from '../services/login.service';
 
 @Component({
   selector: 'app-layout',
@@ -28,7 +27,8 @@ export class LayoutComponent implements OnInit{
     private titleService: Title,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private loginService: LoginService
   ) {}
 
   isCollapsed = false;
@@ -95,12 +95,11 @@ export class LayoutComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 
-  getUserInfo(): void{
+  getUserInfo(): void {
     const token = localStorage.getItem('token');
     if (token) {
-      this.httpClient.get<{admin?: boolean, username?: string}>('/userinfo').subscribe(res => {
-        this.userName = res.username;
-      });
+      const decodedToken = this.loginService.decode(token);
+      this.userName = decodedToken.username;
     }
   }
 }
