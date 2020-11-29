@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   submitForm(): void {
     console.log('提交', this.loginForm.value);
     const value = this.loginForm.value;
-    this.loginService.add(value).subscribe(res => {
+    this.loginService.token(value).subscribe(res => {
       if (res) {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/cmdb/user']);
