@@ -14,6 +14,7 @@ import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {LoginService} from '../services/login.service';
+import {NzMessageModule, NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-layout',
@@ -28,7 +29,8 @@ export class LayoutComponent implements OnInit{
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private messageService: NzMessageService
   ) {}
 
   isCollapsed = false;
@@ -100,6 +102,14 @@ export class LayoutComponent implements OnInit{
     if (token) {
       const decodedToken = this.loginService.decode(token);
       this.userName = decodedToken.username;
+      console.log(new Date(decodedToken.exp * 1000), '解码后', new Date());
+      if (new Date().getTime() > decodedToken.exp * 1000) {
+        console.log('token 过期');
+        this.messageService.info('token 过期', {nzDuration: 3000})
+          .onClose.subscribe(s => {
+            this.userLogout();
+        });
+      }
     }
   }
 }
@@ -155,7 +165,8 @@ const routes: Routes = [
     NzIconModule,
     RouterModule,
     NzAvatarModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzMessageModule
   ],
   exports: [RouterModule, LayoutComponent],
   declarations: [
