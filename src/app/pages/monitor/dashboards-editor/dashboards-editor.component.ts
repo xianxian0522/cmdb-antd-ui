@@ -205,7 +205,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
       this.nzMessageService.success(
         this.id ? '修改成功' : '创建成功',
         {nzDuration: 3000}
-      );
+      ).onClose.subscribe(c => {
+        console.log(c, 'chaungjianchengg');
+      });
     }, error => {
       this.nzMessageService.error(
         this.id ? '修改失败' : '创建失败',
