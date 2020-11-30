@@ -192,9 +192,15 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
             })),
             animationEasing: 'elasticOut',
           };
-          this.optionSeries.splice(ix, 1, this.echartsOption.series);
-          this.optionsEcharts.splice(ix, 1, this.echartsOption);
-          this.optionState.splice(ix, 1, this.state);
+          this.optionSeries[ix] = this.echartsOption.series;
+          this.optionSeries = [...this.optionSeries];
+          // this.optionSeries.splice(ix, 1, this.echartsOption.series);
+          this.optionsEcharts[ix] = this.echartsOption;
+          this.optionsEcharts = [...this.optionsEcharts];
+          // this.optionsEcharts.splice(ix, 1, this.echartsOption);
+          this.optionState[ix] = this.state;
+          this.optionState = [...this.optionState];
+          // this.optionState.splice(ix, 1, this.state);
           console.log(this.optionSeries[ix], 'shi duo wei shu zu', ix, this.optionSeries);
           const ec = echarts.init(document.getElementById('echartId' + ix));
           // chartData.ec = ec;
