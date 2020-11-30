@@ -1,18 +1,19 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges, ViewChild
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {formatDate} from '@angular/common';
-import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-chart-dashboard',
@@ -29,6 +30,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   ) {
   }
 
+  @Output() refresh = new EventEmitter<number>();
   @Input() chartDataID: any = {};
   @Input() index: number;
   echartsOption: any = {};
@@ -48,41 +50,29 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   @ViewChild('echartId') echartId;
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {
-    console.log(this.chartDataID, '传过来');
-    // this.getCharts(this.chartDataID.id);
+    this.refresh.subscribe((x) => {
+      console.log(x);
+      this.getCharts(this.chartDataID.id);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes, '有无？？changes');
-    // this.getCharts(changes.chartData.currentValue);
   }
 
   onChartInit(ec): void {
     this.echartsInstance = ec;
-    // this.getCharts(this.chartData);
-  }
-
-  getDashboard(chartData): void {
-    // console.log(chartData, '没传过来吗');
-    if (chartData) {
-      chartData.map((chart, index) => {
-        this.getCharts(chart.chartDataID.id, index);
-      });
-    }
+    // this.refresh.emit();
   }
 
   getCharts(chartDataID, index?): void {
-    // if (this.echartsInstance) {
-    //   this.echartsInstance.showLoading();
-    //   // this.echartsInstance.resize();
-    // }
-    console.log(chartDataID, 'wu ma');
+    if (this.echartsInstance) {
+      this.echartsInstance.showLoading();
+      this.echartsInstance.resize();
+    }
     this.chartRepository.getById(chartDataID).subscribe(chartData => {
-      console.log(chartData, 'sm shu ju');
       if (chartData) {
         const end = new Date().getTime() / 1000;
         const start = end - 60 * 60;
@@ -201,30 +191,19 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           this.optionState[ix] = this.state;
           this.optionState = [...this.optionState];
           // this.optionState.splice(ix, 1, this.state);
-          console.log(this.optionSeries[ix], 'shi duo wei shu zu', ix, this.optionSeries);
-          const ec = echarts.init(document.getElementById('echartId' + ix));
-          // chartData.ec = ec;
-          if (ec) {
-            ec.showLoading();
+          if (this.echartsInstance) {
+            this.echartsInstance.resize();
+            this.echartsInstance.hideLoading();
+            this.echartsInstance.setOption(this.echartsOption, true);
           }
-          ec.setOption(this.echartsOption, true);
-          if (ec) {
-            setTimeout(() => ec.hideLoading());
-          }
-          // if (this.echartsInstance) {
-          //   // this.echartsInstance.resize();
-          //   this.echartsInstance.hideLoading();
-          // }
           // 变更检测 检测该组件 渲染视图
           this.ref.markForCheck();
         }, err => {
-          console.error(err);
           this.echartsInstance.hideLoading();
         });
       }
 
     });
-    console.log(chartDataID, '传过来的chartData');
   }
 
   showCurrentSeries(item, i): void { // 点击事件

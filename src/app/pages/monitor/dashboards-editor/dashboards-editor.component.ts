@@ -5,8 +5,10 @@ import {
   Component,
   OnChanges,
   OnInit,
+  QueryList,
   SimpleChanges,
   ViewChild,
+  ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -42,8 +44,8 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     private ref: ChangeDetectorRef,
   ) {}
 
-  @ViewChild(ChartDashboardComponent)
-  private chartDashboard: ChartDashboardComponent;
+  @ViewChildren(ChartDashboardComponent)
+  private chartDashboard: QueryList<ChartDashboardComponent>;
 
   @ViewChild('fullScreen') fullScreen;
   isFullScreen = false;
@@ -99,7 +101,10 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
       itemChangeCallback: (item, itemComponent) => {
         this.rowsAll = this.dashboard.map(t => t.rows + t.y)
           .reduce((res, tt) => res < tt ? tt : res, 0);
-        console.log(this.rowsAll, '行数');
+        const idx = this.dashboard.indexOf(item);
+        if (idx !== -1) {
+          this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
+        }
       },
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;
@@ -109,13 +114,13 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
           console.log('set size', this.options.fixedRowHeight);
           const sf = screenfull as Screenfull;
           this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
-          this.changeDashboard();
+          const idx = this.dashboard.indexOf(item);
+          if (idx !== -1) {
+            this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
+          }
         }
       },
       gridSizeChangedCallback: gridsterComponent => {
-        // console.log(gridsterComponent, '这个元素的宽', gridsterComponent.curColWidth);
-        // this.options.fixedRowHeight = gridsterComponent.curColWidth * 0.618;
-        // this.options.api.optionsChanged();
       },
       pushItems: true,
       draggable: {
@@ -164,9 +169,6 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     merge(
       paramsChange,
     ).subscribe(_ => {
-      // // 重新渲染数据 检查该视图及其子视图
-      // this.ref.markForCheck();
-      // this.ref.detectChanges();
       this.changeDashboard();
     });
   }
@@ -184,7 +186,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     this.ref.markForCheck();
     this.ref.detectChanges();
     if (this.chartDashboard) {
-      this.chartDashboard.getDashboard(this.dashboard);
+      this.chartDashboard.forEach(c => c.refresh.emit(2));
       // this.dashboard.map(item => {
       //   this.chartDashboard.getCharts(item.chartData);
       //   console.log('调用几次？？');
