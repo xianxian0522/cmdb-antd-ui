@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'charts', component: ChartsComponent},
   {path: 'charts/edit', component: ChartEditComponent},
   {path: 'dashboards', component: DashboardsComponent},
-  {path: 'dashboards/edit', component: DashboardsEditorComponent}
+  {path: 'dashboards/edit', component: DashboardsEditorComponent},
 ];
 
 @NgModule({

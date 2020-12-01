@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {ChartRepository} from '../../../shared/services/chart-repository';
 import {merge, Observable, of} from 'rxjs';
@@ -61,6 +61,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     private nzMessageService: NzMessageService,
     private ruleRepository: RuleRepository,
     private modal: NzModalService,
+    private router: Router,
   ) {
   }
 
@@ -340,7 +341,10 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
         this.nzMessageService.success(
           this.id ? '修改成功' : '创建成功',
           {nzDuration: 3000}
-        );
+        ).onClose.subscribe(c => {
+          this.router.navigate(['../edit'], { queryParams: { id: newValue.id },
+            relativeTo: this.activatedRoute});
+        });
       },
       err => {
         this.nzMessageService.error(

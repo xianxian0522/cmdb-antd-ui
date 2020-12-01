@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DashboardRepository} from '../../../shared/services/dashboard-repository';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -42,6 +42,7 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     private nzMessageService: NzMessageService,
     private modal: NzModalService,
     private ref: ChangeDetectorRef,
+    private router: Router,
   ) {}
 
   @ViewChildren(ChartDashboardComponent)
@@ -208,7 +209,8 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
         this.id ? '修改成功' : '创建成功',
         {nzDuration: 3000}
       ).onClose.subscribe(c => {
-        console.log(c, 'chaungjianchengg');
+        this.router.navigate(['../edit'], { queryParams: { id: newValue.id },
+          relativeTo: this.activatedRoute});
       });
     }, error => {
       this.nzMessageService.error(
