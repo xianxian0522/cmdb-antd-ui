@@ -63,6 +63,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     private modal: NzModalService,
     private router: Router,
   ) {
+    Object.assign(this, { multi: this.multi });
   }
 
   id: number = null;
@@ -131,6 +132,33 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
 
   referenceIdFormGroup = this.editForm.get('referenceId');
 
+
+  // ngx-charts 配置option
+  multi: any[] = [];
+  view: any[] = [700, 300];
+  legend: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  timeline: boolean = true;
+  colorScheme = {
+    domain: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
+      '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
+  };
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+
+
   referenceIdValidator(control: FormGroup): ValidationErrors | null {
     const values = Object.values(control.controls).map(c => c.value);
     const length = values.filter(v => !!v).length;
@@ -159,6 +187,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
   }
 
   onChartInit(ec): void {
@@ -260,6 +289,16 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
         const m = s.metric.__name__ ? s.metric.__name__ : '';
         return `${m}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
       });
+
+      // ngx-charts的results
+      this.multi = data.map((s, i) => ({
+        name: names[i],
+        series: s.map(ss => ({
+          name: ss[0],
+          value: ss[1],
+        }))
+      }));
+
       this.echartsOption = {
         tooltip: {   // 提示信息
           trigger: 'axis',

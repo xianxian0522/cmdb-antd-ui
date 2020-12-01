@@ -115,6 +115,35 @@
       <span>{{item.name}}</span>
     </div>
   </div>
+
+<div style="width: 100%; height: 400px">
+  <ngx-charts-line-chart
+    [scheme]="colorScheme"
+    [legend]="legend"
+    legendPosition
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [timeline]="timeline"
+    [results]="multi"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+  >
+    <ng-template #seriesTooltipTemplate let-items="model">
+      <p style="font-size:20px;margin:1px 0 0 0;">{{ items[0].name | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+      <ul style="text-align:left; list-style: none; padding-left: 10px">
+        <li *ngFor="let item of items; let i = index">
+          <div style="width: 10px;height: 10px;display: inline-block;margin-right: 3px;" [style.backgroundColor]="item.color"></div>
+          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}
+          <br>
+        </li>
+      </ul>
+    </ng-template>
+  </ngx-charts-line-chart>
+</div>
+
 <!--</div>-->
 <!--<div *ngIf="editForm.get('config').get('type').value==='value'" style="margin: 15px 0;">-->
 <!--  <h1 style="text-align: center">数值</h1>-->
@@ -126,7 +155,7 @@
 <!--  <nz-code-editor style="height: 200px" [nzEditorOption]="{ language: 'markdown' }"></nz-code-editor>-->
 <!--</div>-->
 <div *ngIf="!isReadOnly">
-  <button nz-button (click)="showCreateDialog()">Add Rule</button>
+  <button style="margin-top: 30px" nz-button (click)="showCreateDialog()">Add Rule</button>
   <div>
     <nz-table
       #rowSelectionTable

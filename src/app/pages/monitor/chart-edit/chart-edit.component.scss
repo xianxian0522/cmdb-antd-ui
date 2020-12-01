@@ -82,3 +82,7 @@ nz-date-picker {
     background-color: #cdcdcd;
   }
 }
+// 修改ngx-charts的legend的属性
+::ng-deep .chart-legend {
+  display: block !important;
+}

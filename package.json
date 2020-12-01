@@ -21,6 +21,7 @@
     "@angular/router": "~10.1.5",
     "@auth0/angular-jwt": "^5.0.2",
     "@ctrl/ngx-codemirror": "^4.0.1",
+    "@swimlane/ngx-charts": "^16.0.0",
     "angular-gridster2": "^10.1.6",
     "codemirror": "^5.58.1",
     "cron-validator": "^1.2.0",

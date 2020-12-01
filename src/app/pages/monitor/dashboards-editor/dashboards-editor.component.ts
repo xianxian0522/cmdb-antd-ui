@@ -103,9 +103,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
         this.rowsAll = this.dashboard.map(t => t.rows + t.y)
           .reduce((res, tt) => res < tt ? tt : res, 0);
         const idx = this.dashboard.indexOf(item);
-        if (idx !== -1) {
-          this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
-        }
+        // if (idx !== -1) {
+        //   this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
+        // }
       },
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;

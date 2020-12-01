@@ -34,6 +34,7 @@ import {NzTagModule} from 'ng-zorro-antd/tag';
 import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzCollapseModule} from 'ng-zorro-antd/collapse';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import {NzCollapseModule} from 'ng-zorro-antd/collapse';
     NzTagModule,
     NzCodeEditorModule,
     NzToolTipModule,
-    NzCollapseModule
+    NzCollapseModule,
+    NgxChartsModule,
   ]
 })
 export class MonitorModule { }
