@@ -87,9 +87,9 @@ nz-date-picker {
   display: block !important;
 }
 // 去掉多余的显示time图
-::ng-deep .timeline .brush-background, ::ng-deep .timeline .embedded-chart {
-  display: none;
-}
+//::ng-deep .timeline .brush-background, ::ng-deep .timeline .embedded-chart {
+//  display: none;
+//}
 // 中间的空白
 ::ng-deep .chart-legend .legend-labels {
   position: relative;

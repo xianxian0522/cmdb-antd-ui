@@ -77,17 +77,20 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     console.log(this.fullScreen, sf.element, '是全屏描述');
     if (sf.isEnabled) {
       sf.toggle(this.fullScreen.nativeElement).then(r => {
+        this.changeDashboard();
         console.log(this.options.fixedRowHeight, '这元素的...');
       });
     }
   }
 
-  onCloseScreenFull(): void { // 退出全屏
+  // 退出全屏 退出全屏或者全屏都要刷新自组建 重新渲染大小
+  onCloseScreenFull(): void {
     const sf = screenfull as Screenfull;
     this.isFullScreen = false;
     console.log(sf.element, 'fei全屏模式');
     if (sf.isEnabled) {
       sf.exit().then(r => {
+        this.changeDashboard();
         console.log(this.options.fixedRowHeight, '这元素的...');
       });
     }
@@ -103,9 +106,15 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
         this.rowsAll = this.dashboard.map(t => t.rows + t.y)
           .reduce((res, tt) => res < tt ? tt : res, 0);
         const idx = this.dashboard.indexOf(item);
-        // if (idx !== -1) {
-        //   this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
-        // }
+        if (idx !== -1) {
+          // this.chartDashboard.find((_, i) => i === idx).refresh.emit(3);
+          const c = this.chartDashboard.find((_, i) => i === idx);
+          // 新增图表的时候c是underfund
+          if (c) {
+            c.refresh.emit(3);
+          }
+        }
+        console.log(idx, 'idx sm');
       },
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;

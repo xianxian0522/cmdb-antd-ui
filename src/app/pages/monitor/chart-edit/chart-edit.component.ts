@@ -150,6 +150,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   // yAxis: boolean = true;
   // showYAxisLabel: boolean = true;
   // showXAxisLabel: boolean = true;
+  // timeline去掉charts下面的时间推移显示的图
   // timeline: boolean = true;
   colorScheme = {
     domain: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
