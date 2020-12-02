@@ -86,3 +86,21 @@ nz-date-picker {
 ::ng-deep .chart-legend {
   display: block !important;
 }
+// 去掉多余的显示time图
+::ng-deep .timeline .brush-background, ::ng-deep .timeline .embedded-chart {
+  display: none;
+}
+// 中间的空白
+::ng-deep .chart-legend .legend-labels {
+  position: relative;
+  top: -10px;
+  max-height: 100px !important;
+  background: rgba(256, 256, 256, 1) !important;
+}
+.series-tooltip-template {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 3px;
+  border-radius: 2px;
+}

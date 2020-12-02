@@ -63,7 +63,10 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     private modal: NzModalService,
     private router: Router,
   ) {
-    Object.assign(this, { multi: this.multi });
+    Object.assign(this, {
+      multi: this.multi,
+      bubbleData: this.bubbleData,
+    });
   }
 
   id: number = null;
@@ -134,22 +137,28 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
 
 
   // ngx-charts 配置option
+  chartType: any;
+  // lines的数据
   multi: any[] = [];
+  // bars的数据
+  bubbleData: any[] = [];
   view: any[] = [700, 300];
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  timeline: boolean = true;
+  // legend: boolean = true;
+  // showLabels: boolean = true;
+  // animations: boolean = true;
+  // xAxis: boolean = true;
+  // yAxis: boolean = true;
+  // showYAxisLabel: boolean = true;
+  // showXAxisLabel: boolean = true;
+  // timeline: boolean = true;
   colorScheme = {
     domain: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
       '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
   };
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    const result = this.multi.filter(n => n.name === JSON.parse(JSON.stringify(data)));
+    console.log(result, 'you ji ge');
   }
   onActivate(data): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
@@ -290,12 +299,24 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
         return `${m}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
       });
 
-      // ngx-charts的results
+      // ngx-charts的results lines的数据
       this.multi = data.map((s, i) => ({
         name: names[i],
         series: s.map(ss => ({
           name: ss[0],
-          value: ss[1],
+          // name: formatDate(new Date(ss[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+          value: parseFloat(ss[1]),
+        }))
+      }));
+      this.chartType = config.get('lines').value ? 'lines' : config.get('bars').value ? 'bars' : 'points';
+      // points的数据
+      this.bubbleData = data.map((s, i) => ({
+        name: names[i],
+        series: s.map(ss => ({
+          name: ss[0],
+          x: ss[0],
+          y: ss[1],
+          r: 5
         }))
       }));
 
