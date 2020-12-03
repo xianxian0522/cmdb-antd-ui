@@ -179,7 +179,7 @@
       </ul>
     </ng-template>
   </ngx-charts-area-chart-stacked>
-<!-- 散点图-->
+<!-- 散点图 y轴的值有重复的 是根据每条数据生成的y轴值？？-->
   <ngx-charts-bubble-chart *ngIf="chartType === 'points' && !editForm.get('config').get('stack').value"
     [scheme]="colorScheme"
     [results]="bubbleData"
@@ -202,6 +202,33 @@
       </ul>
     </ng-template>
   </ngx-charts-bubble-chart>
+<!--  柱状图-->
+<!--  <ngx-charts-bar-vertical-2d-->
+<!--    [scheme]="colorScheme"-->
+<!--    [results]="single"-->
+<!--    gradient="true"-->
+<!--    xAxis="true"-->
+<!--    yAxis="true"-->
+<!--    legend="true"-->
+<!--    showXAxisLabel="true"-->
+<!--    legendPosition-->
+<!--    showYAxisLabel="true"-->
+<!--    (select)="onSelect($event)"-->
+<!--    (activate)="onActivate($event)"-->
+<!--    (deactivate)="onDeactivate($event)">-->
+<!--  </ngx-charts-bar-vertical-2d>-->
+  <ngx-charts-bar-vertical-normalized
+    [scheme]="colorScheme"
+    [results]="single"
+    gradient="true"
+    xAxis="true"
+    yAxis="true"
+    legend="true"
+    showXAxisLabel="true"
+    legendPosition
+    showYAxisLabel="true"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical-normalized>
 </div>
 
 <!--</div>-->

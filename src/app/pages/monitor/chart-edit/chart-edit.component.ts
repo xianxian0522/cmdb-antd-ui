@@ -66,6 +66,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     Object.assign(this, {
       multi: this.multi,
       bubbleData: this.bubbleData,
+      single: this.single,
     });
   }
 
@@ -138,10 +139,11 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
 
   // ngx-charts 配置option
   chartType: any;
-  // lines的数据
+  // lines的数据 bars的数据
   multi: any[] = [];
-  // bars的数据
+  // points的数据
   bubbleData: any[] = [];
+  single: any[] = [];
   view: any[] = [700, 300];
   // legend: boolean = true;
   // showLabels: boolean = true;
@@ -300,7 +302,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
         return `${m}{${Object.keys(s.metric).filter(k => k !== '__name__').sort().map(k => `${k}="${s.metric[k]}"`).join(',')}}`;
       });
 
-      // ngx-charts的results lines的数据
+      // ngx-charts的results lines的数据 bars的数据
       this.multi = data.map((s, i) => ({
         name: names[i],
         series: s.map(ss => ({
@@ -320,6 +322,26 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
           r: 5
         }))
       }));
+      // bars的数据
+      this.single = data.map((s, i) => ({
+        name: formatDate(new Date(s.map(name => name[0])[i]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+        series: s.map(ss => ({
+          name: names[i],
+          value: parseFloat(ss[1]),
+        }))
+      }));
+      console.log(this.single, 'sm');
+      const bar = data.map((s, i) => {
+        return s.map(ss => ({
+          name: formatDate(new Date(ss[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+          series: names.map(n => ({
+            name: n,
+            value: parseFloat(ss[1]),
+          }))
+        }));
+      });
+      this.single = bar[0];
+      console.log(this.single, 'bubb', [].concat(...bar));
 
       this.echartsOption = {
         tooltip: {   // 提示信息
