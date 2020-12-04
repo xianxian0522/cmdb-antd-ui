@@ -55,7 +55,7 @@
 <!--      <label nz-radio nzValue="bars" formControlName="bars" (ngModelChage)="statusChange('bars')">bars</label>-->
 <!--      <label nz-radio nzValue="lines" formControlName="lines" (ngModelChage)="statusChange('lines')">lines</label>-->
 <!--      <label nz-radio nzValue="points" formControlName="points" >points</label>-->
-      <label nz-checkbox formControlName="stack" (ngModelChange)="stackChange()">stack</label>
+      <label [nzDisabled]="editForm.get('config').get('points').value" nz-checkbox formControlName="stack" (ngModelChange)="stackChange()">stack</label>
     </nz-radio-group>
     <div formGroupName="config" style="margin-left: 20px;">
       <nz-select formControlName="type" nzPlaceHolder="Choose" nzSize="small">
@@ -107,15 +107,17 @@
   </div>
 </form>
 <!--<div *ngIf="editForm.get('config').get('type').value==='echarts'">-->
-  <div echarts [options]="echartsOption" [merge]="echartsMerge" class="demo-chart" (chartInit)="onChartInit($event)"></div>
-  <div class="content-echarts">
-    <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)" (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of echartsOption.series || []; index as i">
-      <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>
-      <span>{{item.name}}</span>
-    </div>
-  </div>
+<!-- ngx-echarts图表 -->
+<!--  <div echarts [options]="echartsOption" [merge]="echartsMerge" class="demo-chart" (chartInit)="onChartInit($event)"></div>-->
+<!--  <div class="content-echarts">-->
+<!--    <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)" (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of echartsOption.series || []; index as i">-->
+<!--      <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>-->
+<!--      <span>{{item.name}}</span>-->
+<!--    </div>-->
+<!--  </div>-->
 
-<div style="width: 100%; height: 400px">
+<!-- ngx-charts图表 -->
+<div class="chart-edit-charts">
 <!--  线性图-->
   <ngx-charts-line-chart *ngIf="chartType === 'lines' && !editForm.get('config').get('stack').value"
     [scheme]="colorScheme"
@@ -178,8 +180,8 @@
       </ul>
     </ng-template>
   </ngx-charts-area-chart-stacked>
-<!-- 散点图 y轴的值有重复的 是根据每条数据生成的y轴值？？-->
-  <ngx-charts-bubble-chart *ngIf="chartType === 'points' && !editForm.get('config').get('stack').value"
+<!-- 散点图 y轴值需要parseFloat-->
+  <ngx-charts-bubble-chart *ngIf="chartType === 'points'"
     [scheme]="colorScheme"
     [results]="bubbleData"
     xAxis="true"
@@ -216,18 +218,18 @@
 <!--    (activate)="onActivate($event)"-->
 <!--    (deactivate)="onDeactivate($event)">-->
 <!--  </ngx-charts-bar-vertical-2d>-->
-  <ngx-charts-bar-vertical-normalized
-    [scheme]="colorScheme"
-    [results]="single"
-    gradient="true"
-    xAxis="true"
-    yAxis="true"
-    legend="true"
-    showXAxisLabel="true"
-    legendPosition
-    showYAxisLabel="true"
-    (select)="onSelect($event)">
-  </ngx-charts-bar-vertical-normalized>
+<!--  <ngx-charts-bar-vertical-normalized-->
+<!--    [scheme]="colorScheme"-->
+<!--    [results]="single"-->
+<!--    gradient="true"-->
+<!--    xAxis="true"-->
+<!--    yAxis="true"-->
+<!--    legend="true"-->
+<!--    showXAxisLabel="true"-->
+<!--    legendPosition-->
+<!--    showYAxisLabel="true"-->
+<!--    (select)="onSelect($event)">-->
+<!--  </ngx-charts-bar-vertical-normalized>-->
 </div>
 
 <!--</div>-->

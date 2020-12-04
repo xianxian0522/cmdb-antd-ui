@@ -82,8 +82,14 @@ nz-date-picker {
     background-color: #cdcdcd;
   }
 }
+
+.chart-edit-charts {
+  width: 100%;
+  height: 400px;
+  margin-top: 30px;
+}
 // 修改ngx-charts的legend的属性
-::ng-deep .chart-legend {
+.chart-edit-charts ::ng-deep .chart-legend {
   display: block !important;
 }
 // 去掉多余的显示time图
@@ -91,7 +97,7 @@ nz-date-picker {
 //  display: none;
 //}
 // 中间的空白
-::ng-deep .chart-legend .legend-labels {
+.chart-edit-charts ::ng-deep .chart-legend .legend-labels {
   position: relative;
   top: -10px;
   max-height: 100px !important;

@@ -28,6 +28,10 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
     private chartRepository: ChartRepository,
     private ref: ChangeDetectorRef,
   ) {
+    Object.assign(this, {
+      multi: this.multi,
+      bubbleData: this.bubbleData,
+    });
   }
 
   @Output() refresh = new EventEmitter<number>();
@@ -48,8 +52,29 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
     '#c4ccd3'
   ];
   @ViewChild('echartId') echartId;
+  // ngx-charts的数据
+  colorScheme = {
+    domain: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
+      '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
+  };
+  chartType: any;
+  chartStack: boolean;
+  // lines的数据 bars的数据
+  multi: any[] = [];
+  // points的数据
+  bubbleData: any[] = [];
 
   ngOnInit(): void {
+  }
+
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngAfterViewInit(): void {
@@ -196,6 +221,29 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
             this.echartsInstance.hideLoading();
             this.echartsInstance.setOption(this.echartsOption, true);
           }
+
+          // ngx-charts的results lines的数据 bars的数据
+          this.multi = data.map((s, i) => ({
+            name: names[i],
+            series: s.map(ss => ({
+              name: ss[0],
+              // name: formatDate(new Date(ss[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+              value: parseFloat(ss[1] as string),
+            }))
+          }));
+          this.chartType = chartData.config.lines ? 'lines' : chartData.config.bars ? 'bars' : 'points';
+          this.chartStack = chartData.config.stack;
+          // points的数据 y的值需要parseFloat 否则就是散乱的
+          this.bubbleData = data.map((s, i) => ({
+            name: names[i],
+            series: s.map(ss => ({
+              name: ss[0],
+              x: ss[0],
+              y: parseFloat(ss[1] as string),
+              r: 3
+            }))
+          }));
+
           // 变更检测 检测该组件 渲染视图
           this.ref.markForCheck();
         }, err => {

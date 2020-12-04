@@ -39,3 +39,39 @@
     height: 100%;
   }
 }
+
+
+.ngx-charts-content {
+  height: 80%;
+  margin-top: 20px;
+}
+// 修改ngx-charts的legend的属性
+::ng-deep .chart-legend {
+  display: block !important;
+}
+// 去掉多余的显示time图
+//::ng-deep .timeline .brush-background, ::ng-deep .timeline .embedded-chart {
+//  display: none;
+//}
+// 中间的空白
+.ngx-charts-content ::ng-deep .chart-legend .legend-labels {
+  max-height: 60px !important;
+  background: rgba(256, 256, 256, 1) !important;
+  position: relative;
+  //bottom: -25px;
+}
+.ngx-charts-content .series-tooltip-template {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 3px;
+  border-radius: 2px;
+}
+.ngx-charts-content ::ng-deep .chart-legend .legend-label {
+  margin: 4px !important;
+}
+.ngx-charts-content ::ng-deep .chart-legend .legend-label-color {
+  width: 10px !important;
+  height: 10px !important;
+  margin-top: 3px !important;
+}

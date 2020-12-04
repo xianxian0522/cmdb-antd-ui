@@ -113,7 +113,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     }),
     radio: [''],
   });
-  seasons: string[] = ['bars', 'lines', 'points'];
+  seasons: string[] = ['lines', 'points'];
 
   // 查询条件
   stepTime = new FormControl('1h');
@@ -160,8 +160,8 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   };
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    const result = this.multi.filter(n => n.name === JSON.parse(JSON.stringify(data)));
-    console.log(result, 'you ji ge');
+    // const result = this.multi.filter(n => n.name === JSON.parse(JSON.stringify(data)));
+    // console.log(result, 'you ji ge');
   }
   onActivate(data): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
@@ -316,36 +316,36 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
         }))
       }));
       this.chartType = config.get('lines').value ? 'lines' : config.get('bars').value ? 'bars' : 'points';
-      // points的数据
+      // points的数据 y的值需要parseFloat 否则就是散乱的
       this.bubbleData = data.map((s, i) => ({
         name: names[i],
         series: s.map(ss => ({
           name: ss[0],
           x: ss[0],
-          y: ss[1],
-          r: 5
+          y: parseFloat(ss[1]),
+          r: 3
         }))
       }));
       // bars的数据
-      this.single = data.map((s, i) => ({
-        name: formatDate(new Date(s.map(name => name[0])[i]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
-        series: s.map(ss => ({
-          name: names[i],
-          value: parseFloat(ss[1]),
-        }))
-      }));
-      console.log(this.single, 'sm');
-      const bar = data.map((s, i) => {
-        return s.map(ss => ({
-          name: formatDate(new Date(ss[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
-          series: names.map(n => ({
-            name: n,
-            value: parseFloat(ss[1]),
-          }))
-        }));
-      });
-      this.single = bar[0];
-      console.log(this.single, 'bubb', [].concat(...bar));
+      // this.single = data.map((s, i) => ({
+      //   name: formatDate(new Date(s.map(name => name[0])[i]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+      //   series: s.map(ss => ({
+      //     name: names[i],
+      //     value: parseFloat(ss[1]),
+      //   }))
+      // }));
+      // console.log(this.single, 'sm');
+      // const bar = data.map((s, i) => {
+      //   return s.map(ss => ({
+      //     name: formatDate(new Date(ss[0]), 'yyyy-MM-dd HH:mm:ss', 'zh-Hans'),
+      //     series: names.map(n => ({
+      //       name: n,
+      //       value: parseFloat(ss[1]),
+      //     }))
+      //   }));
+      // });
+      // this.single = bar[0];
+      // console.log(this.single, 'bubb', [].concat(...bar));
 
       this.echartsOption = {
         tooltip: {   // 提示信息

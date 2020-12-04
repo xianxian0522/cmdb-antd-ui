@@ -1,11 +1,101 @@
-<div class="charts-list">
-  <div style="text-align: center;">{{chartDataID.name}}</div>
-  <div class="chart-item" [id]="'echartId' + index" echarts [options]="optionsEcharts[index]" [merge]="echartsMerge" (chartInit)="onChartInit($event)"></div>
-  <div class="content-echarts">
-    <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)"
-         (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of optionSeries[index] || []; index as i">
-      <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>
-      <span>{{item.name}}</span>
-    </div>
-  </div>
+<!--<div class="charts-list">-->
+<!--  <div style="text-align: center;">{{chartDataID.name}}</div>-->
+<!--  <div class="chart-item" [id]="'echartId' + index" echarts [options]="optionsEcharts[index]" [merge]="echartsMerge" (chartInit)="onChartInit($event)"></div>-->
+<!--  <div class="content-echarts">-->
+<!--    <div class="content-echarts-text" (click)="showCurrentSeries(item, i)" (mouseleave)="unhighlightCurrentSeries(item, i)"-->
+<!--         (mouseenter)="highlightCurrentSeries(item, i)" *ngFor="let item of optionSeries[index] || []; index as i">-->
+<!--      <div class="circular" [ngStyle]="{'background-color': item.itemStyle.normal.color}"></div>-->
+<!--      <span>{{item.name}}</span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="ngx-charts-content">
+  <!--  线性图-->
+  <ngx-charts-line-chart *ngIf="chartType === 'lines' && !chartStack"
+                         [scheme]="colorScheme"
+                         legend="true"
+                         legendPosition
+                         showXAxisLabel="true"
+                         showYAxisLabel="true"
+                         xAxis="true"
+                         yAxis="true"
+                         autoScale="true"
+                         [timeline]=false
+                         (select)="onSelect($event)"
+                         (activate)="onActivate($event)"
+                         (deactivate)="onDeactivate($event)"
+                         [results]="multi">
+    <ng-template #seriesTooltipTemplate let-items="model">
+      <p style="font-size:20px;margin:1px 0 0 0;">{{ items[0].name | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+      <ul style="text-align:left; list-style: none; padding-left: 10px">
+        <li *ngFor="let item of items; let i = index">
+          <div class="series-tooltip-template" [style.backgroundColor]="item.color"></div>
+          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}
+          <br>
+        </li>
+      </ul>
+    </ng-template>
+    <ng-template #tooltipTemplate let-item="model">
+      <p style="margin:1px 0 0 0;">{{item.series}}</p>
+      <ul style="list-style: none">
+        <li>{{item.name}}: {{item.value}}</li>
+      </ul>
+    </ng-template>
+  </ngx-charts-line-chart>
+  <!-- 线性推叠图-->
+  <ngx-charts-area-chart-stacked *ngIf="chartType === 'lines' && chartStack"
+                                 [scheme]="colorScheme"
+                                 legend="true"
+                                 legendPosition
+                                 autoScale="true"
+                                 showXAxisLabel="true"
+                                 showYAxisLabel="true"
+                                 xAxis="true"
+                                 yAxis="true"
+                                 [timeline]=false
+                                 (select)="onSelect($event)"
+                                 (activate)="onActivate($event)"
+                                 (deactivate)="onDeactivate($event)"
+                                 [results]="multi">
+    <ng-template #seriesTooltipTemplate let-items="model">
+      <p style="font-size:20px;margin:1px 0 0 0;">{{ items[0].name | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+      <ul style="text-align:left; list-style: none; padding-left: 10px">
+        <li *ngFor="let item of items; let i = index">
+          <div class="series-tooltip-template" [style.backgroundColor]="item.color"></div>
+          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}
+          <br>
+        </li>
+      </ul>
+    </ng-template>
+    <ng-template #tooltipTemplate let-item="model">
+      <p style="margin:1px 0 0 0;">{{item.series}}</p>
+      <ul style="list-style: none">
+        <li>{{item.name}}: {{item.value}}</li>
+      </ul>
+    </ng-template>
+  </ngx-charts-area-chart-stacked>
+  <!-- 散点图 y轴值需要parseFloat-->
+  <ngx-charts-bubble-chart *ngIf="chartType === 'points'"
+                           [scheme]="colorScheme"
+                           [results]="bubbleData"
+                           xAxis="true"
+                           legendPosition
+                           yAxis="true"
+                           legend="true"
+                           showXAxisLabel="true"
+                           showYAxisLabel="true"
+                           autoScale="true"
+                           (select)="onSelect($event)"
+                           (activate)="onActivate($event)"
+                           (deactivate)="onDeactivate($event)"
+                           maxRadius="4"
+                           minRadius="4">
+    <ng-template #tooltipTemplate let-item="model">
+      <p style="margin:1px 0 0 0;">{{item.series}}</p>
+      <ul style="list-style: none">
+        <li>{{item.name}}: {{item.value}}</li>
+      </ul>
+    </ng-template>
+  </ngx-charts-bubble-chart>
 </div>
