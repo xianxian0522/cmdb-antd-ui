@@ -119,7 +119,7 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   stepTime = new FormControl('1h');
   stepTimes: string[] = ['10s', '1m', '5m', '15m', '30m',
     '1h', '2h', '6h', '12h', '1d', '2d', '1w'];
-  startTime = new FormControl(new Date(), [Validators.required]);
+  startTime = new FormControl('');
   step = new FormControl(60, {updateOn: 'blur'});
 
   // echarts配置
@@ -274,8 +274,12 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
     if (!query) {
       return;
     }
-    const start = this.startTime.value / 1000 - this.getStepTime();
-    const end = this.startTime.value / 1000;
+    const time = this.startTime.value ? this.startTime.value : new Date();
+    // if (!this.startTime.value) {
+    //   this.startTime.setValue(new Date());
+    // }
+    const start = time / 1000 - this.getStepTime();
+    const end = time / 1000;
     const step = this.step.value;
     const config = this.editForm.get('config');
     this.chartGetRepository.query(
