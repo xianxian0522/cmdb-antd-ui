@@ -60,6 +60,22 @@
     <button nz-button (click)="addItem()" *ngIf="!isFullScreen">
       <i nz-icon nzType="plus" nzTheme="outline"></i>
     </button>
+
+    <nz-select [formControl]="stepTime">
+      <nz-option *ngFor="let option of stepTimes" [nzValue]="option" [nzLabel]="option"></nz-option>
+    </nz-select>
+    <div class="select-date">
+      <i class="select-date-icon" (click)="timeChange(-1)" nz-icon nzType="backward" nzTheme="outline"></i>
+      <nz-date-picker
+        nzShowTime
+        nzFormat="yyyy-MM-dd HH:mm:ss"
+        [formControl]="startTime"
+        nzPlaceHolder="请选择时间"
+      ></nz-date-picker>
+      <i class="select-date-icon" (click)="timeChange(1)" nz-icon nzType="forward" nzTheme="outline"></i>
+    </div>
+    <input style="width: 80px;margin-right: 20px;" nz-input type="number" [formControl]="step"/>
+
     <button nz-button (click)="changeDashboard()">
       <i nz-icon nzType="reload" nzTheme="outline"></i>
     </button>
@@ -75,7 +91,7 @@
                 (touchstart)="removeItem($event, item)" style="position: absolute; right: 10px; top: 10px; z-index: 10;">
           <i nz-icon nzType="delete" nzTheme="outline"></i>
         </button>
-        <app-chart-dashboard [chartDataID]="item.chartDataID" [index]="i" #childSeries></app-chart-dashboard>
+        <app-chart-dashboard [chartDataID]="item.chartDataID" [step]="step.value" [startTime]="startTime.value" [getStepTime]="getStepTime()" [index]="i" #childSeries></app-chart-dashboard>
       </div>
     </gridster-item>
   </gridster>

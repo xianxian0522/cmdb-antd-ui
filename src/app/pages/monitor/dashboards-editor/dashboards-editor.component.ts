@@ -11,7 +11,7 @@ import {
   ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DashboardRepository} from '../../../shared/services/dashboard-repository';
 import {PrometheusDatasource} from '../../../shared/services/prometheus-datasource';
@@ -62,6 +62,13 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
       layout: [],
     })
   });
+
+  // 时间和时间间隔 查询条件
+  stepTime = new FormControl('1h');
+  stepTimes: string[] = ['10s', '1m', '5m', '15m', '30m',
+    '1h', '2h', '6h', '12h', '1d', '2d', '1w'];
+  startTime = new FormControl('');
+  step = new FormControl(60, {updateOn: 'blur'});
 
   dashboard: any = [];
   options: GridsterConfig;
@@ -178,6 +185,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
     );
     merge(
       paramsChange,
+      this.step.valueChanges,
+      this.stepTime.valueChanges,
+      this.startTime.valueChanges,
     ).subscribe(_ => {
       this.changeDashboard();
     });
@@ -185,6 +195,28 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes, 'ngchanges会变化吗');
+  }
+
+  timeChange(i): void {
+    const t = this.startTime.value ? this.startTime.value : new Date();
+    let time = t.getTime();
+    time = time + i * this.getStepTime() * 1000;
+    this.startTime.setValue(new Date(time));
+  }
+  getStepTime(): number {
+    const t = this.stepTime.value.slice(-1);
+    const n = parseInt(this.stepTime.value.slice(0, -1), 10);
+    if (t === 's') {
+      return n;
+    } else if (t === 'm') {
+      return n * 60;
+    } else if (t === 'h') {
+      return n * 60 * 60;
+    } else if (t === 'd') {
+      return n * 24 * 60 * 60;
+    } else if (t === 'w') {
+      return n * 7 * 24 * 60 * 60;
+    }
   }
 
   goBackClick(): void {

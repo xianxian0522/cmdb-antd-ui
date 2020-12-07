@@ -244,7 +244,8 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
   }
 
   timeChange(i): void {
-    let time = this.startTime.value.getTime();
+    const t = this.startTime.value ? this.startTime.value : new Date();
+    let time = t.getTime();
     time = time + i * this.getStepTime() * 1000;
     this.startTime.setValue(new Date(time));
   }

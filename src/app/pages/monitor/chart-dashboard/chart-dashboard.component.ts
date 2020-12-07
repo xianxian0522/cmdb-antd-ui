@@ -37,6 +37,10 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   @Output() refresh = new EventEmitter<number>();
   @Input() chartDataID: any = {};
   @Input() index: number;
+  @Input() startTime;
+  @Input() getStepTime: number;
+  @Input() step;
+
   echartsOption: any = {};
   echartsMerge: any = {};
   echartsInstance: any;
@@ -65,6 +69,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
   bubbleData: any[] = [];
 
   ngOnInit(): void {
+
   }
 
   onSelect(data): void {
@@ -99,8 +104,9 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
     }
     this.chartRepository.getById(chartDataID).subscribe(chartData => {
       if (chartData) {
-        const end = new Date().getTime() / 1000;
-        const start = end - 60 * 60;
+        const t = this.startTime ? this.startTime.getTime() : new Date().getTime();
+        const end = t / 1000;
+        const start = end - this.getStepTime;
         if (!chartData.query) {
           return;
         }
@@ -108,7 +114,7 @@ export class ChartDashboardComponent implements OnInit, AfterViewInit, OnChanges
           chartData.query,
           start,
           end,
-          60
+          this.step
         ).subscribe(value => {
           const series = value.data.result;
           const colors = this.colors;
