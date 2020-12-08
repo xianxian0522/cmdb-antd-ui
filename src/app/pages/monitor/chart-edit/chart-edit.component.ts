@@ -159,15 +159,15 @@ export class ChartEditComponent implements OnInit, AfterViewInit {
       '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
   };
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     // const result = this.multi.filter(n => n.name === JSON.parse(JSON.stringify(data)));
     // console.log(result, 'you ji ge');
   }
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
 
