@@ -81,11 +81,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
   onClickScreenFull(): void { // 全屏
     const sf = screenfull as Screenfull;
     this.isFullScreen = true;
-    console.log(this.fullScreen, sf.element, '是全屏描述');
     if (sf.isEnabled) {
       sf.toggle(this.fullScreen.nativeElement).then(r => {
         this.changeDashboard();
-        console.log(this.options.fixedRowHeight, '这元素的...');
       });
     }
   }
@@ -94,11 +92,9 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
   onCloseScreenFull(): void {
     const sf = screenfull as Screenfull;
     this.isFullScreen = false;
-    console.log(sf.element, 'fei全屏模式');
     if (sf.isEnabled) {
       sf.exit().then(r => {
         this.changeDashboard();
-        console.log(this.options.fixedRowHeight, '这元素的...');
       });
     }
   }
@@ -121,14 +117,13 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
             c.refresh.emit(3);
           }
         }
-        console.log(idx, 'idx sm');
       },
       itemResizeCallback: (item, itemComponent) => {
         const targetHeight = itemComponent.gridster.curColWidth * 0.618;
         if (Math.round(Math.abs(this.options.fixedRowHeight / targetHeight - 1) * 100) !== 0) {
           this.options.fixedRowHeight = targetHeight;
           this.options.api.optionsChanged();
-          console.log('set size', this.options.fixedRowHeight);
+          // console.log('set size', this.options.fixedRowHeight);
           const sf = screenfull as Screenfull;
           this.isFullScreen = sf.isFullscreen;  // 全屏还是非全屏
           const idx = this.dashboard.indexOf(item);
@@ -164,7 +159,14 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
   ngAfterViewInit(): void {
     const paramsChange = this.activatedRoute.queryParams.pipe(
       switchMap(params => {
-        setTimeout(() => params.isReadOnly ? this.isReadOnly = true : this.isReadOnly = false);
+        setTimeout(() => {
+          params.isReadOnly ? this.isReadOnly = true : this.isReadOnly = false;
+          // 查看模式 不能拖曳
+          if (this.isReadOnly) {
+            this.options.draggable.enabled = false;
+            this.options.api.optionsChanged();
+          }
+        });
         return params.id ? this.dashboardRepository.getById(params.id) : of(null);
       }),
       map(v => {
@@ -194,7 +196,6 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes, 'ngchanges会变化吗');
   }
 
   timeChange(i): void {
@@ -234,8 +235,6 @@ export class DashboardsEditorComponent implements OnInit, AfterViewInit, OnChang
       //   console.log('调用几次？？');
       // });
       this.options.api.optionsChanged();
-    } else {
-      console.log('isnull');
     }
   }
 

@@ -26,13 +26,15 @@
                          (activate)="onActivate($event)"
                          (deactivate)="onDeactivate($event)"
                          [results]="multi">
-    <ng-template #seriesTooltipTemplate let-items="model">
+    <ng-template #seriesTooltipTemplate let-items="model" style="text-align: left; width: 700px">
       <p style="font-size:20px;margin:1px 0 0 0;">{{ items[0].name | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
       <ul style="text-align:left; list-style: none; padding-left: 10px">
         <li *ngFor="let item of items; let i = index">
           <div class="series-tooltip-template" [style.backgroundColor]="item.color"></div>
-          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}
+<!--          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}-->
+          {{item.value}}
           <br>
+<!--          {{item | json}}-->
         </li>
       </ul>
     </ng-template>
@@ -63,7 +65,7 @@
       <ul style="text-align:left; list-style: none; padding-left: 10px">
         <li *ngFor="let item of items; let i = index">
           <div class="series-tooltip-template" [style.backgroundColor]="item.color"></div>
-          [{{item.name | date: 'yyyy-MM-dd HH:mm:ss'}}] {{item.value}}
+          {{item.value}}
           <br>
         </li>
       </ul>

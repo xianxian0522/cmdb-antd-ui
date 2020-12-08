@@ -102,9 +102,8 @@ export class LayoutComponent implements OnInit{
     if (token) {
       const decodedToken = this.loginService.decode(token);
       this.userName = decodedToken.username;
-      console.log(new Date(decodedToken.exp * 1000), '解码后', new Date());
+      // console.log(new Date(decodedToken.exp * 1000), '解码后', new Date());
       if (new Date().getTime() > decodedToken.exp * 1000) {
-        console.log('token 过期');
         this.messageService.info('token 过期', {nzDuration: 3000})
           .onClose.subscribe(s => {
             this.userLogout();

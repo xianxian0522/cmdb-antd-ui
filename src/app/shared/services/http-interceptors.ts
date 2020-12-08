@@ -35,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
         event => {
           // console.log(event, '获取返回内容');
           if (event instanceof HttpResponse) {
-            console.log('success');
+            // console.log('success');
           }
         },
         err => {
