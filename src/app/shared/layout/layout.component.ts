@@ -40,8 +40,12 @@ export class LayoutComponent implements OnInit{
 
   isPc: boolean;
   userName: string;
+  pageNum = 1;
 
   ngOnInit(): void {
+    // const page = localStorage.getItem('pageNum');
+    // this.pageNum = parseInt(page, 10);
+
     this.isMobile();
     this.sections = this.menuItems.getAllSections();
     // this.location.onUrlChange((url, state) => {

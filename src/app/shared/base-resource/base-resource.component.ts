@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Output, Type, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, Type, ViewChild} from '@angular/core';
 import {BaseRepository} from '../services/base.repository';
 import {FormGroup} from '@angular/forms';
 import {merge} from 'rxjs';
@@ -6,6 +6,7 @@ import {flow} from '../stream/stream';
 import {debounceTime, map, switchMap} from 'rxjs/operators';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzTableComponent} from 'ng-zorro-antd/table';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export interface EditDialogData<MODEL extends {id?: number}> {
   mode: string;
@@ -17,10 +18,12 @@ export interface EditDialogData<MODEL extends {id?: number}> {
   template: ``
 })
 export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DIALOG>
-  implements AfterViewInit {
+  implements OnInit, AfterViewInit {
   protected constructor(
     protected baseRepository: BaseRepository<MODEL>,
     protected modal: NzModalService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
   }
   data: MODEL[] = [];
@@ -64,7 +67,28 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
     this.refreshCheckedStatus();
   }
 
+  ngOnInit(): void {
+    // 当url变化时 改变分页的页码
+    this.activatedRoute.queryParams.subscribe(url => {
+      let pageNumber = url.pageNumber;
+      if (!pageNumber) {
+        pageNumber = 1;
+      } else {
+        pageNumber = parseInt(pageNumber, 10);
+      }
+      this.pageIndex = pageNumber;
+    });
+  }
+
   ngAfterViewInit(): void {
+    const url = location.pathname;
+    this.table.nzPageIndexChange.subscribe(page => {
+      console.log(page, 'you wu');
+      const pageNum = this.table.nzPageIndex;
+      // localStorage.setItem('pageNum', pageNum);
+      this.router.navigate([url],
+        { queryParams: { pageNumber: pageNum }, relativeTo: this.activatedRoute });
+    });
     flow(merge(this.searchForm.valueChanges, this.refresh, this.table.nzPageIndexChange, this.table.nzPageSizeChange)
       .pipe(
         debounceTime(200),

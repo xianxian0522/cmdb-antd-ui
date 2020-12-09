@@ -3,7 +3,7 @@ import {PlaybookRepository} from '../../../shared/services/playbook-repository';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {FormBuilder} from '@angular/forms';
 import {RepositoryHelperService} from '../../../shared/services/repository-helper.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BaseResourceComponent} from '../../../shared/base-resource/base-resource.component';
 import {Playbook} from '../../../shared/models/playbook';
 import {PlaybookEditDialogComponent} from './playbook-edit-dialog.component';
@@ -27,9 +27,10 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
     protected modal: NzModalService,
     private fb: FormBuilder,
     private helperService: RepositoryHelperService,
-    private router: Router
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute,
   ) {
-    super(playbookRepository, modal);
+    super(playbookRepository, modal, activatedRoute, router);
   }
 
   filteredApps: Observable<App[]>;
@@ -48,6 +49,7 @@ export class PlaybooksComponent extends BaseResourceComponent<Playbook, Playbook
   });
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {

@@ -11,6 +11,7 @@ import {App} from '../../../shared/models/app';
 import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 import {ReplicaSet} from '../../../shared/models/replica-set';
 import {Host} from '../../../shared/models/host';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-instances',
@@ -24,9 +25,11 @@ export class InstancesComponent extends BaseResourceComponent<Instance, Instance
     protected instanceRepository: InstanceRepository,
     protected modal: NzModalService,
     private fb: FormBuilder,
-    private helperService: RepositoryHelperService
+    private helperService: RepositoryHelperService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(instanceRepository, modal);
+    super(instanceRepository, modal, activatedRoute, router);
   }
 
   filteredApps: Observable<App[]>;
@@ -44,6 +47,7 @@ export class InstancesComponent extends BaseResourceComponent<Instance, Instance
   });
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {

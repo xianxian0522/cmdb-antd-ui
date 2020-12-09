@@ -7,6 +7,7 @@ import {NzTableComponent} from 'ng-zorro-antd/table';
 import {merge} from 'rxjs';
 import {BaseResourceComponent} from '../../../shared/base-resource/base-resource.component';
 import {Host} from '../../../shared/models/host';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-hosts',
@@ -20,8 +21,10 @@ export class HostsComponent extends BaseResourceComponent<Host, HostEditDialogCo
     private fb: FormBuilder,
     protected modal: NzModalService,
     protected hostRepository: HostRepository,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(hostRepository, modal);
+    super(hostRepository, modal, activatedRoute, router);
   }
 
   searchForm = this.fb.group({
@@ -50,6 +53,7 @@ export class HostsComponent extends BaseResourceComponent<Host, HostEditDialogCo
   // @ViewChild(NzTableComponent) table: NzTableComponent;
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {

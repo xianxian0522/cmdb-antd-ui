@@ -18,6 +18,7 @@ import {ComponentType} from '@angular/cdk/overlay';
 import {merge} from 'rxjs';
 import {NzTableComponent} from 'ng-zorro-antd/table';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -33,8 +34,10 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
     protected userRepository: UserRepository,
     private fb: FormBuilder,
     private nzMessageService: NzMessageService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(userRepository, modal);
+    super(userRepository, modal, activatedRoute, router);
   }
 
   searchForm = this.fb.group({
@@ -45,9 +48,9 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
   });
   // checked = false;
   // indeterminate = false;
-  total = 1;
-  pageSize = 10;
-  pageIndex = 1;
+  // total = 1;
+  // pageSize = 10;
+  // pageIndex = 1;
   // listOfData: any = [];
   // setOfCheckedId = new Set<number>();
   // @Output() refresh = new EventEmitter<void>();
@@ -62,6 +65,7 @@ export class UserComponent extends BaseResourceComponent<User, UserDialogCompone
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     // this.getData();
   }
 

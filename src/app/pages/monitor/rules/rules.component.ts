@@ -6,6 +6,7 @@ import {BaseResourceComponent} from '../../../shared/base-resource/base-resource
 import {RuleEditorComponent} from '../rule-editor/rule-editor.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {RuleEditWarningComponent} from '../rule-edit-warning/rule-edit-warning.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 const filteredOperation = {
   eq: '等于',
@@ -27,8 +28,10 @@ export class RulesComponent extends BaseResourceComponent<Rule, RuleEditorCompon
     protected ruleRepository: RuleRepository,
     protected modal: NzModalService,
     private fb: FormBuilder,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(ruleRepository, modal);
+    super(ruleRepository, modal, activatedRoute, router);
   }
 
   searchForm = this.fb.group({
@@ -39,6 +42,7 @@ export class RulesComponent extends BaseResourceComponent<Rule, RuleEditorCompon
   // @Output() refresh = new EventEmitter<void>();
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   getOperation(e): string {

@@ -8,6 +8,7 @@ import {AppEditDialogComponent} from './app-edit-dialog.component';
 import {UserRepository} from '../../../shared/services/user-repository';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {AppAddOwnerComponent} from './app-add-owner.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-apps',
@@ -21,9 +22,11 @@ export class AppsComponent extends BaseResourceComponent<App, AppEditDialogCompo
     protected modal: NzModalService,
     private fb: FormBuilder,
     private userRepository: UserRepository,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(appRepository, modal);
+    super(appRepository, modal, activatedRoute, router);
   }
 
   searchForm = this.fb.group({
@@ -37,6 +40,7 @@ export class AppsComponent extends BaseResourceComponent<App, AppEditDialogCompo
   reporters = new FormControl([]);
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {

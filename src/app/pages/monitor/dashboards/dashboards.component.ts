@@ -5,6 +5,7 @@ import {DashboardsEditorComponent} from '../dashboards-editor/dashboards-editor.
 import {DashboardRepository} from '../../../shared/services/dashboard-repository';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboards',
@@ -18,8 +19,10 @@ export class DashboardsComponent extends BaseResourceComponent<Dashboards, Dashb
     protected dashboardRepository: DashboardRepository,
     protected modal: NzModalService,
     private fb: FormBuilder,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(dashboardRepository, modal);
+    super(dashboardRepository, modal, activatedRoute, router);
   }
 
   searchForm = this.fb.group({
@@ -30,6 +33,7 @@ export class DashboardsComponent extends BaseResourceComponent<Dashboards, Dashb
   listOfOption: [] = [];
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {

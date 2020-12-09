@@ -10,6 +10,7 @@ import {Observable} from 'rxjs';
 import {App} from '../../../shared/models/app';
 import {NzAutocompleteComponent} from 'ng-zorro-antd/auto-complete';
 import {AppRepository} from '../../../shared/services/app-repository';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-replica-sets',
@@ -25,8 +26,10 @@ export class ReplicaSetsComponent extends BaseResourceComponent<ReplicaSet, Repl
     private fb: FormBuilder,
     private helperService: RepositoryHelperService,
     private app: AppRepository,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
   ) {
-    super(replicaSetRepository, modal);
+    super(replicaSetRepository, modal, activatedRoute, router);
   }
 
   filteredApps: Observable<App[]>;
@@ -38,6 +41,7 @@ export class ReplicaSetsComponent extends BaseResourceComponent<ReplicaSet, Repl
   });
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   compareFun(): any{
