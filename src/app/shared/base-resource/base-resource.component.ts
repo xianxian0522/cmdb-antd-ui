@@ -83,7 +83,6 @@ export abstract class BaseResourceComponent<MODEL extends {id?: number}, EDIT_DI
   ngAfterViewInit(): void {
     const url = location.pathname;
     this.table.nzPageIndexChange.subscribe(page => {
-      console.log(page, 'you wu');
       const pageNum = this.table.nzPageIndex;
       // localStorage.setItem('pageNum', pageNum);
       this.router.navigate([url],
